@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MatrixFlix - Escáner Multivariable Chileno Pro</title>
+    <title>MatrixFlix - Sistema de Diagnóstico de Campo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
@@ -127,7 +127,6 @@
         @keyframes scan { 0% { top: 0%; } 50% { top: 100%; } 100% { top: 0%; } }
         @keyframes pulse { from { transform: scale(0.9); opacity: 0.3; } to { transform: scale(1.1); opacity: 0.7; } }
 
-        /* RECIENTES Y LOGROS */
         .achievements-box {
             background: #111;
             padding: 18px;
@@ -144,7 +143,6 @@
         .recent-tag { display: inline-block; background: #222; padding: 5px 10px; border-radius: 4px; font-size: 12px; margin: 4px; border: 1px solid #333; color: #ccc; }
         .recent-tag strong { color: var(--netflix-red); }
 
-        /* VISTA DE NETFLIX PREMIUM PARA EL RESULTADO */
         .result-card {
             background: var(--netflix-card-bg);
             border-radius: 12px;
@@ -179,17 +177,26 @@
 
         @keyframes blink { 50% { opacity: 0.4; } }
 
-        .res-id { color: #888; font-weight: bold; font-size: 12px; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px; }
-        .res-name { font-size: 28px; font-weight: 900; margin-bottom: 10px; letter-spacing: -0.5px; line-height: 1.1; }
+        .res-id { color: #888; font-weight: bold; font-size: 11px; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px; }
+        .res-name { font-size: 26px; font-weight: 900; margin-bottom: 10px; letter-spacing: -0.5px; line-height: 1.1; }
         
-        .netflix-meta { display: flex; gap: 12px; align-items: center; margin-bottom: 5px; font-size: 13px; color: #aaa; font-weight: bold; flex-wrap: wrap; }
+        .netflix-meta { display: flex; gap: 10px; align-items: center; margin-bottom: 5px; font-size: 12px; color: #aaa; font-weight: bold; flex-wrap: wrap; }
         .meta-match { color: #46d369; }
         .meta-stars { color: #ffd700; }
-        .meta-genre { background: #b20710; color: #fff; padding: 2px 8px; border-radius: 3px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .meta-genre { background: #b20710; color: #fff; padding: 2px 8px; border-radius: 3px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .meta-page { color: #666; font-size: 11px; }
 
         .result-body { padding: 20px; background: #141414; }
         .res-desc { color: #ddd; line-height: 1.6; margin-bottom: 20px; font-size: 14px; }
         .res-action { font-style: italic; color: #fff; background: rgba(255,255,255,0.04); padding: 14px; border-radius: 6px; font-size: 13px; border-left: 3px solid var(--netflix-red); }
+
+        .netflix-row { margin-top: 20px; text-align: left; }
+        .row-title { font-size: 13px; font-weight: bold; color: #fff; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        .row-cards { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; }
+        .row-cards::-webkit-scrollbar { height: 4px; }
+        .row-cards::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+        .mini-card { flex: 0 0 130px; background: #222; padding: 10px; border-radius: 4px; font-size: 11px; border: 1px solid #333; }
+        .mini-card strong { color: var(--netflix-red); display: block; margin-bottom: 2px; }
 
         .btn {
             background-color: var(--netflix-red);
@@ -209,7 +216,6 @@
             gap: 10px;
         }
         .btn:hover { background-color: #b20710; transform: translateY(-1px); }
-        
         .clear-btn { font-size: 11px; color: #666; cursor: pointer; text-decoration: underline; background: none; border: none; }
         .clear-btn:hover { color: #999; }
     </style>
@@ -283,11 +289,17 @@
                     <span class="meta-match" id="res-match">98% Coincidencia</span>
                     <span class="meta-genre" id="res-genre">CATEGORÍA</span>
                     <span class="meta-stars" id="res-stars">⭐⭐⭐⭐⭐</span>
+                    <span class="meta-page" id="res-page">Pág. 1 de 3</span>
                 </div>
             </div>
             <div class="result-body">
                 <p class="res-desc" id="res-desc">Descripción...</p>
                 <div class="res-action" id="res-action">Recomendación...</div>
+                
+                <div class="netflix-row">
+                    <div class="row-title">Títulos Relacionados en Catálogo</div>
+                    <div class="row-cards" id="netflix-suggestions"></div>
+                </div>
             </div>
         </div>
         
@@ -304,84 +316,85 @@
 </div>
 
 <script>
-    // BASE DE DATOS ACTUALIZADA CON EL MANUAL EXCLUSIVO Y CATEGORÍAS NETFLIX
     const rulesDB = {
         mujeres: {
-            "1": { id: "N° 1", name: "Distribución Estándar A", risk: "BAJO", stars: "⭐", genre: "Clásico de la Naturaleza", desc: "Si tiene culo, no tiene teta. Ley de compensación y equilibrio clásico de la naturaleza.", action: "Estable. Zona segura." },
-            "2": { id: "N° 2", name: "Distribución Estándar B", risk: "BAJO", stars: "⭐", genre: "Lógica Inversa", desc: "Si tiene tetas, no tiene culo. Lógica inversa obligatoria del primer postulado.", action: "Clásico confiable." },
-            "3": { id: "N° 3", name: "Impuesto Ambiental", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Drama Estético", desc: "Si tiene teta y culo, es fea de cara. La física demuestra que el universo no otorga beneficios completos gratis.", action: "Evaluar de espaldas." },
-            "4": { id: "N° 4", name: "El Glitch de la Matrix", risk: "CRÍTICO", stars: "⭐⭐⭐⭐", genre: "Ciencia Ficción / Suspenso", desc: "Si tiene tetas, culo y es bonita de cara, una de dos variables es matemáticamente obligatoria: o es estúpida o era hombre antes.", action: "Investigar trasfondo minuciosamente." },
-            "5": { id: "N° 5", name: "La Paradoja del Desierto", risk: "BAJO", stars: "⭐", genre: "Minimalismo Absoluto", desc: "Sin tetas, sin culo y fea de cara. Cero balance físico. Su valor depende al 100% de factores económicos externos o carisma legendario.", action: "Trato estrictamente de amigos." },
-            "6": { id: "N° 6", name: "El Unicornio de Perfil Bajo", risk: "BAJO", stars: "⭐⭐", genre: "Romance de Oficina", desc: "Sin tetas, sin culo, pero con un rostro bellísimo. Conocida como 'la bonita de oficina'. Engaña de lejos, pero carece de curvas en proximidad.", action: "Ideal para una relación tierna." },
-            "7": { id: "N° 7", name: "Efecto Tuning (Inversión)", risk: "CRÍTICO", stars: "⭐⭐⭐⭐", genre: "Acción Financiera", desc: "Tetas gigantes y culo prominente, pero con obvia manufactura plástica. Financiamiento externo comprobado (padres, ex, o patrocinadores).", action: "Peligro severo para tu billetera." },
-            "8": { id: "N° 8", name: "La Trampa del Gimnasio", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Deporte y Suspenso", desc: "Glúteos de infarto y piernas perfectas, pero espalda más desarrollada que la tuya. Capacidad de levantarte en peso muerto.", action: "No hacerla enojar bajo ningún concepto." },
-            "9": { id: "N° 9", name: "Luz de Cochera (Espejismo)", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Misterio Nocturno", desc: "Silueta confusa a 50 metros que aparenta un deportivo de lujo, pero al aproximarse se activa la Regla N°3 de manera retroactiva.", action: "Verificar iluminación antes de actuar." },
-            "10": { id: "N° 10", name: "Ley de la Tóxica Premium", risk: "CHERNÓBIL", stars: "⭐⭐⭐⭐⭐", genre: "Terror Psicológico", desc: "Rompe la Regla N°4: Tiene cuerpo, cara hermosa y además es sumamente inteligente. Implicación psicológica: Está completamente loca.", action: "Evacuación inmediata o asume las consecuencias." },
-            "11": { id: "N° 11", name: "La 'Cute' de Redes", risk: "BAJO", stars: "⭐⭐", genre: "Fantasía Digital", desc: "Cuerpo promedio, cara común, pero domina los filtros de Tik Tok e Instagram simulando un modelo de animé. El choque de realidad física es duro.", action: "Exigir videollamada sin filtros." },
-            "12": { id: "N° 12", name: "La Bendecida Inalcanzable", risk: "BAJO", stars: "⭐⭐", genre: "Drama VIP", desc: "Posee absolutamente todo (cuerpo, cara, intelecto y valores), pero tiene un novio impecable hace 6 años o juega en ligas económicas inalcanzables.", action: "Solo para apreciar de lejos. No insistir." },
-            "13": { id: "N° 13", name: "Paquete de Datos Ilimitado", risk: "BAJO", stars: "⭐", genre: "Comedia de Culto", desc: "No destaca en ningún eje anatómico, pero posee un carisma, labia y actitud tan potentes que anulan por completo cualquier carencia visual.", action: "Altamente adictiva. Proceder." },
-            "14": { id: "N° 14", name: "Efecto Gamer / Otaku", risk: "BAJO", stars: "⭐⭐", genre: "Cultura Geek", desc: "Físicamente en el estándar inferior, pero comparte aficiones de nicho, ve animé y domina los videojuegos. Suma +3 puntos automáticos en valoración.", action: "Valor estratégico muy alto. Asegurar." },
-            "15": { id: "N° 15", name: "Fresa de Alto Mantenimiento", risk: "CRÍTICO", stars: "⭐⭐⭐⭐", genre: "Terror Financiero", desc: "Puede alinearse con la Regla 1 o 2, pero su costo operativo mensual (viajes, cenas VIP) eleva drásticamente el costo por centímetro de atributo.", action: "Requiere solvencia o tarjeta corporativa." },
-            "16": { id: "N° 16", name: "La Ley del Pelo Largo", risk: "BAJO", stars: "⭐", genre: "Ilusión Óptica", desc: "Carece de rostro, busto y glúteos significativos, pero posee una cabellera espectacular. Genera enamoramiento cervical hasta que voltea.", action: "Caminar por delante de ella para evaluar." },
-            "17": { id: "N° 17", name: "La Milf Promesa", risk: "BAJO", stars: "⭐⭐", genre: "Inversión del Futuro", desc: "Actualmente en un rango estándar, pero el análisis genético de su madre demuestra que envejecerá como un vino de alta gama.", action: "Inversión inmobiliaria a largo plazo." },
-            "18": { id: "N° 18", name: "El Enigma Camaleón", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Efectos Especiales", desc: "Un martes por la tarde clasifica como Regla N°5 (desastre absoluto), pero un sábado producida con vestidos y maquillaje roza la Regla Nº4.", action: "Solo agendar citas nocturnas de fin de semana." },
-            "19": { id: "N° 19", name: "La Hippie Natural", risk: "MEDIO", stars: "⭐⭐", genre: "Aventura Ecológica", desc: "Cuerpo natural estético bajo Regla 1 o 2, rostro armónico, pero rechaza la depilación convencional y el uso de desodorantes industriales.", action: "Dilema ideológico y olfativo. A discreción." },
-            "20": { id: "N° 20", name: "Filtro Final (Paz Mental)", risk: "BAJO", stars: "💖", genre: "Obra Maestra Premiada", desc: "Ignora todas las reglas estéticas previas. Cocina de manera espectacular, te apoya en tus locuras, es leal y te quita el estrés diario.", action: "El verdadero Jefe Final. Casarse de inmediato." }
+            "1": { id: "N° 1", name: "Distribución Estándar A", risk: "BAJO", stars: "⭐", genre: "Clásico de la Naturaleza", page: "Pág. 1", desc: "Si tiene culo, no tiene teta. Ley de compensación y equilibrio clásico de la naturaleza.", action: "Estable. Zona segura." },
+            "2": { id: "N° 2", name: "Distribución Estándar B", risk: "BAJO", stars: "⭐", genre: "Lógica Inversa", page: "Pág. 1", desc: "Si tiene tetas, no tiene culo. Lógica inversa obligatoria del primer postulado.", action: "Clásico confiable." },
+            "3": { id: "N° 3", name: "Impuesto Ambiental", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Drama Estético", page: "Pág. 1", desc: "Si tiene teta y culo, es fea de cara. La física demuestra que el universo no otorga beneficios completos gratis.", action: "Evaluar de espaldas." },
+            "4": { id: "N° 4", name: "El Glitch de la Matrix", risk: "CRÍTICO", stars: "⭐⭐⭐⭐", genre: "Ciencia Ficción / Suspenso", page: "Pág. 1", desc: "Si tiene tetas, culo y es bonita de cara, una de dos variables es matemáticamente obligatoria: o es estúpida o era hombre antes.", action: "Investigar trasfondo tras las pistas visuales." },
+            "5": { id: "N° 5", name: "La Paradoja del Desierto", risk: "BAJO", stars: "⭐", genre: "Minimalismo Absoluto", page: "Pág. 1", desc: "Sin tetas, sin culo y fea de cara. Cero balance físico. Su valor depende al 100% de factores económicos externos o carisma legendario.", action: "Trato estrictamente de amigos." },
+            "6": { id: "N° 6", name: "El Unicornio de Perfil Bajo", risk: "BAJO", stars: "⭐⭐", genre: "Romance de Oficina", page: "Pág. 2", desc: "Sin tetas, sin culo, pero con un rostro bellísimo. Conocida como 'la bonita de oficina'. Engaña de lejos, pero carece de curvas en proximidad.", action: "Ideal para una relación tierna." },
+            "7": { id: "N° 7", name: "Efecto Tuning (Inversión)", risk: "CRÍTICO", stars: "⭐⭐⭐⭐", genre: "Acción Financiera", page: "Pág. 2", desc: "Tetas gigantes y culo prominente, pero con obvia manufactura plástica. Financiamiento externo comprobado (padres, ex, o patrocinadores).", action: "Peligro severo para tu billetera." },
+            "8": { id: "N° 8", name: "La Trampa del Gimnasio", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Deporte y Suspenso", page: "Pág. 2", desc: "Glúteos de infarto y piernas perfectas, pero espalda más desarrollada que la tuya. Capacidad de levantarte en peso muerto.", action: "No hacerla enojar bajo ningún concepto." },
+            "9": { id: "N° 9", name: "Luz de Cochera (Espejismo)", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Misterio Nocturno", page: "Pág. 2", desc: "Silueta confusa a 50 metros que aparenta un deportivo de lujo, pero al aproximarse se activa la Regla N°3 de manera retroactiva.", action: "Verificar iluminación antes de actuar." },
+            "10": { id: "N° 10", name: "Ley de la Tóxica Premium", risk: "CHERNÓBIL", stars: "⭐⭐⭐⭐⭐", genre: "Terror Psicológico", page: "Pág. 2", desc: "Rompe la Regla N°4: Tiene cuerpo, cara hermosa y además es sumamente inteligente. Implicación psicológica: Está completamente loca.", action: "Evacuación inmediata o asume las consecuencias." },
+            "11": { id: "N° 11", name: "La 'Cute' de Redes", risk: "BAJO", stars: "⭐⭐", genre: "Fantasía Digital", page: "Pág. 2", desc: "Cuerpo promedio, cara común, pero domina los filtros en plataformas simulando perfección absoluta. El choque de realidad física es duro.", action: "Exigir videollamada sin filtros." },
+            "12": { id: "N° 12", name: "La Bendecida Inalcanzable", risk: "BAJO", stars: "⭐⭐", genre: "Drama VIP", page: "Pág. 2", desc: "Posee absolutamente todo (cuerpo, cara, intelecto), pero su escasa huella digital o misterio social la hacen un objetivo indescifrable.", action: "Solo para apreciar de lejos. No insistir." },
+            "13": { id: "N° 13", name: "Paquete de Datos Ilimitado", risk: "BAJO", stars: "⭐", genre: "Comedia de Culto", page: "Pág. 2", desc: "No destaca en ningún eje anatómico, pero posee un carisma, labia y actitud tan potentes que anulan por completo cualquier carencia visual.", action: "Altamente adictiva. Proceder." },
+            "14": { id: "N° 14", name: "Efecto Gamer / Otaku", risk: "BAJO", stars: "⭐⭐", genre: "Cultura Geek", page: "Pág. 2", desc: "Físicamente en el estándar inferior, pero comparte aficiones de nicho, ve animé y domina los videojuegos. Suma +3 puntos automáticos en valoración.", action: "Valor estratégico muy alto. Asegurar." },
+            "15": { id: "N° 15", name: "Fresa de Alto Mantenimiento", risk: "CRÍTICO", stars: "⭐⭐⭐⭐", genre: "Terror Financiero", page: "Pág. 2", desc: "Puede alinearse con la Regla 1 o 2, pero su costo operativo mensual (viajes, cenas VIP) eleva drásticamente el costo por centímetro de atributo.", action: "Requiere solvencia o tarjeta corporativa." },
+            "16": { id: "N° 16", name: "La Ley del Pelo Largo", risk: "BAJO", stars: "⭐", genre: "Ilusión Óptica", page: "Pág. 3", desc: "Carece de rostro, busto y glúteos significativos, pero posee una cabellera espectacular. Genera enamoramiento cervical hasta que voltea.", action: "Caminar por delante de ella para evaluar." },
+            "17": { id: "N° 17", name: "La Milf Promesa", risk: "BAJO", stars: "⭐⭐", genre: "Inversión del Futuro", page: "Pág. 3", desc: "Actualmente en un rango estándar, pero el análisis genético de su madre demuestra que envejecerá como un vino de alta gama.", action: "Inversión inmobiliaria a largo plazo." },
+            "18": { id: "N° 18", name: "El Enigma Camaleón", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Efectos Especiales", page: "Pág. 3", desc: "Un martes por la tarde clasifica como Regla N°5 (desastre absoluto), pero un sábado producida con vestidos y maquillaje roza la Regla Nº4.", action: "Solo agendar citas nocturnas de fin de semana." },
+            "19": { id: "N° 19", name: "La Hippie Natural", risk: "MEDIO", stars: "⭐⭐", genre: "Aventura Ecológica", page: "Pág. 3", desc: "Cuerpo natural estético bajo Regla 1 o 2, rostro armónico, pero rechaza la depilación convencional y el uso de desodorantes industriales.", action: "Dilema ideológico y olfativo. A discreción." },
+            "20": { id: "N° 20", name: "Filtro Final (Paz Mental)", risk: "BAJO", stars: "💖", genre: "Obra Maestra Premiada", page: "Pág. 3", desc: "Ignora todas las reglas estéticas previas. Cocina de manera espectacular, te apoya en tus locuras, es leal y te quita el estrés diario.", action: "El verdadero Jefe Final. Casarse de inmediato." }
         },
         hombres: {
-            // Se mantiene mapeado dinámicamente con categorías cinematográficas espejo para el espectro masculino
-            "1": { id: "N° 1", name: "El Gym-Bro de Bolsillo", risk: "BAJO", stars: "⭐", genre: "Comedia de Acción", desc: "Brazos gigantes, espalda de coloso, pero mide 1.60m. La genética se expandió horizontalmente.", action: "Mantener fuera del alcance de estanterías altas." },
-            "2": { id: "N° 2", name: "El Alumbrado Financiero", risk: "BAJO", stars: "⭐⭐", genre: "Ficción Económica", desc: "Auto de lujo financiado a 60 cuotas, zapatillas de marca con el logo gigante, pero saldo negativo en la Cuenta RUT.", action: "Monitorear flujos de caja y no prestarle dinero." },
-            "3": { id: "N° 3", name: "El Impuesto del Carito", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Cine Mudo / Drama", desc: "Excelente estructura facial y simetría física, pero su vocabulario no supera las tres palabras. Aburrimiento garantizado.", action: "Útil para fotografías, inviable para viajes largos." },
-            "4": { id: "N° 4", name: "El Minazo Misterioso", risk: "CRÍTICO", stars: "⭐⭐⭐⭐", genre: "Suspenso / Doble Identidad", desc: "Alto, finta de modelo, atento y soltero de forma sospechosa. Altas probabilidades de una familia paralela en otra región.", action: "Exigir coordenadas satelitales en tiempo real." },
-            "5": { id: "N° 5", name: "El Mantenido Carismático", risk: "BAJO", stars: "⭐", genre: "Comedia Romántica", desc: "Sin empleo, sin vehículo, sin rutinas de ejercicio, pero posee una labia poética que hechiza a todo el perímetro urbano.", action: "Cortar subsidios de inmediato." },
-            "6": { id: "N° 6", name: "El Lindo de Cristal", risk: "BAJO", stars: "⭐⭐", genre: "Melodrama Juvenil", desc: "Estética impecable estilo K-Pop, fragilidad estructural extrema. Incapaz de cambiar un neumático o mover muebles.", action: "Manipular con extremo cuidado para evitar fracturas." },
-            "7": { id: "N° 7", name: "El Alucín de Zona Escolar", risk: "CRÍTICO", stars: "⭐⭐⭐⭐", genre: "Acción Extrema", desc: "Camioneta ruidosa, accesorios dorados falsos y actitud de prófugo internacional. Garantiza problemas civiles.", action: "Mantener distancia prudente de la policía local." },
-            "8": { id: "N° 8", name: "El Monotemático del Crossfit", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Documental Deportivo", desc: "Físico óptimo, pero su espectro conversacional se reduce a gramos de proteína, creatina y récords personales.", action: "Prepararse para una dieta estricta de pollo y arroz sin sal." },
-            "9": { id: "N° 9", name: "Espejismo de Barba Candado", risk: "MEDIO", stars: "⭐⭐", genre: "Efectos Especiales", desc: "La barba le otorga un aire rústico y varonil. El día que se afeita se descubre una ausencia total de mentón.", action: "Solicitar archivos fotográficos del año anterior." },
-            "10": { id: "N° 10", name: "El Tiburón de la Micro", risk: "CHERNÓBIL", stars: "⭐⭐⭐⭐⭐", genre: "Terror Financiero", desc: "Traje formal desgastado, discursos sobre activos digitales y libertad financiera, pero solicita dinero prestado para el transporte público.", action: "Evacuar antes de ser reclutado en un esquema piramidal." },
-            "11": { id: "N° 11", name: "El Streamer Subterráneo", risk: "BAJO", stars: "⭐", genre: "Cyberpunk de Clóset", desc: "Evita la luz solar directa, alimentación basada en energéticas y su única red social activa es un servidor de Discord.", action: "Proveer bloqueador solar factor 50 de manera urgente." },
-            "12": { id: "N° 12", name: "El Inalcanzable de Elite", risk: "BAJO", stars: "⭐⭐", genre: "Drama de Alta Sociedad", desc: "Solvencia histórica familiar, propiedades vacacionales, pero su algoritmo social solo le permite interactuar con su mismo colegio de origen.", action: "No desperdiciar recursos tácticos." },
-            "13": { id: "N° 13", name: "El Feo con Tumbao", risk: "BAJO", stars: "⭐", genre: "Musical / Comedia", desc: "Nulo atractivo en ejes convencionales, pero domina las artes culinarias, el baile y el humor de alta gama.", action: "Activo de alto valor. Asegurar." },
-            "14": { id: "N° 14", name: "El Coleccionista de Animé", risk: "BAJO", stars: "⭐⭐", genre: "Anime / Animación", desc: "Indumentaria gigante de Akatsuki, presupuesto destinado a figuras coleccionables. Nula tasa de infidelidad detectada.", action: "Garantía de fidelidad absoluta." },
-            "15": { id: "N° 15", name: "El Zorrón de Temporada", risk: "CRÍTICO", stars: "⭐⭐⭐⭐", genre: "Reality Show", desc: "Léxico basado en muletillas de balnearios exclusivos, adicto a las motos acuáticas y propenso a liquidar presupuestos en una noche.", action: "Monitorear límites de tarjetas de crédito." },
-            "16": { id: "N° 16", name: "La Trampa del Jockey Urbano", risk: "BAJO", stars: "⭐", genre: "Misterio / Caída Libre", desc: "Perspectiva posterior impecable con gorra urbana. Al retirarla se evidencia un avance avanzado del mapa de calvicie.", action: "Evaluar el perímetro frontal en condiciones de luz diurna." },
-            "17": { id: "N° 17", name: "El Sugar en Práctica", risk: "BAJO", stars: "⭐⭐", genre: "Finanzas / Drama", desc: "Ofrece financiar cenas exclusivas, pero audita detalladamente la boleta y procesa el pago a múltiples cuotas sin interés.", action: "Inversión con retorno lento pero seguro." },
-            "18": { id: "N° 18", name: "El Ejecutivo Camaleónico", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Ficción Corporativa", desc: "Aspecto corporativo premium de lunes a viernes. Los domingos en el mercado local con sandalias es completamente irreconocible.", action: "Restringir interacciones a horarios de oficina." },
-            "19": { id: "N° 19", name: "El Trovador Habitacional", risk: "MEDIO", stars: "⭐⭐", genre: "Aventura / Documental", desc: "Atractivo silvestre, ejecución musical destacada, pero carece de domicilio fijo y habita en estructuras temporales.", action: "Dilema severo de estabilidad residencial." },
-            "20": { id: "N° 20", name: "El Partner Definitivo", risk: "BAJO", stars: "💖", genre: "Obra Maestra Romántica", desc: "Soporte absoluto en crisis, destreza en el ensamblaje de mobiliario, habilidades culinarias y proveedor de estabilidad psicológica.", action: "El verdadero Jefe Final. Casarse inmediatamente." }
+            "1": { id: "N° 1", name: "El Gym-Bro de Bolsillo", risk: "BAJO", stars: "⭐", genre: "Comedia de Acción", page: "Pág. 1", desc: "Brazos gigantes, espalda de coloso, pero mide 1.60m. La genética se expandió horizontalmente.", action: "Mantener fuera del alcance de estanterías altas." },
+            "2": { id: "N° 2", name: "El Alumbrado Financiero", risk: "BAJO", stars: "⭐⭐", genre: "Ficción Económica", page: "Pág. 1", desc: "Auto de lujo financiado a 60 cuotas, zapatillas de marca con el logo gigante, pero saldo negativo en la Cuenta RUT.", action: "Monitorear flujos de caja y no prestarle dinero." },
+            "3": { id: "N° 3", name: "El Impuesto del Carito", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Cine Mudo / Drama", page: "Pág. 1", desc: "Excelente estructura facial y simetría física, pero su vocabulario no supera las tres palabras. Aburrimiento garantizado.", action: "Útil para fotografías, inviable para viajes largos." },
+            "4": { id: "N° 4", name: "El Minazo Misterioso", risk: "CRÍTICO", stars: "⭐⭐⭐⭐", genre: "Suspenso / Doble Identidad", page: "Pág. 1", desc: "Alto, finta de modelo, atento y soltero de forma sospechosa. No deja rastro alguno en sus redes sociales digitales.", action: "Exigir coordenadas satelitales en tiempo real." },
+            "5": { id: "N° 5", name: "El Mantenido Carismático", risk: "BAJO", stars: "⭐", genre: "Comedia Romántica", page: "Pág. 1", desc: "Sin empleo, sin vehículo, sin rutinas de ejercicio, pero posee una labia poética que hechiza a todo el perímetro urbano.", action: "Cortar subsidios de inmediato." },
+            "6": { id: "N° 6", name: "El Lindo de Cristal", risk: "BAJO", stars: "⭐⭐", genre: "Melodrama Juvenil", page: "Pág. 2", desc: "Estética impecable estilo K-Pop, fragilidad estructural extrema. Incapaz de cambiar un neumático o mover muebles.", action: "Manipular con extremo cuidado para evitar fracturas." },
+            "7": { id: "N° 7", name: "El Alucín de Zona Escolar", risk: "CRÍTICO", stars: "⭐⭐⭐⭐", genre: "Acción Extrema", page: "Pág. 2", desc: "Camioneta ruidosa, accesorios dorados y actitud extravagante. Sube material arriesgado a sus historias privadas.", action: "Mantener distancia prudente de la policía local." },
+            "8": { id: "N° 8", name: "El Monotemático del Crossfit", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Documental Deportivo", page: "Pág. 2", desc: "Físico óptimo, pero su espectro conversacional se reduce a gramos de proteína, creatina y récords personales al natural.", action: "Prepararse para una dieta estricta de pollo y arroz sin sal." },
+            "9": { id: "N° 9", name: "Espejismo de Barba Candado", risk: "MEDIO", stars: "⭐⭐", genre: "Efectos Especiales", page: "Pág. 2", desc: "La barba le otorga un aire rústico y varonil. El día que se afeita se descubre una ausencia total de mentón.", action: "Solicitar archivos fotográficos del año anterior." },
+            "10": { id: "N° 10", name: "El Tiburón de la Micro", risk: "CHERNÓBIL", stars: "⭐⭐⭐⭐⭐", genre: "Terror Financiero", page: "Pág. 2", desc: "Traje formal desgastado, discursos sobre activos digitales y libertad financiera, pero solicita dinero prestado para el transporte público.", action: "Evacuar antes de ser reclutado en un esquema piramidal." },
+            "11": { id: "N° 11", name: "El Streamer Subterráneo", risk: "BAJO", stars: "⭐", genre: "Cyberpunk de Clóset", page: "Pág. 2", desc: "Evita la luz solar directa, alimentación basada en energéticas y su única red social activa es un servidor de Discord.", action: "Proveer bloqueador solar factor 50 de manera urgente." },
+            "12": { id: "N° 12", name: "El Inalcanzable de Elite", risk: "BAJO", stars: "⭐⭐", genre: "Drama de Alta Sociedad", page: "Pág. 2", desc: "Solvencia histórica familiar, propiedades vacacionales, pero su algoritmo social es sumamente privado y cerrado.", action: "No desperdiciar recursos tácticos." },
+            "13": { id: "N° 13", name: "El Feo con Tumbao", risk: "BAJO", stars: "⭐", genre: "Musical / Comedia", page: "Pág. 2", desc: "Nulo atractivo en ejes convencionales, pero domina las artes culinarias, el baile y el humor de alta gama.", action: "Activo de alto valor. Asegurar." },
+            "14": { id: "N° 14", name: "El Coleccionista de Animé", risk: "BAJO", stars: "⭐⭐", genre: "Anime / Animación", page: "Pág. 2", desc: "Indumentaria gigante de Akatsuki, presupuesto destinado a figuras coleccionables. Nula tasa de infidelidad detectada.", action: "Garantía de fidelidad absoluta." },
+            "15": { id: "N° 15", name: "El Zorrón de Temporada", risk: "CRÍTICO", stars: "⭐⭐⭐⭐", genre: "Reality Show", page: "Pág. 2", desc: "Léxico basado en muletillas de balnearios exclusivos, adicto a las motos acuáticas y propenso a liquidar presupuestos en una noche.", action: "Monitorear límites de tarjetas de crédito." },
+            "16": { id: "N° 16", name: "La Trampa del Jockey Urbano", risk: "BAJO", stars: "⭐", genre: "Misterio / Caída Libre", page: "Pág. 3", desc: "Perspectiva posterior impecable con gorra urbana. Al retirarla se evidencia un avance avanzado del mapa de calvicie.", action: "Evaluar el perímetro frontal en condiciones de luz diurna." },
+            "17": { id: "N° 17", name: "El Sugar en Práctica", risk: "BAJO", stars: "⭐⭐", genre: "Finanzas / Drama", page: "Pág. 3", desc: "Ofrece financiar cenas exclusivas, pero audita detalladamente la boleta y procesa el pago a múltiples cuotas sin interés.", action: "Inversión con retorno lento pero seguro." },
+            "18": { id: "N° 18", name: "El Executive Camaleónico", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Ficción Corporativa", page: "Pág. 3", desc: "Aspecto corporativo premium de lunes a viernes. Los domingos en el mercado local con sandalias es completamente irreconocible.", action: "Restringir interacciones a horarios de oficina." },
+            "19": { id: "N° 19", name: "El Trovador Habitacional", risk: "MEDIO", stars: "⭐⭐", genre: "Aventura / Documental", page: "Pág. 3", desc: "Atractivo silvestre, ejecución musical destacada, pero carece de domicilio fijo y habita en estructuras temporales.", action: "Dilema de estabilidad residencial." },
+            "20": { id: "N° 20", name: "El Partner Definitivo", risk: "BAJO", stars: "💖", genre: "Obra Maestra Romántica", page: "Pág. 3", desc: "Soporte absoluto en crisis, destreza en el ensamblaje de mobiliario, habilidades culinarias y proveedor de estabilidad psicológica.", action: "El verdadero Jefe Final. Casarse inmediatamente." }
         }
     };
 
-    // PREGUNTAS EXPANDIDAS SEGÚN TUS REQUERIMIENTOS (PELO DESGLOSADO Y OJOS EXPANDIDOS)
+    // BANCO DE PREGUNTAS AMPLIADO CON SALIDAS, CONSUMO Y TIEMPO DEL EX
     const questions = {
         mujeres: [
             { q: "¿Cómo calificarías el nivel de su escote (delantera)?", options: ["Nada", "Algo", "Bueno", "Caray", "Divina"] },
             { q: "¿Cómo calificarías el nivel de su retaguardia (glúteos)?", options: ["Nada", "Algo", "Bueno", "Caray", "Divina"] },
             { q: "¿Qué tal anda de carita (lindura de rostro)?", options: ["Pasa piola / No salva", "Simpática", "Bonita", "Terrible de hermosa"] },
-            // EXPANSIÓN 1: CORTE / PEINADO / LARGO DE PELO
-            { q: "¿Qué estructura, largo o peinado lleva en el cabello?", options: ["Pelo ultra corto / Pixie / Rapado lateral", "Corte Bob / Melena media estándar", "Cabellera gigante, larga y espectacular", "Tomado con pinza desordenada todo el día", "Rastas / Trenzas artesanales"] },
-            // EXPANSIÓN 2: NUEVA PREGUNTA DE COLOR DE PELO / TINTE
-            { q: "¿Cuál es el color o diseño de tinte del espécimen?", options: ["Color natural clásico (Castaño / Negro)", "Rubio ceniza / Platinado tuning", "Pelirrojo / Cobrizo fuego", "Colores de animé / Fantasía (Azul, Rosado, Verde)", "Mechas californianas / Balayage de oficina"] },
-            // EXPANSIÓN 3: COLOR Y ESTILO DE OJOS EXPANDIDO
-            { q: "¿Cómo clasificarías sus ojos y su mirada?", options: ["Café oscuro / Pardo estándar de la población", "Verdes / Azules / Claros magnéticos", "Heterocromía pura (un ojo de cada color o manchado)", "Mirada cansada / Ojeras de mapache por el trabajo o la universidad", "Ojos achinados expresivos"] },
-            { q: "¿Cómo evalúas su comportamiento en redes sociales?", options: ["Normal / Privado", "Sube fotos con mil filtros de animé", "Tiene novio hace 6 años / Inalcanzable"] },
-            { q: "¿Tiene algún retoque, cirugía o tuneo físico evidente?", options: ["100% Natural, orgánica", "Su arreglín piola", "Tuneada completa de fábrica"] },
-            { q: "¿Qué tal anda en el amoblaje de cabeza y cocina?", options: ["Normal", "Loca de remate", "Cocina espectacular, te da paz y te apaña en todo"] },
+            { q: "¿Qué estructura, largo o peinado lleva en el cabello?", options: ["Pelo ultra corto / Rapado lateral", "Corte Bob / Melena media estándar", "Cabellera gigante, larga y espectacular", "Tomado con pinza desordenada todo el día", "Rastas / Trenzas artesanales"] },
+            { q: "¿Cuál es el color o design de tinte del espécimen?", options: ["Color natural clásico (Castaño / Negro)", "Rubio ceniza / Platinado tuning", "Pelirrojo / Cobrizo fuego", "Colores de animé / Fantasía (Azul, Rosado)", "Mechas californianas / Balayage"] },
+            { q: "¿Cómo clasificarías sus ojos y su mirada?", options: ["Café oscuro / Pardo estándar", "Verdes / Azules / Claros magnéticos", "Heterocromía pura", "Mirada cansada / Ojeras de mapache", "Ojos achinados expresivos"] },
+            { q: "¿Qué tipo de contenido suele subir a sus redes sociales?", options: ["Nº1: Con filtro para mejorar belleza", "Nº2: Sin filtro, al natural", "Nº3: Normalmente a sus mejores amigos sube fotos en ropa interior", "Nº4: Casi no sube fotos de sí misma"] },
+            // NUEVAS PREGUNTAS DE AUDITORÍA URBANA NOCTURNA
+            { q: "Al momento de salir a beber alcohol juntas/os:", options: ["Bebe moderado y conversa tranquilo", "Se transforma por completo / Show garantizado", "Gasta una fortuna pidiendo la carta VIP", "Prefiere quedarse en casa (No bebe / Aburrida)"] },
+            { q: "¿Tiene hábitos de fumar o consume estupefacientes?", options: ["100% libre de humo y sustancias", "Fuma tabaco/vapea de forma social", "Consume estupefacientes recreativos recurrentes"] },
+            { q: "¿Hace cuánto tiempo terminó con su último Ex?", options: ["Menos de una semana / Sigue llorando", "Entre 1 y 3 meses (Terreno inestable)", "Más de 6 meses / Ciclo cerrado", "Nunca ha tenido una relación seria"] },
+            { q: "¿Tiene algún retoque o tuneo físico evidente?", options: ["100% Natural, orgánica", "Su arreglín piola", "Tuneada completa de fábrica"] },
+            { q: "¿Qué tal anda en el amoblaje de cabeza y cocina?", options: ["Normal", "Loca de remate", "Cocina espectacular, te da paz y te apaña"] },
             { q: "¿Qué tanto gasta en salidas, cenas o estilo de vida?", options: ["Humilde / Alaraquea poco", "Alto mantenimiento / Gasto operativo nivel VIP"] }
         ],
         hombres: [
             { q: "¿Cómo calificarías su musculatura o porte físico?", options: ["Nada / Flaquito / Guatita parrillera", "Algo armado", "Bueno / Pasa metido en el gimnasio"] },
             { q: "¿Cómo anda de estatus o alumbrado de lujos?", options: ["Humilde / Anda a pata", "Alumbra marcas y auto del año que debe", "Alucín completo / Camioneta gigante"] },
             { q: "¿Qué tal el rostro del espécimen?", options: ["Feo pero simpático", "Promedio", "Carita de modelo / Minazo"] },
-            { q: "¿Mide más de 1.80 metros (es alto)?", options: ["No, estándar/bajo", "Sí, es una torre"] },
-            // EXPANSIÓN CAPILAR MASCULINA
-            { q: "¿Qué diseño capilar u opción de ocultamiento lleva?", options: ["Pelo corto normal / Degradado clásico", "Corte urbano con diseños / Líneas rapadas", "Cabello largo estilo vikingo / Man-bun", "Jockey / Gorra puesta las 24 horas del día"] },
-            // EXPANSIÓN COLOR DE OJOS MASCULINOS
-            { q: "¿Qué tonalidad e impacto tienen sus ojos?", options: ["Oscuros comunes", "Claros / Verdes / Azules impactantes", "Mirada de sueño / Cansancio minero profundo"] },
-            { q: "¿De qué pasa hablando constantemente?", options: ["Cosas comunes / Fútbol / Juegos", "Inversiones, criptos y mentalidad de tiburón", "De sus marcas en el gimnasio / Creatina"] },
-            { q: "¿Cómo es su labia o capacidad de engrupimiento?", options: ["Tímido / Habla poco", "Labia nivel Dios / Te vende un hielo en la Antártica"] },
-            { q: "Estilo y comportamiento de Campo:", options: ["Normal", "Zorrón de Pucón insoportable", "Partner definitivo / Te cocina y te da paz mental"] },
+            { q: "Medidas del espécimen urbano:", options: ["Estándar/bajo de estatura", "Sí, es alto (más de 1.80m)"] },
+            { q: "Diseño capilar u ocultamiento urbano:", options: ["Pelo corto normal / Degradado clásico", "Corte urbano con diseños", "Cabello largo estilo vikingo / Man-bun", "Jockey / Gorra puesta las 24 horas del día"] },
+            { q: "Tonalidad e impacto visual de sus ojos:", options: ["Oscuros comunes", "Claros / Verdes / Azules impactantes", "Mirada de sueño / Cansancio profundo"] },
+            { q: "¿Qué tipo de contenido suele subir a sus redes sociales?", options: ["Nº1: Con filtro para mejorar belleza", "Nº2: Sin filtro, al natural", "Nº3: Normalmente a sus mejores amigos sube fotos en ropa interior", "Nº4: Casi no sube fotos de sí mismo"] },
+            // NUEVAS PREGUNTAS DE AUDITORÍA URBANA NOCTURNA
+            { q: "Al momento de salir a beber alcohol juntos/as:", options: ["Paga su parte y controla el ambiente", "Se le apaga la tele / Se pone violento o denso", "Alardea invitando rondas que no puede pagar", "No sale a beber / Prefiere quedarse jugando en PC"] },
+            { q: "¿Tiene hábitos de fumar o consume estupefacientes?", options: ["100% libre de humo y sustancias", "Fuma tabaco/vapea de forma social", "Consume estupefacientes recreativos recurrentes"] },
+            { q: "¿Hace cuánto tiempo terminó con su última Ex?", options: ["Menos de una semana / Sigue acosando", "Entre 1 y 3 meses (Despecho activo)", "Más de 6 meses / Superado", "Soltero histórico de campo"] },
+            { q: "¿Cómo es su labia o capacidad de engrupimiento?", options: ["Tímido / Habla poco", "Labia nivel Dios / Te vende un hielo"] },
+            { q: "Estilo y comportamiento de Campo:", options: ["Normal", "Zorrón de Pucón insoportable", "Partner definitivo / Te cocina y te da paz"] },
             { q: "¿Qué tal su billetera reales?", options: ["Normal", "Es un Sugar en práctica (paga a 6 cuotas)"] }
         ]
     };
@@ -395,11 +408,6 @@
             const AudioContext = window.AudioContext || window.webkitAudioContext;
             if (!AudioContext) return;
             const ctx = new AudioContext();
-            
-            if (['click', 'star', 'start'].includes(type) && navigator.vibrate) {
-                navigator.vibrate(type === 'star' ? [60, 40, 60] : 15);
-            }
-
             if (type === 'click') {
                 let osc = ctx.createOscillator(); let gain = ctx.createGain();
                 osc.type = 'sine'; osc.frequency.setValueAtTime(450, ctx.currentTime);
@@ -407,17 +415,6 @@
                 osc.connect(gain); gain.connect(ctx.destination);
                 osc.start(); osc.stop(ctx.currentTime + 0.04);
             } 
-            else if (type === 'star') {
-                let now = ctx.currentTime; let osc1 = ctx.createOscillator(); let gain = ctx.createGain();
-                osc1.type = 'triangle';
-                osc1.frequency.setValueAtTime(523.25, now);
-                osc1.frequency.setValueAtTime(659.25, now + 0.06);
-                osc1.frequency.setValueAtTime(783.99, now + 0.12);
-                osc1.frequency.setValueAtTime(1174.66, now + 0.18);
-                gain.gain.setValueAtTime(0.12, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
-                osc1.connect(gain); gain.connect(ctx.destination);
-                osc1.start(); osc1.stop(now + 0.4);
-            }
             else if (type === 'start') {
                 let now = ctx.currentTime; let osc = ctx.createOscillator(); let gain = ctx.createGain();
                 osc.type = 'sawtooth'; osc.frequency.setValueAtTime(100, now);
@@ -436,24 +433,9 @@
         } catch(e) { console.log(e); }
     }
 
-    function playVoiceResult(type) {
-        if (!('speechSynthesis' in window)) return;
-        window.speechSynthesis.cancel();
-        let msg = new SpeechSynthesisUtterance();
-        msg.lang = 'es-CL'; msg.rate = 1.2;
-
-        if (type === 'scan') msg.text = "Iniciando escaneo cinemático central.";
-        if (type === 'BAJO') msg.text = "Riesgo bajo. Categoría segura.";
-        if (type === 'MEDIO') msg.text = "Riesgo medio. Advertencia en los metadatos.";
-        if (type === 'CRÍTICO') msg.text = "Riesgo crítico. Alerta en la cartelera.";
-        if (type === 'CHERNÓBIL') msg.text = "¡Riesgo Chernobyl! ¡Abandona la sala de cine!";
-
-        window.speechSynthesis.speak(msg);
-    }
-
     function nextScreen(id) {
         if(id === 'screen-gender') {
-            userData.name = document.getElementById('target-name').value.trim() || "Objetivo Anónimo";
+            userData.name = document.getElementById('target-name').value.trim() || "Sujeto de Campo";
         }
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         document.getElementById(id).classList.add('active');
@@ -501,51 +483,52 @@
 
     function processQuiz() {
         nextScreen('screen-loading');
-        playVoiceResult('scan');
         scanAudioInterval = setInterval(() => { playEffect('scanning_beep'); }, 350);
         setTimeout(() => { clearInterval(scanAudioInterval); calculateRule(); }, 2500);
     }
 
+    // ALGORITMO INTEGRADO CON CONTROL DE EX, DROGAS Y COMPORTAMIENTO DE BAR
     function calculateRule() {
         let finalRuleKey = "5"; 
         const ans = userData.answers;
 
         if (userData.gender === "mujeres") {
-            // Mapeo dinámico balanceado considerando las nuevas preguntas capilares y oculares intercaladas
-            const teta = ans[0]; const culo = ans[1]; const cara = ans[2];
-            const peinado = ans[3]; const colorPelo = ans[4]; const ojos = ans[5];
-            const redes = ans[6]; const tuneo = ans[7]; const mente = ans[8]; const gasto = ans[9];
+            const teta = ans[0]; const culo = ans[1]; const cara = ans[2]; const peinado = ans[3]; 
+            const colorPelo = ans[4]; const ojos = ans[5]; const redes = ans[6];
+            const bar = ans[7]; const consumo = ans[8]; const tiempoEx = ans[9];
+            const tuneo = ans[10]; const mente = ans[11]; const gasto = ans[12];
 
-            if (mente === 2) finalRuleKey = "20"; 
-            else if (mente === 1) finalRuleKey = "10"; 
-            else if (gasto === 1) finalRuleKey = "15"; 
-            else if (tuneo === 2 || colorPelo === 1) finalRuleKey = "7";  
-            else if (redes === 2) finalRuleKey = "12"; 
-            else if (redes === 1 || colorPelo === 3) finalRuleKey = "11"; 
-            else if (colorPelo === 3 && peinado === 2) finalRuleKey = "14";  
-            else if (peinado === 2 && cara === 0) finalRuleKey = "16"; 
-            else if (culo >= 3 && teta <= 1 && tuneo === 0) finalRuleKey = "1"; 
+            // Inyecciones prioritarias por inestabilidad del ex o consumo crítico
+            if (mente === 2 && tiempoEx >= 2 && consumo === 0) finalRuleKey = "20"; // Filtro Final Sólido
+            else if (mente === 1 || bar === 1 || consumo === 2 || tiempoEx === 0) finalRuleKey = "10"; // Chernobyl instantáneo (Tóxica Premium / Ruina psicológica)
+            else if (gasto === 1 || bar === 2) finalRuleKey = "15"; // Fresa de alto costo operativo
+            else if (tuneo === 2 || redes === 2) finalRuleKey = "7"; // Tuning / Mejores amigos arriesgado
+            else if (peinado === 2 && cara === 0) finalRuleKey = "16"; // Ley del Pelo Largo
+            else if (redes === 0) finalRuleKey = "11"; // Con filtros
+            else if (colorPelo === 3 && peinado === 4) finalRuleKey = "14"; // Otaku / Gamer (Prefiere casa bar === 3)
+            else if (redes === 3 && cara >= 2) finalRuleKey = "12"; // Inalcanzable de Bajo Perfil
+            else if (peinado === 4 || consumo === 1) finalRuleKey = "19"; // Hippie Natural
+            else if (culo >= 3 && teta <= 1) finalRuleKey = "1"; 
             else if (teta >= 3 && culo <= 1) finalRuleKey = "2"; 
             else if (teta >= 3 && culo >= 3 && cara >= 2) finalRuleKey = "4"; 
             else if (teta >= 2 && culo >= 2 && cara === 0) finalRuleKey = "3"; 
             else if (teta <= 1 && culo <= 1 && cara >= 2) finalRuleKey = "6"; 
             else if (culo >= 3 && mente === 0) finalRuleKey = "8"; 
-            else if (peinado === 4) finalRuleKey = "19";
             else finalRuleKey = "5"; 
         } else {
             const musculo = ans[0]; const plata = ans[1]; const cara = ans[2]; const alto = ans[3];
-            const jockey = ans[4]; const ojos = ans[5]; const tema = ans[6]; const labia = ans[7];
-            const actitud = ans[8]; const sugar = ans[9];
+            const jockey = ans[4]; const ojos = ans[5]; const redes = ans[6];
+            const bar = ans[7]; const consumo = ans[8]; const tiempoEx = ans[9];
+            const labia = ans[10]; const actitud = ans[11]; const sugar = ans[12];
 
-            if (actitud === 2) finalRuleKey = "20"; 
-            else if (tema === 1) finalRuleKey = "10"; 
-            else if (plata === 2) finalRuleKey = "7"; 
+            if (actitud === 2 && tiempoEx >= 2) finalRuleKey = "20"; // Partner Definitivo
+            if (bar === 1 || consumo === 2 || tiempoEx === 0) finalRuleKey = "10"; // Tiburón de la Micro / Desastre de campo
+            else if (redes === 2 || plata === 2 || bar === 2) finalRuleKey = "7"; // Alucín de Zona Escolar
             else if (sugar === 1) finalRuleKey = "17"; 
             else if (jockey === 3) finalRuleKey = "16"; 
-            else if (tema === 2) finalRuleKey = "8"; 
+            else if (redes === 3 && cara === 2) finalRuleKey = "4"; // Minazo Oculto
             else if (plata === 1) finalRuleKey = "2"; 
             else if (musculo === 2 && alto === 0) finalRuleKey = "1"; 
-            else if (alto === 1 && cara === 2) finalRuleKey = "4"; 
             else if (cara === 2 && labia === 0) finalRuleKey = "3"; 
             else if (musculo === 0 && plata === 0 && labia === 1) finalRuleKey = "5"; 
             else if (cara === 2 && musculo === 0) finalRuleKey = "6"; 
@@ -564,6 +547,7 @@
         document.getElementById('res-action').textContent = `Recomendación: ${result.action}`;
         document.getElementById('res-stars').textContent = result.stars || "⭐";
         document.getElementById('res-genre').textContent = result.genre || "Drama Central";
+        document.getElementById('res-page').textContent = `${result.page} de 3`;
         
         const randomMatch = Math.floor(Math.random() * (99 - 91 + 1)) + 91;
         document.getElementById('res-match').textContent = `${randomMatch}% Coincidencia`;
@@ -577,10 +561,28 @@
         if(result.risk === "CRÍTICO") rBadge.classList.add('badge-critico');
         if(result.risk === "CHERNÓBIL") rBadge.classList.add('badge-chernobil');
         
-        playVoiceResult(result.risk);
+        renderSuggestions(ruleKey);
         saveToRecents(userData.name, result.name);
         updateAchievements(result.risk);
         nextScreen('screen-result');
+    }
+
+    function renderSuggestions(currentKey) {
+        const db = rulesDB[userData.gender];
+        const suggestionsDiv = document.getElementById('netflix-suggestions');
+        suggestionsDiv.innerHTML = "";
+        
+        let count = 0;
+        for (let key in db) {
+            if (key !== currentKey && count < 3) {
+                const item = db[key];
+                const card = document.createElement('div');
+                card.className = "mini-card";
+                card.innerHTML = `<strong>${item.id}</strong>${item.name}<br><span style="color:#666; font-size:9px;">${item.risk}</span>`;
+                suggestionsDiv.appendChild(card);
+                count++;
+            }
+        }
     }
 
     function saveToRecents(name, ruleName) {
@@ -600,14 +602,13 @@
         let newBadge = null;
 
         if (scans === 1 && !unlockedBadges.includes("Novato")) {
-            newBadge = { title: "Iniciado en la Matrix", desc: "Hiciste tu primer escáner de campo con éxito." };
+            newBadge = { title: "Iniciado en la Matrix", desc: "Hiciste tu primer escáner con éxito." };
             unlockedBadges.push("Novato");
         } else if (scans === 5 && !unlockedBadges.includes("Escaneador5")) {
             newBadge = { title: "Cazador Urbano", desc: "Completaste 5 análisis tácticos en terreno." };
             unlockedBadges.push("Escaneador5");
-            playEffect('star');
         } else if (riskLevel === "CHERNÓBIL" && !unlockedBadges.includes("Sobreviviente")) {
-            newBadge = { title: "Sobreviviente Nuclear", desc: "Detectaste un objetivo de riesgo Chernobyl." };
+            newBadge = { title: "Sobreviviente Nuclear", desc: "Detectaste un objetivo Chernobyl." };
             unlockedBadges.push("Sobreviviente");
         }
 
@@ -663,7 +664,7 @@
     }
 
     function clearData() {
-        if(confirm("¿Seguro que quieres borrar todos tus trofeos y el historial de objetivos?")) {
+        if(confirm("¿Borrar trofeos e historial?")) {
             localStorage.clear();
             location.reload();
         }
