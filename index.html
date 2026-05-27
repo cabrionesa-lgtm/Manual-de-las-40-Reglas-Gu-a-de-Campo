@@ -92,7 +92,6 @@
             transition: width 0.3s ease;
         }
 
-        /* Animación Hacker de Escaneo */
         .scanner-box {
             position: relative;
             width: 150px;
@@ -159,7 +158,6 @@
         }
         .btn:hover { background-color: #b20710; }
 
-        /* Panel de Logros */
         .achievements-box {
             background: #1f1f1f;
             padding: 15px;
@@ -187,7 +185,7 @@
             <label>Nombre o Alias del Objetivo:</label>
             <input type="text" id="target-name" placeholder="Ej: Sujeto Alpha / Candidata X">
         </div>
-        <button class="btn" onclick="playSound('inicio'); nextScreen('screen-gender');">Iniciar Escaneo</button>
+        <button class="btn" onclick="playEffect('start'); nextScreen('screen-gender');">Iniciar Escaneo</button>
         
         <div class="achievements-box">
             <div class="ach-title"><i class="fa-solid fa-trophy"></i> Tus Medallas de Operador</div>
@@ -199,8 +197,8 @@
         <h1>Selecciona el Universo</h1>
         <p>¿A qué matriz corresponde el espécimen analizado?</p>
         <div class="options-list">
-            <div class="option-btn" onclick="playSound('clic'); setGender('mujeres')">MUJER</div>
-            <div class="option-btn" onclick="playSound('clic'); setGender('hombres')">HOMBRE</div>
+            <div class="option-btn" onclick="playEffect('click'); setGender('mujeres')">MUJER</div>
+            <div class="option-btn" onclick="playEffect('click'); setGender('hombres')">HOMBRE</div>
         </div>
     </div>
 
@@ -238,12 +236,11 @@
         <br>
         <button class="btn" onclick="shareWhatsApp()"><i class="fa-brands fa-whatsapp"></i> Compartir por WhatsApp</button>
         <br><br>
-        <button class="btn" style="background: #333;" onclick="location.reload()">Analizar de nuevo</button>
+        <button class="btn" style="background: #333;" onclick="playEffect('click'); location.reload()">Analizar de nuevo</button>
     </div>
 </div>
 
 <script>
-    // BASE DE DATOS COMPLETA - MANUAL DE LAS 20 REGLAS 
     const rulesDB = {
         mujeres: {
             "1": { id: "N° 1", name: "Distribución Estándar A", risk: "BAJO", desc: "Si tiene culo, no tiene teta. Ley de compensación y equilibrio clásico de la naturaleza.", action: "Estable. Zona segura." },
@@ -264,7 +261,7 @@
             "16": { id: "N° 16", name: "La Ley del Pelo Largo", risk: "BAJO", desc: "Carece de rostro, busto y glúteos significativos, pero posee una cabellera espectacular. Genera enamoramiento cervical hasta que voltea.", action: "Caminar por delante de ella para evaluar." },
             "17": { id: "N° 17", name: "La Milf Promesa", risk: "BAJO", desc: "Actualmente en un rango estándar, pero el análisis genético de su madre demuestra que envejecerá como un vino de alta gama.", action: "Inversión inmobiliaria a largo plazo." },
             "18": { id: "N° 18", name: "El Enigma Camaleón", risk: "MEDIO", desc: "Un martes por la tarde clasifica como Regla N°5, pero un sábado producida con vestidos y maquillaje roza la Regla Nº4.", action: "Solo agendar citas nocturnas de fin de semana." },
-            "19": { id: "N° 19", name: "La Hippie Natural", risk: "MEDIO", desc: "Cuerpo natural estético bajo Regla 1 o 2, rostro armónico, pero rechaza la depilación convencional y el uso de desodorantes industriales.", action: "Dilema ideológico y olfativo. A discreción." },
+            "19": { id: "N° 19", name: "La Hippie Natural", risk: "MEDIO", desc: "Cuerpo natural estético bajo Regla 1 o 2, rostro armónico, pero rechaza la depilación unconventional y el uso de desodorantes industriales.", action: "Dilema ideológico y olfativo. A discreción." },
             "20": { id: "N° 20", name: "Filtro Final (Paz Mental)", risk: "BAJO", desc: "Ignora todas las reglas estéticas previas. Cocina espectacular, te apoya en tus locuras, es leal y te quita por completo el estrés diario.", action: "El verdadero Jefe Final. Casarse de inmediato." }
         },
         hombres: {
@@ -291,7 +288,6 @@
         }
     };
 
-    // PREGUNTAS AMPLIADAS PARA DETECTAR LA CONDICIÓN SECRETA DE LA REGLA 4 
     const questions = {
         mujeres: [
             { q: "¿Cómo calificarías el nivel de su escote (delantera)?", options: ["Nada", "Algo", "Bueno", "Caray", "Divina"] },
@@ -303,7 +299,6 @@
             { q: "¿Tiene algún retoque, cirugía o tuneo físico evidente?", options: ["100% Natural, orgánica", "Su arreglín piola", "Tuneada completa de fábrica"] },
             { q: "¿Qué tal anda en el amoblaje de cabeza y cocina?", options: ["Normal", "Loca de remate", "Cocina espectacular, te da paz y te apaña en todo"] },
             { q: "¿Qué tanto gasta en salidas, cenas o estilo de vida?", options: ["Humilde / Alaraquea poco", "Alto mantenimiento / Gasto operativo nivel VIP"] },
-            // PREGUNTA CLAVE PARA ACTIVAR LA BROMA DE LA REGLA 4
             { q: "Sensor de Trasfondo Biométrico: ¿Hay sospecha fundada de que el espécimen fue hombre antes?", options: ["No, 100% verificado de nacimiento", "Sí, hay finta sospechosa o la voz es media ruda"] }
         ],
         hombres: [
@@ -314,7 +309,7 @@
             { q: "¿Lleva gorra puesta todo el día?", options: ["No", "Sí, no se la saca por nada del mundo"] },
             { q: "¿De qué pasa hablando constantemente?", options: ["Cosas comunes / Fútbol / Juegos", "Inversiones, criptos y mentalidad de tiburón", "De sus marcas en el gimnasio / Creatina"] },
             { q: "¿Cómo es su labia o capacidad de engrupimiento?", options: ["Tímido / Habla poco", "Labia nivel Dios / Te vende un hielo en la Antártica"] },
-            { q: "¿Cómo es su actitud del día a día contigo?", options: ["Normal", "Zorrón insoportable", "Partner definitivo / Te cocina y te da paz mental"] },
+            { q: "Estilo y comportamiento de Campo:", options: ["Normal", "Zorrón de Pucón insoportable", "Partner definitivo / Te cocina y te da paz mental"] },
             { q: "¿Qué tal su billetera reales?", options: ["Normal", "Es un Sugar en práctica (paga a 6 cuotas)"] }
         ]
     };
@@ -322,25 +317,89 @@
     let userData = { name: "", gender: "", answers: [] };
     let currentStep = 0;
 
-    // SISTEMA DE SONIDO VIRTUAL POR VOZ (Web Speech API)
-    function playSound(type) {
+    // GENERADOR DE EFECTOS DE SONIDO REALES MEDIANTE SÍNTESIS DE AUDIO (Web Audio API)
+    function playEffect(type) {
+        try {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContext) return;
+            const ctx = new AudioContext();
+            
+            if (type === 'click') {
+                // Sonido corto tipo botón retro
+                let osc = ctx.createOscillator();
+                let gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(400, ctx.currentTime);
+                gain.gain.setValueAtTime(0.1, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.05);
+            } 
+            else if (type === 'star') {
+                // Sonido brillante y ascendente de "Estrella / Maravilla" 🌟
+                let now = ctx.currentTime;
+                let osc1 = ctx.createOscillator();
+                let osc2 = ctx.createOscillator();
+                let gain = ctx.createGain();
+                
+                osc1.type = 'triangle';
+                osc2.type = 'sine';
+                
+                // Arpegio rápido ascendente
+                osc1.frequency.setValueAtTime(523.25, now); // Do
+                osc1.frequency.setValueAtTime(659.25, now + 0.08); // Mi
+                osc1.frequency.setValueAtTime(783.99, now + 0.16); // Sol
+                osc1.frequency.setValueAtTime(1046.50, now + 0.24); // Do Alto
+                
+                osc2.frequency.setValueAtTime(1046.50, now);
+                osc2.frequency.setValueAtTime(1318.51, now + 0.16);
+
+                gain.gain.setValueAtTime(0.15, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+                
+                osc1.connect(gain);
+                osc2.connect(gain);
+                gain.connect(ctx.destination);
+                
+                osc1.start();
+                osc2.start();
+                osc1.stop(now + 0.5);
+                osc2.stop(now + 0.5);
+            }
+            else if (type === 'start') {
+                // Efecto ascendente de inicio de juego
+                let now = ctx.currentTime;
+                let osc = ctx.createOscillator();
+                let gain = ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(150, now);
+                osc.frequency.exponentialRampToValueAtTime(600, now + 0.3);
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(now + 0.3);
+            }
+        } catch(e) { console.log("Audio error: ", e); }
+    }
+
+    // VOZ DE DICTADO DE RESULTADOS (Se complementa con los efectos de sonido)
+    function playVoiceResult(type) {
         if (!('speechSynthesis' in window)) return;
         window.speechSynthesis.cancel();
-        
         let msg = new SpeechSynthesisUtterance();
         msg.lang = 'es-CL';
         msg.rate = 1.2;
-        msg.pitch = 1.0;
 
-        if (type === 'inicio') msg.text = "Iniciando escáner de campo. Prepárate.";
-        if (type === 'clic') { msg.text = "¡Pum!"; msg.rate = 2.2; }
-        if (type === 'scan') msg.text = "Procesando datos. Buscando anomalías en el trasfondo de la Matrix.";
-        if (type === 'BAJO') msg.text = "Diagnóstico completado. Zona segura. Peligro bajo.";
-        if (type === 'MEDIO') msg.text = "Alerta. Riesgo moderado detectado.";
-        if (type === 'CRÍTICO') msg.text = "¡Atención! Nivel crítico. Protege tu integridad financiera.";
-        if (type === 'CHERNÓBIL') { msg.text = "¡Alerta nuclear! ¡Evacuación inmediata! ¡Arranca!"; msg.rate = 1.0; }
-        // SONIDO DE LA BROMA SECRETA
-        if (type === 'SECRETO') { msg.text = "¡Peligro! ¡Sorpresa inesperada detectada! ¡Cuidado con el rifle!"; msg.rate = 1.1; msg.pitch = 1.3; }
+        if (type === 'scan') msg.text = "Procesando datos tácticos en la matriz.";
+        if (type === 'BAJO') msg.text = "Zona segura. Peligro bajo.";
+        if (type === 'MEDIO') msg.text = "Alerta. Riesgo moderado.";
+        if (type === 'CRÍTICO') msg.text = "¡Atención! Nivel crítico. Cuida la billetera.";
+        if (type === 'CHERNÓBIL') msg.text = "¡Alerta nuclear! ¡Arranca de inmediato!";
+        if (type === 'SECRETO') msg.text = "¡Alerta! ¡Cuidado con el rifle francotirador!";
 
         window.speechSynthesis.speak(msg);
     }
@@ -370,16 +429,26 @@
         const optionsDiv = document.getElementById('quiz-options');
         optionsDiv.innerHTML = "";
         
-        qData.options.forEach((opt, index) => {
+        qData.options.forEach((opt) => {
             const div = document.createElement('div');
             div.className = "option-btn";
             div.textContent = opt;
-            div.onclick = () => { playSound('clic'); selectOption(index); };
+            
+            // FILTRO DE AUDIO: Si la opción es una maravilla o rango épico, asigna sonido de estrella
+            if (opt === "Divina" || opt === "Terrible de hermosa" || opt === "Cocina espectacular, te da paz y te apaña en todo" || opt === "Bueno / Pasa metido en el gimnasio" || opt === "Partner definitivo / Te cocina y te da paz mental") {
+                div.onclick = () => { playEffect('star'); selectOption(opt); };
+            } else {
+                div.onclick = () => { playEffect('click'); selectOption(opt); };
+            }
             optionsDiv.appendChild(div);
         });
     }
 
-    function selectOption(idx) {
+    function selectOption(selectedText) {
+        // Encontrar índice seleccionado
+        const currentOptions = questions[userData.gender][currentStep].options;
+        const idx = currentOptions.indexOf(selectedText);
+        
         userData.answers.push(idx);
         currentStep++;
         
@@ -393,7 +462,7 @@
 
     function processQuiz() {
         nextScreen('screen-loading');
-        playSound('scan');
+        playVoiceResult('scan');
         
         setTimeout(() => {
             calculateRule();
@@ -414,12 +483,11 @@
             const tuneo = ans[6];
             const mente = ans[7];
             const gasto = ans[8];
-            const sospechaTrans = ans[9]; // 0 = No, 1 = Sí (Broma)
+            const sospechaTrans = ans[9];
 
-            // GATILLO DE LA BROMA: Si hay sospecha y cumple atributos de la Regla 4 
             if (sospechaTrans === 1) {
                 finalRuleKey = "4"; 
-                triggerSecretBadge = true; // Activa el logro secreto rifle
+                triggerSecretBadge = true; 
             }
             else if (mente === 2) finalRuleKey = "20"; 
             else if (mente === 1) finalRuleKey = "10"; 
@@ -437,7 +505,6 @@
             else if (culo >= 3 && mente === 0) finalRuleKey = "8"; 
             else finalRuleKey = "5"; 
         } else {
-            // HOMBRES
             const musculo = ans[0];
             const plata = ans[1];
             const cara = ans[2];
@@ -480,21 +547,20 @@
         if (triggerSecretBadge) {
             rBadge.textContent = "ALERTA: SORPRESA DETECTADA";
             rBadge.classList.add('badge-secreto');
-            playSound('SECRETO');
+            playVoiceResult('SECRETO');
         } else {
             rBadge.textContent = `RIESGO: ${result.risk}`;
             if(result.risk === "BAJO") rBadge.classList.add('badge-bajo');
             if(result.risk === "MEDIO") rBadge.classList.add('badge-medio');
             if(result.risk === "CRÍTICO") rBadge.classList.add('badge-critico');
             if(result.risk === "CHERNÓBIL") rBadge.classList.add('badge-chernobil');
-            playSound(result.risk);
+            playVoiceResult(result.risk);
         }
         
         updateAchievements(result.risk, triggerSecretBadge);
         nextScreen('screen-result');
     }
 
-    // MANEJO DE MEDALLAS CON EL NUEVO LOGRO RIFLUDO SECRETO
     function updateAchievements(riskLevel, triggerSecretBadge) {
         let scans = parseInt(localStorage.getItem('matrix_scans_count') || "0");
         scans++;
@@ -503,10 +569,10 @@
         let unlockedBadges = JSON.parse(localStorage.getItem('matrix_badges') || "[]");
         let newBadge = null;
 
-        // VERIFICAR EL LOGRO SECRETO RIFLUDO DE MANERA PRIORITARIA
         if (triggerSecretBadge && !unlockedBadges.includes("SecretRifle")) {
             newBadge = { title: "Premio al Francotirador Urbano (¡Trae Rifle!)", desc: "Desbloqueaste el easter-egg oculto: Encontraste el Glitch definitivo de la Matrix." };
             unlockedBadges.push("SecretRifle");
+            playEffect('star');
         } 
         else if (scans === 1 && !unlockedBadges.includes("Novato")) {
             newBadge = { title: "Iniciado en la Matrix", desc: "Hiciste tu primer escáner de campo con éxito." };
@@ -514,6 +580,7 @@
         } else if (scans === 5 && !unlockedBadges.includes("Escaneador5")) {
             newBadge = { title: "Cazador Urbano", desc: "Completaste 5 análisis tácticos en terreno." };
             unlockedBadges.push("Escaneador5");
+            playEffect('star');
         } else if (riskLevel === "CHERNÓBIL" && !unlockedBadges.includes("Sobreviviente")) {
             newBadge = { title: "Sobreviviente Nuclear", desc: "Detectaste un objetivo de riesgo Chernobyl y saliste vivo." };
             unlockedBadges.push("Sobreviviente");
@@ -550,7 +617,6 @@
             { id: "Escaneador5", title: "Cazador Urbano", desc: "5 escaneos completados" },
             { id: "Billetera", title: "Escudo Financiero", desc: "Detectó riesgo Crítico" },
             { id: "Sobreviviente", title: "Sobreviviente Nuclear", desc: "Detectó un Chernobyl" },
-            // LOGRO OCULTO EN LA LISTA
             { id: "SecretRifle", title: "⚠️ Francotirador Oculto", desc: "Logro Secreto: Descubierto al gatillar la Regla N°4 Especial" }
         ];
 
