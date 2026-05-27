@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MatrixFlix - Algoritmo Interactivo v2.0</title>
+    <title>MatrixFlix - Algoritmo Interactivo v2.5</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
@@ -80,14 +80,32 @@
         .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
         .option-btn {
             background: #333;
-            padding: 15px;
+            padding: 18px;
             border-radius: 5px;
             cursor: pointer;
             border: 2px solid transparent;
             transition: 0.2s;
-            font-weight: 500;
+            font-weight: bold;
+            font-size: 15px;
+            letter-spacing: 0.5px;
         }
         .option-btn:hover { background: #444; border-color: #666; }
+
+        /* Barra de progreso para las preguntas */
+        .progress-container {
+            width: 100%;
+            background-color: #333;
+            border-radius: 5px;
+            margin-bottom: 25px;
+            height: 6px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background-color: var(--netflix-red);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
 
         .loader {
             width: 60px;
@@ -134,7 +152,7 @@
 
     <div id="screen-start" class="screen active">
         <h1>Algoritmo de Diagnóstico Urbano</h1>
-        <p>Procesa los datos de tu candidato/a para identificar qué regla del manual oficial rige su perfil social.</p>
+        <p>Procesa los datos de tu objetivo para identificar qué regla del manual oficial rige su perfil social.</p>
         <div class="input-group">
             <label>Nombre o Alias del Objetivo:</label>
             <input type="text" id="target-name" placeholder="Ej: Sujeto Alpha / Candidato 1">
@@ -146,12 +164,15 @@
         <h1>Selecciona el Universo</h1>
         <p>Configurando los parámetros de la matriz correspondiente...</p>
         <div class="options-grid">
-            <div class="option-btn" onclick="setGender('mujeres')">MUJER (Películas)</div>
-            <div class="option-btn" onclick="setGender('hombres')">HOMBRE (Series)</div>
+            <div class="option-btn" onclick="setGender('mujeres')">MUJER</div>
+            <div class="option-btn" onclick="setGender('hombres')">HOMBRE</div>
         </div>
     </div>
 
     <div id="screen-quiz" class="screen">
+        <div class="progress-container">
+            <div class="progress-bar" id="quiz-progress"></div>
+        </div>
         <h1 id="quiz-question">Pregunta</h1>
         <p id="quiz-subtitle">Selecciona la opción que mejor describa al objetivo.</p>
         <div id="quiz-options" class="options-grid"></div>
@@ -178,47 +199,55 @@
 </div>
 
 <script>
-    // BASE DE DATOS ESTRUCTURADA: LAS PRIMERAS 10 REGLAS OFICIALES PARA MUJERES Y 10 EQUIVALENTES PARA HOMBRES
+    // BASE DE DATOS OPTIMIZADA CON LAS COMBINACIONES DE LAS 6 PREGUNTAS CLAVE
     const rulesDB = {
         mujeres: {
-            "1-0-0-0": { id: "N° 1", name: "Distribución Estándar A", risk: "BAJO", desc: "Si tiene culo, no tiene teta. Ley de compensación y equilibrio clásico de la naturaleza.", action: "Estable. Zona segura." },
-            "0-1-0-0": { id: "N° 2", name: "Distribución Estándar B", risk: "BAJO", desc: "Si tiene tetas, no tiene culo. Lógica inversa obligatoria del primer postulado.", action: "Clásico confiable." },
-            "1-1-0-0": { id: "N° 3", name: "Impuesto Ambiental", risk: "MEDIO", desc: "Si tiene teta y culo, es fea de cara. La física demuestra que el universo no otorga beneficios completos gratis.", action: "Evaluar de espaldas." },
-            "1-1-1-0": { id: "N° 4", name: "El Glitch de la Matrix", risk: "CRÍTICO", desc: "Si tiene tetas, culo y es bonita de cara, una de dos variables es matemáticamente obligatoria: o es estúpida o era hombre antes.", action: "Investigar trasfondo." },
-            "0-0-0-0": { id: "N° 5", name: "La Paradoja del Desierto", risk: "BAJO", desc: "Sin tetas, sin culo y fea de cara. Cero balance físico. Su valor depende al 100% de factores económicos externos (auto, dinero) o carisma legendario.", action: "Trato estrictamente de amigos." },
-            "0-0-1-0": { id: "N° 6", name: "El Unicornio de Perfil Bajo", risk: "BAJO", desc: "Sin tetas, sin culo, pero con un rostro bellísimo. Conocida como 'la bonita de oficina'. Engaña de lejos, pero carece de curvas en proximidad.", action: "Ideal para una relación tierna." },
-            "1-1-0-1": { id: "N° 7", name: "Efecto Tuning (Inversión)", risk: "CRÍTICO", desc: "Tetas gigantes y culo prominente, pero con obvia manufactura plástica. Financiamiento externo comprobado (padres, ex, o patrocinadores).", action: "Peligro severo para tu billetera." },
-            "1-0-1-1": { id: "N° 8", name: "La Trampa del Gimnasio", risk: "MEDIO", desc: "Glúteos de infarto y piernas perfectas, pero espalda más desarrollada que la tuya. Capacidad de levantarte en peso muerto.", action: "No hacerla enojar bajo ningún concepto." },
-            "0-1-1-1": { id: "N° 9", name: "Luz de Cochera (Espejismo)", risk: "MEDIO", desc: "Silueta confusa a 50 metros que aparenta un deportivo de lujo, pero al aproximarse se activa la Regla N°3 de manera retroactiva.", action: "Verificar iluminación antes de actuar." },
-            "1-1-1-1": { id: "N° 10", name: "Ley de la Tóxica Premium", risk: "CHERNÓBIL", desc: "Rompe la Regla N°4: Tiene cuerpo, cara hermosa y además es sumamente inteligente. Implicación psicológica: Está completamente loca.", action: "Evacuación inmediata o asume las consecuencias." }
+            "1-0-0-0-0-0": { id: "N° 1", name: "Distribución Estándar A", risk: "BAJO", desc: "Si tiene culo, no tiene teta. Ley de compensación y equilibrio clásico de la naturaleza.", action: "Estable. Zona segura." },
+            "0-1-0-0-0-0": { id: "N° 2", name: "Distribución Estándar B", risk: "BAJO", desc: "Si tiene tetas, no tiene culo. Lógica inversa obligatoria del primer postulado.", action: "Clásico confiable." },
+            "1-1-0-0-0-0": { id: "N° 3", name: "Impuesto Ambiental", risk: "MEDIO", desc: "Si tiene teta y culo, es fea de cara. La física demuestra que el universo no otorga beneficios completos gratis.", action: "Evaluar de espaldas." },
+            "1-1-1-0-0-0": { id: "N° 4", name: "El Glitch de la Matrix", risk: "CRÍTICO", desc: "Si tiene tetas, culo y es bonita de cara, una de dos variables es matemáticamente obligatoria: o es estúpida o era hombre antes.", action: "Investigar trasfondo." },
+            "0-0-0-0-0-0": { id: "N° 5", name: "La Paradoja del Desierto", risk: "BAJO", desc: "Sin tetas, sin culo y fea de cara. Cero balance físico. Su valor depende al 100% de factores económicos externos o carisma legendario.", action: "Trato estrictamente de amigos." },
+            "0-0-1-0-0-0": { id: "N° 6", name: "El Unicornio de Perfil Bajo", risk: "BAJO", desc: "Sin tetas, sin culo, pero con un rostro bellísimo. Conocida como 'la bonita de oficina'. Engaña de lejos, pero carece de curvas en proximidad.", action: "Ideal para una relación tierna." },
+            "1-1-0-1-0-0": { id: "N° 7", name: "Efecto Tuning (Inversión)", risk: "CRÍTICO", desc: "Tetas gigantes y culo prominente, pero con obvia manufactura plástica. Financiamiento externo comprobado (padres, ex, o patrocinadores).", action: "Peligro severo para tu billetera." },
+            "1-0-0-0-1-0": { id: "N° 8", name: "La Trampa del Gimnasio", risk: "MEDIO", desc: "Glúteos de infarto y piernas perfectas, pero espalda más desarrollada que la tuya. Capacidad de levantarte en peso muerto.", action: "No hacerla enojar bajo ningún concepto." },
+            "0-0-1-0-0-1": { id: "N° 9", name: "Luz de Cochera (Espejismo)", risk: "MEDIO", desc: "Silueta confusa a 50 metros que aparenta un deportivo de lujo, pero al aproximarse se activa la Regla N°3 de manera retroactiva.", action: "Verificar iluminación antes de actuar." },
+            "1-1-1-1-0-0": { id: "N° 10", name: "Ley de la Tóxica Premium", risk: "CHERNÓBIL", desc: "Rompe la Regla N°4: Tiene cuerpo, cara hermosa y además es sumamente inteligente. Implicación psicológica: Está completamente loca.", action: "Evacuación inmediata o asume las consecuencias." },
+            // Casos por defecto si no son combinaciones exactas
+            "high-risk": { id: "N° 10", name: "Ley de la Tóxica Premium", risk: "CHERNÓBIL", desc: "Los altos niveles de coincidencia visual e intelectual dispararon las alarmas. Implicación psicológica: Inestabilidad crítica latente.", action: "Evacuación inmediata por protocolo." },
+            "default": { id: "N° 5", name: "La Paradoja del Desierto", risk: "BAJO", desc: "El objetivo mantiene un perfil neutral sin anomalías estéticas o psicológicas críticas detectadas.", action: "Trato amigable o soporte de campo estándar." }
         },
         hombres: {
-            "1-0-0-0": { id: "N° 1", name: "El Gym-Bro de Bolsillo", risk: "BAJO", desc: "Brazos gigantes, espalda ancha y marcado, pero carece por completo de estatura. La energía del crecimiento se fue hacia los lados.", action: "Fácil de controlar. Mantener fuera del alcance de estantes altos." },
-            "0-1-0-0": { id: "N° 2", name: "El Espejismo Financiero", desc: "Maneja un auto del año y viste marcas con logos gigantes, pero no tiene liquidez. Todo el sueldo se le va en pagar el crédito vehicular.", risk: "BAJO", action: "Clásico de la apariencia. No pedirle cenas caras a fin de mes." },
-            "1-0-1-0": { id: "N° 3", name: "El Impuesto del Guapo", risk: "MEDIO", desc: "Sumamente guapo de cara y buen cuerpo natural, pero es aburrido y sin conversación. El físico atrofió por completo el carisma.", action: "Útil para fotos de Instagram, aburrido para viajes de más de una hora." },
-            "1-1-1-0": { id: "N° 4", name: "El Glitch Masculino", risk: "CRÍTICO", desc: "Es alto, guapo, atento, caballeroso y soltero. El algoritmo dicta un riesgo matemático: o es ficticio o tiene tres familias.", action: "Revisar detalladamente sus antecedentes de ubicación." },
-            "0-0-0-0": { id: "N° 5", name: "La Paradoja del Mantenido", risk: "BAJO", desc: "No tiene trabajo, auto ni físico, pero sigue invicto en el ecosistema gracias a que posee una labia nivel dios.", action: "Cortar financiamiento de inmediato." },
-            "0-0-1-0": { id: "N° 6", name: "El Chico Lindo de Cristal", risk: "BAJO", desc: "Guapo de facciones estéticas, pero pesa 50 kilos mojado. Ideal para fotos Tumblr pero incapaz de cambiar un neumático o mover un mueble.", action: "Tratar con cuidado, se puede fracturar cargando las bolsas." },
-            "1-1-0-1": { id: "N° 7", name: "El Efecto Alucín", risk: "CRÍTICO", desc: "Camioneta gigante, cadenas pesadas y ropa estridente de diseñador. Procedencia de fondos y estabilidad legal altamente dudosa.", action: "Riesgo severo de fiscalizaciones policiales sorpresivas." },
-            "1-0-1-1": { id: "N° 8", name: "El Crossfitter Intensivo", risk: "MEDIO", desc: "Cuerpo de atleta olímpico pero personalidad completamente absorbida. Toda conversación girará en torno a sus marcas y tus carbohidratos.", action: "Prepárate para cenar pechuga de pollo y brócoli." },
-            "0-1-1-1": { id: "N° 9", name: "Espejismo de Barba de Candado", risk: "MEDIO", desc: "Con barba parece un rústico actor de acción, pero el día que se afeita descubres que no tiene mandíbula y se desploma su atractivo.", action: "Esconderle las rasuradoras por el bien de la familia." },
-            "1-1-1-1": { id: "N° 10", name: "El Cryptobro de Tiburón", risk: "CHERNÓBIL", desc: "Usa traje formal en domingo y habla de activos digitales, pero te pide prestado para el estacionamiento porque tiene sus fondos bloqueados.", action: "No dejes que toque tus ahorros bajo ninguna circunstancia." }
+            "1-0-0-0-0-0": { id: "N° 1", name: "El Gym-Bro de Bolsillo", risk: "BAJO", desc: "Brazos gigantes, espalda ancha y marcado, pero carece por completo de estatura. La energía del crecimiento se fue hacia los lados.", action: "Fácil de controlar. Mantener fuera de estantes altos." },
+            "0-0-0-1-1-0": { id: "N° 2", name: "El Espejismo Financiero", risk: "BAJO", desc: "Maneja un auto del año y viste marcas con logos gigantes, pero no tiene liquidez. Todo el sueldo se le va en pagar el crédito vehicular.", action: "Clásico de la apariencia. No pedirle cenas caras." },
+            "0-0-1-0-0-0": { id: "N° 3", name: "El Impuesto del Guapo", risk: "MEDIO", desc: "Sumamente guapo de cara y buen cuerpo natural, pero es aburrido y sin conversación. El físico atrofió por completo el carisma.", action: "Útil para fotos de Instagram, aburrido para viajes largos." },
+            "1-1-1-0-0-0": { id: "N° 4", name: "El Glitch Masculino", risk: "CRÍTICO", desc: "Es alto, guapo, atento, caballeroso y soltero. O es un personaje ficticio de película romántica, o es un psicópata con tres familias.", action: "Revisar detalladamente sus antecedentes de ubicación." },
+            "0-0-0-0-0-1": { id: "N° 5", name: "La Paradoja del Mantenido", risk: "BAJO", desc: "No tiene trabajo, auto ni físico, pero sigue invicto en el ecosistema social gracias a que posee una labia e historias nivel dios.", action: "Cortar financiamiento de inmediato." },
+            "0-0-1-0-0-1": { id: "N° 6", name: "El Chico Lindo de Cristal", risk: "BAJO", desc: "Guapo de facciones estéticas, pero pesa 50 kilos mojado. Ideal para fotos de redes pero incapaz de cambiar un neumático o mover un mueble.", action: "Tratar con cuidado, se puede lesionar cargando las compras." },
+            "0-1-0-1-1-0": { id: "N° 7", name: "El Efecto Alucín", risk: "CRÍTICO", desc: "Camioneta gigante, cadenas pesadas y ropa estridente de diseñador. Procedencia de fondos y estabilidad legal altamente dudosa.", action: "Riesgo severo de fiscalizaciones policiales o líos de discoteca." },
+            "1-0-0-0-1-1": { id: "N° 8", name: "El Crossfitter Intensivo", risk: "MEDIO", desc: "Cuerpo de atleta olímpico pero personalidad completamente absorbida por el box. Toda conversación girará en torno a sus marcas y suplementos.", action: "Prepárate para cenar pechuga de pollo y brócoli." },
+            "0-0-1-0-1-0": { id: "N° 9", name: "Espejismo de Barba de Candado", risk: "MEDIO", desc: "Con barba parece un rústico actor de acción, pero el día que se afeita descubres que no tiene mandíbula y se desploma su atractivo.", action: "Esconderle las rasuradoras por el bien de la estética." },
+            "1-1-1-1-1-0": { id: "N° 10", name: "El Cryptobro de Tiburón", risk: "CHERNÓBIL", desc: "Usa traje formal en domingo y habla de activos digitales o libertad financiera, pero te pide prestado porque tiene sus fondos bloqueados.", action: "No dejes que toque tus ahorros bajo ninguna circunstancia." },
+            "default": { id: "N° 5", name: "La Paradoja del Mantenido", risk: "BAJO", desc: "El perfil evaluado no cuenta con el respaldo de activos suficientes ni un cuadro fisionómico dominante.", action: "Mantener en observación periférica." }
         }
     };
 
-    // PREGUNTAS CLAVE PARA DETECTAR LAS CARACTERÍSTICAS
+    // 6 PREGUNTAS ESPECÍFICAS PARA MEDIR DETALLADAMENTE EL PELIGRO
     const questions = {
         mujeres: [
             { q: "¿Tiene glúteos prominentes destacados?", options: ["SÍ", "NO"] },
             { q: "¿Tiene busto destacado?", options: ["SÍ", "NO"] },
-            { q: "¿Es bonita de cara?", options: ["SÍ", "NO"] },
-            { q: "¿Es inteligente y centrada?", options: ["SÍ", "NO"] }
+            { q: "¿Es atractiva o bonita de rostro?", options: ["SÍ", "NO"] },
+            { q: "¿Es inteligente, madura y centrada?", options: ["SÍ", "NO"] },
+            { q: "¿Tiene cirugías estéticas o retoques evidentes?", options: ["SÍ", "NO"] },
+            { q: "¿Cambia drásticamente de apariencia cuando usa maquillaje?", options: ["SÍ", "NO"] }
         ],
         hombres: [
-            { q: "¿Tiene físico atlético o va mucho al gimnasio?", options: ["SÍ", "NO"] },
-            { q: "¿Destaca por su estatura o estatus / auto?", options: ["SÍ", "NO"] },
+            { q: "¿Tiene físico atlético o entrena demasiado?", options: ["SÍ", "NO"] },
+            { q: "¿Mide más de 1.80 metros de altura?", options: ["SÍ", "NO"] },
             { q: "¿Es bien parecido de rostro?", options: ["SÍ", "NO"] },
-            { q: "¿Tiene una personalidad intensa / llamativa?", options: ["SÍ", "NO"] }
+            { q: "¿Presume excesivamente lujos, marcas o autos?", options: ["SÍ", "NO"] },
+            { q: "¿Habla constantemente de negocios, dinero o mentalidad?", options: ["SÍ", "NO"] },
+            { q: "¿Tiene una labia o facilidad de palabra exagerada?", options: ["SÍ", "NO"] }
         ]
     };
 
@@ -227,7 +256,7 @@
 
     function nextScreen(id) {
         if(id === 'screen-gender') {
-            userData.name = document.getElementById('target-name').value.trim() || "Objetivo Anónimo";
+            userData.name = document.getElementById('target-name').value.trim() || "Objetivo de Campo";
         }
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         document.getElementById(id).classList.add('active');
@@ -240,6 +269,11 @@
     }
 
     function showQuestion() {
+        // Actualizar barra de progreso
+        const totalQuestions = questions[userData.gender].length;
+        const progressPercent = (currentStep / totalQuestions) * 100;
+        document.getElementById('quiz-progress').style.width = `${progressPercent}%`;
+
         const qData = questions[userData.gender][currentStep];
         document.getElementById('quiz-question').textContent = qData.q;
         
@@ -256,13 +290,13 @@
     }
 
     function selectOption(idx) {
-        // Guardamos 1 si la respuesta es SÍ (índice 0) y 0 si es NO (índice 1)
         userData.answers.push(idx === 0 ? 1 : 0);
         currentStep++;
         
         if(currentStep < questions[userData.gender].length) {
             showQuestion();
         } else {
+            document.getElementById('quiz-progress').style.width = `100%`;
             processQuiz();
         }
     }
@@ -271,9 +305,9 @@
         nextScreen('screen-loading');
         const phrases = [
             "Conectando bases de datos urbanas...",
-            "Calculando índice de atributos...",
-            "Cruzando variables con la ley del manual...",
-            "Generando veredicto de MatrixFlix..."
+            "Analizando matriz de riesgo...",
+            "Cruzando variables fisionómicas...",
+            "Generando veredicto en MatrixFlix..."
         ];
         
         let i = 0;
@@ -290,9 +324,17 @@
 
     function showResult() {
         const key = userData.answers.join("-");
-        
-        // Mapea las respuestas. Si es una combinación rarísima, cae en la regla base por defecto (Regla N°5)
-        const result = rulesDB[userData.gender][key] || rulesDB[userData.gender]["0-0-0-0"];
+        let result = rulesDB[userData.gender][key];
+
+        // Lógica de respaldo si la combinación exacta de 6 dígitos varía un poco
+        if (!result) {
+            // Si las 4 primeras respuestas de mujer son SÍ, es Tóxica Premium de manual
+            if (userData.gender === 'mujeres' && userData.answers[0] === 1 && userData.answers[1] === 1 && userData.answers[2] === 1 && userData.answers[3] === 1) {
+                result = rulesDB.mujeres["high-risk"];
+            } else {
+                result = rulesDB[userData.gender]["default"];
+            }
+        }
         
         document.getElementById('res-id').textContent = `REGLA ${userData.gender === 'mujeres' ? 'FEMENINA' : 'MASCULINA'} ${result.id}`;
         document.getElementById('res-name').textContent = result.name;
@@ -300,10 +342,9 @@
         document.getElementById('res-action').textContent = `Recomendación: ${result.action}`;
         
         const rBadge = document.getElementById('res-risk');
-        rBadge.className = "res-badge"; // limpiar clases
+        rBadge.className = "res-badge"; 
         rBadge.textContent = `RIESGO: ${result.risk}`;
         
-        // Clases de color según riesgo
         if(result.risk === "BAJO") rBadge.classList.add('badge-bajo');
         if(result.risk === "MEDIO") rBadge.classList.add('badge-medio');
         if(result.risk === "CRÍTICO") rBadge.classList.add('badge-critico');
@@ -313,13 +354,10 @@
     }
 
     function shareWhatsApp() {
-        const text = `*MatrixFlix - Diagnóstico de Campo* 🎬\n\n*Sujeto Analizado:* ${userData.name}\n*Resultado:* ${document.getElementById('res-name').textContent}\n*Teoría:* ${document.getElementById('res-desc').textContent}`;
+        const text = `*MatrixFlix - Diagnóstico de Campo* 🎬\n\n*Objetivo:* ${userData.name}\n*Resultado:* ${document.getElementById('res-name').textContent}\n*Diagnóstico:* ${document.getElementById('res-desc').textContent}`;
         window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
     }
 </script>
-
-</body>
-</html>
 
 </body>
 </html>
