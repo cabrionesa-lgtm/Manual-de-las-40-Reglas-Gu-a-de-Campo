@@ -188,7 +188,8 @@
 
         .result-body { padding: 20px; background: #141414; }
         .res-desc { color: #ddd; line-height: 1.6; margin-bottom: 20px; font-size: 14px; }
-        .res-action { font-style: italic; color: #fff; background: rgba(255,255,255,0.04); padding: 14px; border-radius: 6px; font-size: 13px; border-left: 3px solid var(--netflix-red); }
+        .res-action { font-style: italic; color: #fff; background: rgba(255,255,255,0.04); padding: 14px; border-radius: 6px; font-size: 13px; border-left: 3px solid var(--netflix-red); margin-bottom: 15px; }
+        .res-panorama { color: #ffd700; background: rgba(255, 215, 0, 0.05); padding: 14px; border-radius: 6px; font-size: 13px; border-left: 3px solid #ffd700; }
 
         .netflix-row { margin-top: 20px; text-align: left; }
         .row-title { font-size: 13px; font-weight: bold; color: #fff; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
@@ -295,6 +296,7 @@
             <div class="result-body">
                 <p class="res-desc" id="res-desc">Descripción...</p>
                 <div class="res-action" id="res-action">Recomendación...</div>
+                <div class="res-panorama" id="res-panorama">Panorama con Pareja...</div>
                 
                 <div class="netflix-row">
                     <div class="row-title">Títulos Relacionados en Catálogo</div>
@@ -363,20 +365,22 @@
         }
     };
 
-    // BANCO DE PREGUNTAS AMPLIADO CON SALIDAS, CONSUMO Y TIEMPO DEL EX
+    // BANCO DE PREGUNTAS ACTUALIZADO (REMOCIÓN DE Nº EN REDES Y ADICIÓN DE APARTADO CITAS)
     const questions = {
         mujeres: [
             { q: "¿Cómo calificarías el nivel de su escote (delantera)?", options: ["Nada", "Algo", "Bueno", "Caray", "Divina"] },
             { q: "¿Cómo calificarías el nivel de su retaguardia (glúteos)?", options: ["Nada", "Algo", "Bueno", "Caray", "Divina"] },
             { q: "¿Qué tal anda de carita (lindura de rostro)?", options: ["Pasa piola / No salva", "Simpática", "Bonita", "Terrible de hermosa"] },
             { q: "¿Qué estructura, largo o peinado lleva en el cabello?", options: ["Pelo ultra corto / Rapado lateral", "Corte Bob / Melena media estándar", "Cabellera gigante, larga y espectacular", "Tomado con pinza desordenada todo el día", "Rastas / Trenzas artesanales"] },
-            { q: "¿Cuál es el color o design de tinte del espécimen?", options: ["Color natural clásico (Castaño / Negro)", "Rubio ceniza / Platinado tuning", "Pelirrojo / Cobrizo fuego", "Colores de animé / Fantasía (Azul, Rosado)", "Mechas californianas / Balayage"] },
+            { q: "¿Cuál es el color o diseño de tinte del espécimen?", options: ["Color natural clásico (Castaño / Negro)", "Rubio ceniza / Platinado tuning", "Pelirrojo / Cobrizo fuego", "Colores de animé / Fantasía (Azul, Rosado)", "Mechas californianas / Balayage"] },
             { q: "¿Cómo clasificarías sus ojos y su mirada?", options: ["Café oscuro / Pardo estándar", "Verdes / Azules / Claros magnéticos", "Heterocromía pura", "Mirada cansada / Ojeras de mapache", "Ojos achinados expresivos"] },
-            { q: "¿Qué tipo de contenido suele subir a sus redes sociales?", options: ["Nº1: Con filtro para mejorar belleza", "Nº2: Sin filtro, al natural", "Nº3: Normalmente a sus mejores amigos sube fotos en ropa interior", "Nº4: Casi no sube fotos de sí misma"] },
-            // NUEVAS PREGUNTAS DE AUDITORÍA URBANA NOCTURNA
+            // APARTADO REDES REFORMULADO SIN "Nº"
+            { q: "¿Qué tipo de contenido suele subir a sus redes sociales?", options: ["Con filtro para mejorar belleza", "Sin filtro, al natural", "Normalmente a sus mejores amigos sube fotos en ropa interior", "Casi no sube fotos de sí misma"] },
             { q: "Al momento de salir a beber alcohol juntas/os:", options: ["Bebe moderado y conversa tranquilo", "Se transforma por completo / Show garantizado", "Gasta una fortuna pidiendo la carta VIP", "Prefiere quedarse en casa (No bebe / Aburrida)"] },
             { q: "¿Tiene hábitos de fumar o consume estupefacientes?", options: ["100% libre de humo y sustancias", "Fuma tabaco/vapea de forma social", "Consume estupefacientes recreativos recurrentes"] },
-            { q: "¿Hace cuánto tiempo terminó con su último Ex?", options: ["Menos de una semana / Sigue llorando", "Entre 1 y 3 meses (Terreno inestable)", "Más de 6 meses / Ciclo cerrado", "Nunca ha tenido una relación seria"] },
+            { q: "¿Hace cuánt tempo terminó con su último Ex?", options: ["Menos de una semana / Sigue llorando", "Entre 1 y 3 meses (Terreno inestable)", "Más de 6 meses / Ciclo cerrado", "Nunca ha tenido una relación seria"] },
+            // NUEVO APARTADO: CITAS Y ENTRENIMIENTO DE PAREJA
+            { q: "¿Qué tipo de cita prefiere o le encanta hacer con su pareja?", options: ["Restaurante VIP lujoso, bar estético e historias para redes", "Quedarse en cama viendo Netflix, series y pidiendo delivery", "Naturaleza, trekking, acampar o un parque al aire libre", "Ir a un concierto masivo, festival de música o techno-rave", "Cita geek: jugar videojuegos juntos, ir a comer ramen o arcade"] },
             { q: "¿Tiene algún retoque o tuneo físico evidente?", options: ["100% Natural, orgánica", "Su arreglín piola", "Tuneada completa de fábrica"] },
             { q: "¿Qué tal anda en el amoblaje de cabeza y cocina?", options: ["Normal", "Loca de remate", "Cocina espectacular, te da paz y te apaña"] },
             { q: "¿Qué tanto gasta en salidas, cenas o estilo de vida?", options: ["Humilde / Alaraquea poco", "Alto mantenimiento / Gasto operativo nivel VIP"] }
@@ -388,11 +392,13 @@
             { q: "Medidas del espécimen urbano:", options: ["Estándar/bajo de estatura", "Sí, es alto (más de 1.80m)"] },
             { q: "Diseño capilar u ocultamiento urbano:", options: ["Pelo corto normal / Degradado clásico", "Corte urbano con diseños", "Cabello largo estilo vikingo / Man-bun", "Jockey / Gorra puesta las 24 horas del día"] },
             { q: "Tonalidad e impacto visual de sus ojos:", options: ["Oscuros comunes", "Claros / Verdes / Azules impactantes", "Mirada de sueño / Cansancio profundo"] },
-            { q: "¿Qué tipo de contenido suele subir a sus redes sociales?", options: ["Nº1: Con filtro para mejorar belleza", "Nº2: Sin filtro, al natural", "Nº3: Normalmente a sus mejores amigos sube fotos en ropa interior", "Nº4: Casi no sube fotos de sí mismo"] },
-            // NUEVAS PREGUNTAS DE AUDITORÍA URBANA NOCTURNA
+            // APARTADO REDES REFORMULADO SIN "Nº"
+            { q: "¿Qué tipo de contenido suele subir a sus redes sociales?", options: ["Con filtro para mejorar belleza", "Sin filtro, al natural", "Normalmente a sus mejores amigos sube fotos en ropa interior", "Casi no sube fotos de sí mismo"] },
             { q: "Al momento de salir a beber alcohol juntos/as:", options: ["Paga su parte y controla el ambiente", "Se le apaga la tele / Se pone violento o denso", "Alardea invitando rondas que no puede pagar", "No sale a beber / Prefiere quedarse jugando en PC"] },
             { q: "¿Tiene hábitos de fumar o consume estupefacientes?", options: ["100% libre de humo y sustancias", "Fuma tabaco/vapea de forma social", "Consume estupefacientes recreativos recurrentes"] },
             { q: "¿Hace cuánto tiempo terminó con su última Ex?", options: ["Menos de una semana / Sigue acosando", "Entre 1 y 3 meses (Despecho activo)", "Más de 6 meses / Superado", "Soltero histórico de campo"] },
+            // NUEVO APARTADO: CITAS Y ENTRENIMIENTO DE PAREJA
+            { q: "¿Qué tipo de cita prefiere o le encanta hacer con su pareja?", options: ["Ir a un bar clandestino caro, comer sushi e impresionar", "Hacer maratón de películas en casa, regalonear o cocinar juntos", "Salir a correr, ir al cerro, andar en bicicleta o entrenar juntos", "Ir a una tocata de rock, festival de música electrónica o disco", "Quedarse en Discord jugando cooperativos o viendo anime entero"] },
             { q: "¿Cómo es su labia o capacidad de engrupimiento?", options: ["Tímido / Habla poco", "Labia nivel Dios / Te vende un hielo"] },
             { q: "Estilo y comportamiento de Campo:", options: ["Normal", "Zorrón de Pucón insoportable", "Partner definitivo / Te cocina y te da paz"] },
             { q: "¿Qué tal su billetera reales?", options: ["Normal", "Es un Sugar en práctica (paga a 6 cuotas)"] }
@@ -487,7 +493,6 @@
         setTimeout(() => { clearInterval(scanAudioInterval); calculateRule(); }, 2500);
     }
 
-    // ALGORITMO INTEGRADO CON CONTROL DE EX, DROGAS Y COMPORTAMIENTO DE BAR
     function calculateRule() {
         let finalRuleKey = "5"; 
         const ans = userData.answers;
@@ -495,19 +500,18 @@
         if (userData.gender === "mujeres") {
             const teta = ans[0]; const culo = ans[1]; const cara = ans[2]; const peinado = ans[3]; 
             const colorPelo = ans[4]; const ojos = ans[5]; const redes = ans[6];
-            const bar = ans[7]; const consumo = ans[8]; const tiempoEx = ans[9];
-            const tuneo = ans[10]; const mente = ans[11]; const gasto = ans[12];
+            const bar = ans[7]; const consumo = ans[8]; const tiempoEx = ans[9]; const cita = ans[10];
+            const tuneo = ans[11]; const mente = ans[12]; const gasto = ans[13];
 
-            // Inyecciones prioritarias por inestabilidad del ex o consumo crítico
-            if (mente === 2 && tiempoEx >= 2 && consumo === 0) finalRuleKey = "20"; // Filtro Final Sólido
-            else if (mente === 1 || bar === 1 || consumo === 2 || tiempoEx === 0) finalRuleKey = "10"; // Chernobyl instantáneo (Tóxica Premium / Ruina psicológica)
-            else if (gasto === 1 || bar === 2) finalRuleKey = "15"; // Fresa de alto costo operativo
-            else if (tuneo === 2 || redes === 2) finalRuleKey = "7"; // Tuning / Mejores amigos arriesgado
-            else if (peinado === 2 && cara === 0) finalRuleKey = "16"; // Ley del Pelo Largo
-            else if (redes === 0) finalRuleKey = "11"; // Con filtros
-            else if (colorPelo === 3 && peinado === 4) finalRuleKey = "14"; // Otaku / Gamer (Prefiere casa bar === 3)
-            else if (redes === 3 && cara >= 2) finalRuleKey = "12"; // Inalcanzable de Bajo Perfil
-            else if (peinado === 4 || consumo === 1) finalRuleKey = "19"; // Hippie Natural
+            if (mente === 2 && tiempoEx >= 2 && consumo === 0) finalRuleKey = "20"; 
+            else if (mente === 1 || bar === 1 || consumo === 2 || tiempoEx === 0) finalRuleKey = "10"; 
+            else if (gasto === 1 || bar === 2 || cita === 0) finalRuleKey = "15"; 
+            else if (tuneo === 2 || redes === 2) finalRuleKey = "7"; 
+            else if (peinado === 2 && cara === 0) finalRuleKey = "16"; 
+            else if (redes === 0) finalRuleKey = "11"; 
+            else if (colorPelo === 3 || cita === 4) finalRuleKey = "14"; 
+            else if (redes === 3 && cara >= 2) finalRuleKey = "12"; 
+            else if (peinado === 4 || cita === 2) finalRuleKey = "19"; 
             else if (culo >= 3 && teta <= 1) finalRuleKey = "1"; 
             else if (teta >= 3 && culo <= 1) finalRuleKey = "2"; 
             else if (teta >= 3 && culo >= 3 && cara >= 2) finalRuleKey = "4"; 
@@ -518,15 +522,15 @@
         } else {
             const musculo = ans[0]; const plata = ans[1]; const cara = ans[2]; const alto = ans[3];
             const jockey = ans[4]; const ojos = ans[5]; const redes = ans[6];
-            const bar = ans[7]; const consumo = ans[8]; const tiempoEx = ans[9];
-            const labia = ans[10]; const actitud = ans[11]; const sugar = ans[12];
+            const bar = ans[7]; const consumo = ans[8]; const tiempoEx = ans[9]; const cita = ans[10];
+            const labia = ans[11]; const actitud = ans[12]; const sugar = ans[13];
 
-            if (actitud === 2 && tiempoEx >= 2) finalRuleKey = "20"; // Partner Definitivo
-            if (bar === 1 || consumo === 2 || tiempoEx === 0) finalRuleKey = "10"; // Tiburón de la Micro / Desastre de campo
-            else if (redes === 2 || plata === 2 || bar === 2) finalRuleKey = "7"; // Alucín de Zona Escolar
+            if (actitud === 2 && tiempoEx >= 2) finalRuleKey = "20"; 
+            if (bar === 1 || consumo === 2 || tiempoEx === 0) finalRuleKey = "10"; 
+            else if (redes === 2 || plata === 2 || bar === 2 || cita === 3) finalRuleKey = "7"; 
             else if (sugar === 1) finalRuleKey = "17"; 
             else if (jockey === 3) finalRuleKey = "16"; 
-            else if (redes === 3 && cara === 2) finalRuleKey = "4"; // Minazo Oculto
+            else if (redes === 3 && cara === 2) finalRuleKey = "4"; 
             else if (plata === 1) finalRuleKey = "2"; 
             else if (musculo === 2 && alto === 0) finalRuleKey = "1"; 
             else if (cara === 2 && labia === 0) finalRuleKey = "3"; 
@@ -540,6 +544,7 @@
 
     function showResult(ruleKey) {
         const result = rulesDB[userData.gender][ruleKey];
+        const ans = userData.answers;
         
         document.getElementById('res-id').textContent = `REGLA ${userData.gender === 'mujeres' ? 'FEMENINA' : 'MASCULINA'} ${result.id}`;
         document.getElementById('res-name').textContent = result.name;
@@ -549,6 +554,11 @@
         document.getElementById('res-genre').textContent = result.genre || "Drama Central";
         document.getElementById('res-page').textContent = `${result.page} de 3`;
         
+        // Extraer texto de la cita seleccionada para mostrar en el veredicto final
+        const citaIdx = userData.gender === 'mujeres' ? ans[10] : ans[10];
+        const panoramaElegido = questions[userData.gender][10].options[citaIdx];
+        document.getElementById('res-panorama').innerHTML = `<i class="fa-solid fa-heart-crack"></i> <strong>Panorama Ideal con Pareja:</strong> ${panoramaElegido}`;
+
         const randomMatch = Math.floor(Math.random() * (99 - 91 + 1)) + 91;
         document.getElementById('res-match').textContent = `${randomMatch}% Coincidencia`;
 
