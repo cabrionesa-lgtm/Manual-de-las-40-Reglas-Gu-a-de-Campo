@@ -135,6 +135,7 @@
         .badge-medio { background-color: #f57c00; }
         .badge-critico { background-color: #c62828; }
         .badge-chernobil { background-color: #000; border: 1px dashed #E50914; color: #E50914; animation: blink 1s infinite; }
+        .badge-secreto { background: linear-gradient(45deg, #ff007f, #7f00ff); border: 1px solid #fff; color: #fff; font-weight: bold; }
 
         @keyframes blink { 50% { border-color: transparent; } }
 
@@ -171,6 +172,7 @@
         .badge-item { display: flex; align-items: center; gap: 10px; background: #292929; padding: 10px; border-radius: 5px; margin-bottom: 5px; font-size: 13px; }
         .badge-icon { font-size: 20px; color: #ffd700; }
         .badge-locked { filter: grayscale(1); opacity: 0.4; }
+        .badge-secret-style { background: linear-gradient(135deg, #2c003e, #000); border: 1px solid #ff00ff; color: #ff00ff; }
     </style>
 </head>
 <body>
@@ -241,27 +243,27 @@
 </div>
 
 <script>
-    // BASE DE DATOS COMPLETA - MANUAL DE LAS 20 REGLAS OFICIALES 
+    // BASE DE DATOS COMPLETA - MANUAL DE LAS 20 REGLAS 
     const rulesDB = {
         mujeres: {
-            "1": { id: "N° 1", name: "Distribución Estándar A", risk: "BAJO", desc: "Si tiene culo, no tiene teta. Ley de compensación y equilibrio clásico de la naturaleza[cite: 9].", action: "Estable. Zona segura[cite: 9]." },
-            "2": { id: "N° 2", name: "Distribución Estándar B", risk: "BAJO", desc: "Si tiene tetas, no tiene culo. Lógica inversa obligatoria del primer postulado [cite: 9].", action: "Clásico confiable[cite: 9]." },
-            "3": { id: "N° 3", name: "Impuesto Ambiental", risk: "MEDIO", desc: "Si tiene teta y culo, es fea de cara. La física demuestra que el universo no otorga beneficios completos gratis [cite: 9].", action: "Evaluar de espaldas[cite: 9]." },
-            "4": { id: "N° 4", name: "El Glitch de la Matrix", risk: "CRÍTICO", desc: "Si tiene tetas, culo y es bonita de cara, una de dos variables es matemáticamente obligatoria: o es estúpida o era hombre antes [cite: 9].", action: "Investigar trasfondo[cite: 9]." },
-            "5": { id: "N° 5", name: "La Paradoja del Desierto", risk: "BAJO", desc: "Sin tetas, sin culo y fea de cara. Cero balance físico. Su valor depende al 100% de factores económicos externos o carisma legendario [cite: 12].", action: "Trato estrictamente de amigos[cite: 12]." },
-            "6": { id: "N° 6", name: "El Unicornio de Perfil Bajo", risk: "BAJO", desc: "Sin tetas, sin culo, pero con un rostro bellísimo. Conocida como 'la bonita de oficina'. Engaña de lejos, pero carece de curvas en proximidad .", action: "Ideal para una relación tierna." },
-            "7": { id: "N° 7", name: "Efecto Tuning (Inversión)", risk: "CRÍTICO", desc: "Tetas gigantes y culo prominente, pero con obvia manufactura plástica. Financiamiento externo comprobado (padres, ex, o patrocinadores) .", action: "Peligro severo para tu billetera." },
-            "8": { id: "N° 8", name: "La Trampa del Gimnasio", risk: "MEDIO", desc: "Glúteos de infarto y piernas perfectas, pero espalda más desarrollada que la tuya. Capacidad de levantarte en peso muerto .", action: "No hacerla enojar bajo ningún concepto." },
-            "9": { id: "N° 9", name: "Luz de Cochera (Espejismo)", risk: "MEDIO", desc: "Silueta confusa a 50 metros que aparenta un deportivo de lujo, pero al aproximarse se activa la Regla N°3 de manera retroactiva .", action: "Verificar iluminación antes de actuar." },
-            "10": { id: "N° 10", name: "Ley de la Tóxica Premium", risk: "CHERNÓBIL", desc: "Rompe la Regla N°4: Tiene cuerpo, cara hermosa y además es sumamente inteligente. Implicación psicológica: Está completamente loca .", action: "Evacuación inmediata o asume las consecuencias." },
-            "11": { id: "N° 11", name: "La 'Cute' de Redes", risk: "BAJO", desc: "Cuerpo promedio, cara común, pero domina los filtros de TikTok e Instagram simulando un modelo de animé. El choque de realidad física es duro .", action: "Exigir videollamada sin filtros." },
+            "1": { id: "N° 1", name: "Distribución Estándar A", risk: "BAJO", desc: "Si tiene culo, no tiene teta. Ley de compensación y equilibrio clásico de la naturaleza.", action: "Estable. Zona segura." },
+            "2": { id: "N° 2", name: "Distribución Estándar B", risk: "BAJO", desc: "Si tiene tetas, no tiene culo. Lógica inversa obligatoria del primer postulado.", action: "Clásico confiable." },
+            "3": { id: "N° 3", name: "Impuesto Ambiental", risk: "MEDIO", desc: "Si tiene teta y culo, es fea de cara. La física demuestra que el universo no otorga beneficios completos gratis.", action: "Evaluar de espaldas." },
+            "4": { id: "N° 4", name: "El Glitch de la Matrix", risk: "CRÍTICO", desc: "Si tiene tetas, culo y es bonita de cara, una de dos variables es matemáticamente obligatoria: o es estúpida o era hombre antes.", action: "Investigar trasfondo minuciosamente." },
+            "5": { id: "N° 5", name: "La Paradoja del Desierto", risk: "BAJO", desc: "Sin tetas, sin culo y fea de cara. Cero balance físico. Su valor depende al 100% de factores económicos externos o carisma legendario.", action: "Trato estrictamente de amigos." },
+            "6": { id: "N° 6", name: "El Unicornio de Perfil Bajo", risk: "BAJO", desc: "Sin tetas, sin culo, pero con un rostro bellísimo. Conocida como 'la bonita de oficina'. Engaña de lejos, pero carece de curvas en proximidad.", action: "Ideal para una relación tierna." },
+            "7": { id: "N° 7", name: "Efecto Tuning (Inversión)", risk: "CRÍTICO", desc: "Tetas gigantes y culo prominente, pero con obvia manufactura plástica. Financiamiento externo comprobado (padres, ex, o patrocinadores).", action: "Peligro severo para tu billetera." },
+            "8": { id: "N° 8", name: "La Trampa del Gimnasio", risk: "MEDIO", desc: "Glúteos de infarto y piernas perfectas, pero espalda más desarrollada que la tuya. Capacidad de levantarte en peso muerto.", action: "No hacerla enojar bajo ningún concepto." },
+            "9": { id: "N° 9", name: "Luz de Cochera (Espejismo)", risk: "MEDIO", desc: "Silueta confusa a 50 metros que aparenta un deportivo de lujo, pero al aproximarse se activa la Regla N°3 de manera retroactiva.", action: "Verificar iluminación antes de actuar." },
+            "10": { id: "N° 10", name: "Ley de la Tóxica Premium", risk: "CHERNÓBIL", desc: "Rompe la Regla N°4: Tiene cuerpo, cara hermosa y además es sumamente inteligente. Implicación psicológica: Está completamente loca.", action: "Evacuación inmediata o asume las consecuencias." },
+            "11": { id: "N° 11", name: "La 'Cute' de Redes", risk: "BAJO", desc: "Cuerpo promedio, cara común, pero domina los filtros de TikTok e Instagram simulando un modelo de animé. El choque de realidad física es duro.", action: "Exigir videollamada sin filtros." },
             "12": { id: "N° 12", name: "La Bendecida Inalcanzable", risk: "BAJO", desc: "Posee absolutamente todo (cuerpo, cara, intelecto y valores), pero tiene un novio impecable hace 6 años o juega en ligas económicas lejanas.", action: "Solo para apreciar de lejos. No insistir." },
             "13": { id: "N° 13", name: "Paquete de Datos Ilimitado", risk: "BAJO", desc: "No destaca en ningún eje anatómico, pero posee un carisma, labia y actitud tan potentes que anulan por completo cualquier carencia visual.", action: "Altamente adictiva. Proceder." },
             "14": { id: "N° 14", name: "Efecto Gamer / Otaku", risk: "BAJO", desc: "Físicamente en el estándar inferior, pero comparte aficiones de nicho, ve animé y domina los videojuegos. Suma +3 puntos automáticos.", action: "Valor estratégico muy alto. Asegurar." },
-            "15": { id: "N° 15", name: "Fresa de Alto Mantenimiento", risk: "CRÍTICO", desc: "Puede alinearse con la Regla 1 o 2, pero su costo operativo mensual (viajes, cenas VIP) eleva drásticamente el costo por centímetro de atributo .", action: "Requiere solvencia o tarjeta corporativa." },
-            "16": { id: "N° 16", name: "La Ley del Pelo Largo", risk: "BAJO", desc: "Carece de rostro, busto y glúteos significativos, pero posee una cabellera espectacular. Genera enamoramiento cervical hasta que voltea .", action: "Caminar por delante de ella para evaluar." },
-            "17": { id: "N° 17", name: "La Milf Promesa", risk: "BAJO", desc: "Actualmente en un rango estándar, pero el análisis genético de su madre demuestra que envejecerá como un vino de alta gama .", action: "Inversión inmobiliaria a largo plazo." },
-            "18": { id: "N° 18", name: "El Enigma Camaleón", risk: "MEDIO", desc: "Un martes por la tarde clasifica como Regla N°5, pero un sábado producida con vestidos y maquillaje roza la Regla Nº4 .", action: "Solo agendar citas nocturnas de fin de semana." },
+            "15": { id: "N° 15", name: "Fresa de Alto Mantenimiento", risk: "CRÍTICO", desc: "Puede alinearse con la Regla 1 o 2, pero su costo operativo mensual (viajes, cenas VIP) eleva drásticamente el costo por centímetro de atributo.", action: "Requiere solvencia o tarjeta corporativa." },
+            "16": { id: "N° 16", name: "La Ley del Pelo Largo", risk: "BAJO", desc: "Carece de rostro, busto y glúteos significativos, pero posee una cabellera espectacular. Genera enamoramiento cervical hasta que voltea.", action: "Caminar por delante de ella para evaluar." },
+            "17": { id: "N° 17", name: "La Milf Promesa", risk: "BAJO", desc: "Actualmente en un rango estándar, pero el análisis genético de su madre demuestra que envejecerá como un vino de alta gama.", action: "Inversión inmobiliaria a largo plazo." },
+            "18": { id: "N° 18", name: "El Enigma Camaleón", risk: "MEDIO", desc: "Un martes por la tarde clasifica como Regla N°5, pero un sábado producida con vestidos y maquillaje roza la Regla Nº4.", action: "Solo agendar citas nocturnas de fin de semana." },
             "19": { id: "N° 19", name: "La Hippie Natural", risk: "MEDIO", desc: "Cuerpo natural estético bajo Regla 1 o 2, rostro armónico, pero rechaza la depilación convencional y el uso de desodorantes industriales.", action: "Dilema ideológico y olfativo. A discreción." },
             "20": { id: "N° 20", name: "Filtro Final (Paz Mental)", risk: "BAJO", desc: "Ignora todas las reglas estéticas previas. Cocina espectacular, te apoya en tus locuras, es leal y te quita por completo el estrés diario.", action: "El verdadero Jefe Final. Casarse de inmediato." }
         },
@@ -289,7 +291,7 @@
         }
     };
 
-    // PREGUNTAS AMPLIADAS PARA CUBRIR LAS 20 REGLAS
+    // PREGUNTAS AMPLIADAS PARA DETECTAR LA CONDICIÓN SECRETA DE LA REGLA 4 
     const questions = {
         mujeres: [
             { q: "¿Cómo calificarías el nivel de su escote (delantera)?", options: ["Nada", "Algo", "Bueno", "Caray", "Divina"] },
@@ -300,7 +302,9 @@
             { q: "¿Cómo evalúas su comportamiento en redes sociales?", options: ["Normal / Privado", "Sube fotos con mil filtros de animé", "Tiene novio hace 6 años / Inalcanzable"] },
             { q: "¿Tiene algún retoque, cirugía o tuneo físico evidente?", options: ["100% Natural, orgánica", "Su arreglín piola", "Tuneada completa de fábrica"] },
             { q: "¿Qué tal anda en el amoblaje de cabeza y cocina?", options: ["Normal", "Loca de remate", "Cocina espectacular, te da paz y te apaña en todo"] },
-            { q: "¿Qué tanto gasta en salidas, cenas o estilo de vida?", options: ["Humilde / Alaraquea poco", "Alto mantenimiento / Gasto operativo nivel VIP"] }
+            { q: "¿Qué tanto gasta en salidas, cenas o estilo de vida?", options: ["Humilde / Alaraquea poco", "Alto mantenimiento / Gasto operativo nivel VIP"] },
+            // PREGUNTA CLAVE PARA ACTIVAR LA BROMA DE LA REGLA 4
+            { q: "Sensor de Trasfondo Biométrico: ¿Hay sospecha fundada de que el espécimen fue hombre antes?", options: ["No, 100% verificado de nacimiento", "Sí, hay finta sospechosa o la voz es media ruda"] }
         ],
         hombres: [
             { q: "¿Cómo calificarías su musculatura o porte físico?", options: ["Nada / Flaquito / Guatita parrillera", "Algo armado", "Bueno / Pasa metido en el gimnasio"] },
@@ -318,23 +322,25 @@
     let userData = { name: "", gender: "", answers: [] };
     let currentStep = 0;
 
-    // SISTEMA DE SONIDO VIRTUAL USANDO LA VOZ DEL NAVEGADOR (Web Speech API)
+    // SISTEMA DE SONIDO VIRTUAL POR VOZ (Web Speech API)
     function playSound(type) {
-        if (!('speechSynthesis' in window)) return; // Si el navegador no lo soporta, no hace nada
-        window.speechSynthesis.cancel(); // Detiene cualquier sonido previo
+        if (!('speechSynthesis' in window)) return;
+        window.speechSynthesis.cancel();
         
         let msg = new SpeechSynthesisUtterance();
-        msg.lang = 'es-CL'; // Modismo chileno si está disponible
+        msg.lang = 'es-CL';
         msg.rate = 1.2;
         msg.pitch = 1.0;
 
         if (type === 'inicio') msg.text = "Iniciando escáner de campo. Prepárate.";
-        if (type === 'clic') { msg.text = "¡Pum!"; msg.rate = 2.0; }
-        if (type === 'scan') msg.text = "Procesando datos. Buscando toxicidad en la matriz.";
+        if (type === 'clic') { msg.text = "¡Pum!"; msg.rate = 2.2; }
+        if (type === 'scan') msg.text = "Procesando datos. Buscando anomalías en el trasfondo de la Matrix.";
         if (type === 'BAJO') msg.text = "Diagnóstico completado. Zona segura. Peligro bajo.";
         if (type === 'MEDIO') msg.text = "Alerta. Riesgo moderado detectado.";
-        if (type === 'CRÍTICO') msg.text = "¡Atención! Nivel crítico. Protege tu billetera.";
-        if (type === 'CHERNÓBIL') { msg.text = "¡Alerta nuclear! ¡Evacuación de inmediato! Repito, ¡Arranca!"; msg.rate = 1.0; msg.pitch = 0.8; }
+        if (type === 'CRÍTICO') msg.text = "¡Atención! Nivel crítico. Protege tu integridad financiera.";
+        if (type === 'CHERNÓBIL') { msg.text = "¡Alerta nuclear! ¡Evacuación inmediata! ¡Arranca!"; msg.rate = 1.0; }
+        // SONIDO DE LA BROMA SECRETA
+        if (type === 'SECRETO') { msg.text = "¡Peligro! ¡Sorpresa inesperada detectada! ¡Cuidado con el rifle!"; msg.rate = 1.1; msg.pitch = 1.3; }
 
         window.speechSynthesis.speak(msg);
     }
@@ -394,9 +400,9 @@
         }, 2500);
     }
 
-    // MOTOR LÓGICO INTEGRADO PARA LAS 20 REGLAS COMPLETAS
     function calculateRule() {
         let finalRuleKey = "5"; 
+        let triggerSecretBadge = false;
         const ans = userData.answers;
 
         if (userData.gender === "mujeres") {
@@ -408,24 +414,30 @@
             const tuneo = ans[6];
             const mente = ans[7];
             const gasto = ans[8];
+            const sospechaTrans = ans[9]; // 0 = No, 1 = Sí (Broma)
 
-            if (mente === 2) finalRuleKey = "20"; // Filtro final 
-            else if (mente === 1) finalRuleKey = "10"; // Tóxica Premium 
-            else if (redes === 2) finalRuleKey = "12"; // Inalcanzable 
-            else if (gasto === 1) finalRuleKey = "15"; // Fresa Alto Mantenimiento 
-            else if (tuneo === 2) finalRuleKey = "7";  // Efecto Tuning 
-            else if (redes === 1) finalRuleKey = "11"; // Cute de redes 
-            else if (pelo === 2) finalRuleKey = "14";  // Gamer / Otaku 
-            else if (pelo === 1 && cara === 0) finalRuleKey = "16"; // Ley del pelo largo 
-            else if (culo >= 3 && teta <= 1 && tuneo === 0) finalRuleKey = "1"; // Estándar A [cite: 9]
-            else if (teta >= 3 && culo <= 1) finalRuleKey = "2"; // Estándar B [cite: 9]
-            else if (teta >= 3 && culo >= 3 && cara >= 2) finalRuleKey = "4"; // Glitch de la Matrix [cite: 9]
-            else if (teta >= 2 && culo >= 2 && cara === 0) finalRuleKey = "3"; // Impuesto Ambiental [cite: 9]
-            else if (teta <= 1 && culo <= 1 && cara >= 2) finalRuleKey = "6"; // Unicornio 
-            else if (culo >= 3 && mente === 0) finalRuleKey = "8"; // Trampa gimnasio 
-            else finalRuleKey = "5"; // Paradoja del desierto [cite: 12]
+            // GATILLO DE LA BROMA: Si hay sospecha y cumple atributos de la Regla 4 
+            if (sospechaTrans === 1) {
+                finalRuleKey = "4"; 
+                triggerSecretBadge = true; // Activa el logro secreto rifle
+            }
+            else if (mente === 2) finalRuleKey = "20"; 
+            else if (mente === 1) finalRuleKey = "10"; 
+            else if (redes === 2) finalRuleKey = "12"; 
+            else if (gasto === 1) finalRuleKey = "15"; 
+            else if (tuneo === 2) finalRuleKey = "7";  
+            else if (redes === 1) finalRuleKey = "11"; 
+            else if (pelo === 2) finalRuleKey = "14";  
+            else if (pelo === 1 && cara === 0) finalRuleKey = "16"; 
+            else if (culo >= 3 && teta <= 1 && tuneo === 0) finalRuleKey = "1"; 
+            else if (teta >= 3 && culo <= 1) finalRuleKey = "2"; 
+            else if (teta >= 3 && culo >= 3 && cara >= 2) finalRuleKey = "4"; 
+            else if (teta >= 2 && culo >= 2 && cara === 0) finalRuleKey = "3"; 
+            else if (teta <= 1 && culo <= 1 && cara >= 2) finalRuleKey = "6"; 
+            else if (culo >= 3 && mente === 0) finalRuleKey = "8"; 
+            else finalRuleKey = "5"; 
         } else {
-            // LÓGICA HOMBRES (REGLAS 1 A 20)
+            // HOMBRES
             const musculo = ans[0];
             const plata = ans[1];
             const cara = ans[2];
@@ -436,25 +448,25 @@
             const actitud = ans[7];
             const sugar = ans[8];
 
-            if (actitud === 2) finalRuleKey = "20"; // Partner definitivo
-            if (tema === 1) finalRuleKey = "10"; // Mente de tiburón
-            else if (plata === 2) finalRuleKey = "7"; // Alucín
-            else if (sugar === 1) finalRuleKey = "17"; // Sugar en práctica
-            else if (gorra === 1) finalRuleKey = "16"; // Ley de la gorra
-            else if (tema === 2) finalRuleKey = "8"; // Crossfitero
-            else if (plata === 1) finalRuleKey = "2"; // Alumbrado financiero
-            else if (musculo === 2 && alto === 0) finalRuleKey = "1"; // Gymbro de bolsillo
-            else if (alto === 1 && cara === 2) finalRuleKey = "4"; // El minazo glitch
-            else if (cara === 2 && labia === 0) finalRuleKey = "3"; // Impuesto del carito
-            else if (musculo === 0 && plata === 0 && labia === 1) finalRuleKey = "5"; // Mantenido con labia
-            else if (cara === 2 && musculo === 0) finalRuleKey = "6"; // Lindo de cristal
-            else finalRuleKey = "13"; // Feo con tumbao por descarte
+            if (actitud === 2) finalRuleKey = "20"; 
+            if (tema === 1) finalRuleKey = "10"; 
+            else if (plata === 2) finalRuleKey = "7"; 
+            else if (sugar === 1) finalRuleKey = "17"; 
+            else if (gorra === 1) finalRuleKey = "16"; 
+            else if (tema === 2) finalRuleKey = "8"; 
+            else if (plata === 1) finalRuleKey = "2"; 
+            else if (musculo === 2 && alto === 0) finalRuleKey = "1"; 
+            else if (alto === 1 && cara === 2) finalRuleKey = "4"; 
+            else if (cara === 2 && labia === 0) finalRuleKey = "3"; 
+            else if (musculo === 0 && plata === 0 && labia === 1) finalRuleKey = "5"; 
+            else if (cara === 2 && musculo === 0) finalRuleKey = "6"; 
+            else finalRuleKey = "13"; 
         }
 
-        showResult(finalRuleKey);
+        showResult(finalRuleKey, triggerSecretBadge);
     }
 
-    function showResult(ruleKey) {
+    function showResult(ruleKey, triggerSecretBadge) {
         const result = rulesDB[userData.gender][ruleKey];
         
         document.getElementById('res-id').textContent = `REGLA ${userData.gender === 'mujeres' ? 'FEMENINA' : 'MASCULINA'} ${result.id}`;
@@ -464,20 +476,26 @@
         
         const rBadge = document.getElementById('res-risk');
         rBadge.className = "res-badge"; 
-        rBadge.textContent = `RIESGO: ${result.risk}`;
         
-        if(result.risk === "BAJO") rBadge.classList.add('badge-bajo');
-        if(result.risk === "MEDIO") rBadge.classList.add('badge-medio');
-        if(result.risk === "CRÍTICO") rBadge.classList.add('badge-critico');
-        if(result.risk === "CHERNÓBIL") rBadge.classList.add('badge-chernobil');
+        if (triggerSecretBadge) {
+            rBadge.textContent = "ALERTA: SORPRESA DETECTADA";
+            rBadge.classList.add('badge-secreto');
+            playSound('SECRETO');
+        } else {
+            rBadge.textContent = `RIESGO: ${result.risk}`;
+            if(result.risk === "BAJO") rBadge.classList.add('badge-bajo');
+            if(result.risk === "MEDIO") rBadge.classList.add('badge-medio');
+            if(result.risk === "CRÍTICO") rBadge.classList.add('badge-critico');
+            if(result.risk === "CHERNÓBIL") rBadge.classList.add('badge-chernobil');
+            playSound(result.risk);
+        }
         
-        playSound(result.risk);
-        updateAchievements(result.risk, result.name);
+        updateAchievements(result.risk, triggerSecretBadge);
         nextScreen('screen-result');
     }
 
-    // SISTEMA DE LOGROS Y RECOMPENSAS (Cada 5 escaneos y guardado local)
-    function updateAchievements(riskLevel, ruleName) {
+    // MANEJO DE MEDALLAS CON EL NUEVO LOGRO RIFLUDO SECRETO
+    function updateAchievements(riskLevel, triggerSecretBadge) {
         let scans = parseInt(localStorage.getItem('matrix_scans_count') || "0");
         scans++;
         localStorage.setItem('matrix_scans_count', scans);
@@ -485,8 +503,12 @@
         let unlockedBadges = JSON.parse(localStorage.getItem('matrix_badges') || "[]");
         let newBadge = null;
 
-        // Reglas de desbloqueo basadas en nivel y cantidad
-        if (scans === 1 && !unlockedBadges.includes("Novato")) {
+        // VERIFICAR EL LOGRO SECRETO RIFLUDO DE MANERA PRIORITARIA
+        if (triggerSecretBadge && !unlockedBadges.includes("SecretRifle")) {
+            newBadge = { title: "Premio al Francotirador Urbano (¡Trae Rifle!)", desc: "Desbloqueaste el easter-egg oculto: Encontraste el Glitch definitivo de la Matrix." };
+            unlockedBadges.push("SecretRifle");
+        } 
+        else if (scans === 1 && !unlockedBadges.includes("Novato")) {
             newBadge = { title: "Iniciado en la Matrix", desc: "Hiciste tu primer escáner de campo con éxito." };
             unlockedBadges.push("Novato");
         } else if (scans === 5 && !unlockedBadges.includes("Escaneador5")) {
@@ -498,9 +520,6 @@
         } else if (riskLevel === "CRÍTICO" && !unlockedBadges.includes("Billetera")) {
             newBadge = { title: "Escudo Financiero", desc: "Identificaste un perfil de Alto Riesgo antes de gastar un peso." };
             unlockedBadges.push("Billetera");
-        } else if (scans === 10 && !unlockedBadges.includes("Master")) {
-            newBadge = { title: "Ingeniero Social Pro", desc: "10 escaneos completados. El manual ya es parte de tu ADN." };
-            unlockedBadges.push("Master");
         }
 
         localStorage.setItem('matrix_badges', JSON.stringify(unlockedBadges));
@@ -508,8 +527,8 @@
         if (newBadge) {
             document.getElementById('achievement-alert').style.display = "block";
             document.getElementById('new-badge-content').innerHTML = `
-                <div class="badge-item">
-                    <div class="badge-icon"><i class="fa-solid fa-medal"></i></div>
+                <div class="badge-item ${triggerSecretBadge ? 'badge-secret-style' : ''}">
+                    <div class="badge-icon"><i class="fa-solid ${triggerSecretBadge ? 'fa-gun' : 'fa-medal'}"></i></div>
                     <div>
                         <strong>${newBadge.title}</strong><br>
                         <small style="color:#aaa;">${newBadge.desc}</small>
@@ -531,15 +550,16 @@
             { id: "Escaneador5", title: "Cazador Urbano", desc: "5 escaneos completados" },
             { id: "Billetera", title: "Escudo Financiero", desc: "Detectó riesgo Crítico" },
             { id: "Sobreviviente", title: "Sobreviviente Nuclear", desc: "Detectó un Chernobyl" },
-            { id: "Master", title: "Ingeniero Social Pro", desc: "10 escaneos acumulados" }
+            // LOGRO OCULTO EN LA LISTA
+            { id: "SecretRifle", title: "⚠️ Francotirador Oculto", desc: "Logro Secreto: Descubierto al gatillar la Regla N°4 Especial" }
         ];
 
         let html = `<p style='font-size:11px; margin-bottom:8px; color:#aaa;'>Escaneos totales: <strong>${totalScans}</strong></p>`;
         allPossible.forEach(b => {
             const isLocked = !unlocked.includes(b.id);
             html += `
-                <div class="badge-item ${isLocked ? 'badge-locked' : ''}">
-                    <div class="badge-icon"><i class="fa-solid ${isLocked ? 'fa-lock' : 'fa-medal'}"></i></div>
+                <div class="badge-item ${isLocked ? 'badge-locked' : ''} ${b.id === 'SecretRifle' && !isLocked ? 'badge-secret-style' : ''}">
+                    <div class="badge-icon"><i class="fa-solid ${isLocked ? 'fa-lock' : (b.id === 'SecretRifle' ? 'fa-gun' : 'fa-medal')}"></i></div>
                     <div>
                         <strong>${b.title}</strong><br>
                         <small style="color:#888;">${b.desc}</small>
@@ -557,7 +577,6 @@
         window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
     }
 
-    // Inicializar medallas al cargar la página
     window.onload = renderBadges;
 </script>
 
