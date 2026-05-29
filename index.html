@@ -12,6 +12,7 @@
             --netflix-dark-gray: #141414;
             --netflix-card-bg: #181818;
             --netflix-light-gray: #e5e5e5;
+            --cosmic-purple: #6a0dad;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
@@ -227,16 +228,54 @@
         .clear-btn { font-size: 11px; color: #666; cursor: pointer; text-decoration: underline; background: none; border: none; }
         .clear-btn:hover { color: #999; }
 
-        /* ESTILOS PARA LA PANTALLA DE CATÁLOGO COMPLETO */
         .catalog-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
         .tab-btn { flex: 1; padding: 12px; background: #1f1f1f; border: 1px solid #333; color: #888; border-radius: 6px; font-weight: bold; cursor: pointer; transition: all 0.2s; font-size: 13px; }
         .tab-btn.active { background: var(--netflix-red); color: white; border-color: var(--netflix-red); }
         .catalog-list { display: flex; flex-direction: column; gap: 10px; max-height: 60vh; overflow-y: auto; padding-right: 5px; text-align: left; }
         .catalog-list::-webkit-scrollbar { width: 6px; }
         .catalog-list::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+
+        /* PANTALLA DE ERROR CÓSMICO */
+        .cosmic-danger {
+            background: radial-gradient(circle at center, #2a0033 0%, #000 80%) !important;
+            border: 2px solid var(--cosmic-purple) !important;
+            box-shadow: 0 0 30px rgba(106, 13, 173, 0.6) !important;
+        }
+        .cosmic-alert-icon {
+            font-size: 60px;
+            color: #ff00ff;
+            text-shadow: 0 0 20px #ff00ff;
+            margin-bottom: 20px;
+            animation: pulseCosmic 0.6s infinite alternate;
+        }
+        
+        /* CARTEL ERROR CRÍTICO PARPADEANTE */
+        .critical-banner {
+            background: #b71c1c; 
+            color: white; 
+            font-weight: 900; 
+            padding: 12px; 
+            border-radius: 6px; 
+            letter-spacing: 2px; 
+            margin-bottom: 25px; 
+            border: 2px solid #ff0000; 
+            box-shadow: 0 0 15px #ff0000;
+            font-size: 14px;
+            animation: extremeBlink 0.4s infinite;
+        }
+
+        @keyframes extremeBlink { 
+            0%, 100% { opacity: 1; transform: scale(1); } 
+            50% { opacity: 0.5; transform: scale(0.98); } 
+        }
+        @keyframes scan { 0% { top: 0%; } 50% { top: 100%; } 100% { top: 0%; } }
+        @keyframes pulse { from { transform: scale(0.9); opacity: 0.3; } to { transform: scale(1.1); opacity: 0.7; } }
+        @keyframes pulseCosmic { from { transform: scale(0.95); opacity: 0.8; } to { transform: scale(1.05); opacity: 1; } }
     </style>
 </head>
 <body>
+
+<audio id="cosmic-error-sound" src="alerta.mp3" preload="auto"></audio>
 
 <div class="container">
     <div class="logo">MATRIXFLIX</div>
@@ -344,20 +383,37 @@
             <button class="tab-btn" id="tab-hombres" onclick="switchCatalogTab('hombres')">Masculinos (20)</button>
         </div>
 
-        <div class="catalog-list" id="catalog-container">
-            </div>
+        <div class="catalog-list" id="catalog-container"></div>
 
         <br>
         <button class="btn btn-secondary" onclick="playEffect('click'); nextScreen('screen-start');"><i class="fa-solid fa-arrow-left"></i> Volver al Menú</button>
     </div>
+
+    <div id="screen-cosmic-error" class="screen">
+        <div class="result-card cosmic-danger">
+            <div style="padding: 40px 20px; text-align: center;">
+                
+                <div class="critical-banner">
+                    🚨 ERROR CRÍTICO 🚨
+                </div>
+
+                <i class="fa-solid fa-triangle-exclamation cosmic-alert-icon"></i>
+                <h1 style="color: #ff00ff; font-size: 26px; text-shadow: 0 0 10px #ff00ff;">ALERTA CRÍTICA</h1>
+                <p style="color: #e5e5e5; font-weight: bold; margin-bottom: 15px;">PELIGRO NIVEL CÓSMICO DETECTADO</p>
+                <div style="background: rgba(0,0,0,0.6); padding: 15px; border-radius: 6px; font-size: 13px; border-left: 3px solid #ff00ff; text-align: left; line-height: 1.6; color: #fff; margin-bottom: 20px;">
+                    <strong>Diagnóstico del Sistema:</strong> El espécimen analizado ha sido clasificado bajo la vertiente ideológica de <strong>Extrema Izquierda</strong>. La distorsión espacio-temporal y los niveles de debate circular rompen las ecuaciones base de MatrixFlix. El juego se ha congelado para proteger tu integridad financiera y mental.
+                </div>
+                <button class="btn" style="background: #6a0dad; border: 1px solid #ff00ff;" onclick="location.reload()">Reiniciar Sistema (Evacuar)</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-    // BASE DE DATOS OFICIAL CON LAS 40 LEYES INTEGRADAS
     const rulesDB = {
         mujeres: {
             "1": { id: "N°1", name: "La Distribución Estándar A", risk: "BAJO", stars: "⭐", genre: "Equilibrio Clásico", page: "Pág. 1", desc: "Si tiene culo, no tiene teta. (Equilibrio clásico).", action: "Disfrutar de la simetría natural y clásica de este ecosistema." },
-            "2": { id: "N°2", name: "La Distribución Estándar B", risk: "BAJO", stars: "⭐", genre: "Lógica Inversa", page: "Pág. 1", desc: "Si tiene tetas, no tiene culo. (Lógica inversa de la regla 1).", action: "Apreciar la distribución inversa clásica sin exigir de más." },
+            "2": { id: "N°2", name: "La Distribución Estándar B", risk: "BAJO", stars: "⭐", genre: "Lógica Inversa", page: "Pág. 1", desc: "Si tiene tetas, no tiene culo. (Lógica inversa de la regla 1).", action: "Apreciar la distribution inversa clásica sin exigir de más." },
             "3": { id: "N°3", name: "El Impuesto de la Naturaleza", risk: "MEDIO", stars: "⭐⭐", genre: "Compensación", page: "Pág. 1", desc: "Si tiene teta y culo, es fea de cara. (La vida no te da todo gratis).", action: "Valorar los atributos físicos recordando las leyes de compensación." },
             "4": { id: "N°4", name: "El Glitch de la Matrix", risk: "ALTO", stars: "⭐⭐⭐⭐", genre: "Ficción Absoluta", page: "Pág. 1", desc: "Si tiene tetas, culo y es bonita de cara, una de dos: o es estúpida o era hombre antes. (Demasiado perfecto para ser real).", action: "Mantener los ojos abiertos ante posibles fallas lógicas del sistema." },
             "5": { id: "N°5", name: "La Paradoja del Desierto", risk: "BAJO", stars: "⭐", genre: "Personalidad", page: "Pág. 1", desc: "Si no tiene tetas, no tiene culo y es fea de cara. No hay atributos físicos que evaluar. Su valor en la tabla depende 100% de que sea millonaria, tenga carro del año o una personalidad legendaria.", action: "Enfocarse plenamente en el capital financiero o el carisma legendario." },
@@ -382,7 +438,7 @@
             "2": { id: "N°2", name: "La Distribución Estándar B (El Espejismo Financiero)", risk: "BAJO", stars: "⭐⭐", genre: "Estatus de Deuda", page: "Pág. 1", desc: "Si tiene un auto del año y viste ropa de marca, no tiene un peso en el banco. Todo el sueldo se va en pagar la cuota del auto y la tarjeta de crédito está al borde del embargo.", action: "Evitar pedirle préstamos y verificar quién paga las cuentas básicas." },
             "3": { id: "N°3", name: "El Impuesto de la Naturaleza", risk: "MEDIO", stars: "⭐⭐", genre: "Conversación Plana", page: "Pág. 1", desc: "Si es guapo de cara y tiene buen cuerpo, es un aburrido total o no tiene conversación. La vida no le exigió desarrollar carisma porque su físico hacía todo el trabajo.", action: "Llevar temas preparados a la cita o usarlo principalmente de adorno visual." },
             "4": { id: "N°4", name: "El Glitch de la Matrix Masculino", risk: "ALTO", stars: "⭐⭐⭐⭐", genre: "Peligro Narcisista", page: "Pág. 1", desc: "Si es alto (más de 1.85m), guapo, tiene dinero, es atento, caballeroso y soltero... una de dos: o es un personaje de ficción de Netflix, o es un psicópata narcisista con tres familias ocultas. Nivel de Riesgo: Chernóbil.", action: "Contratar un detective privado antes de presentar formalmente con la familia." },
-            "5": { id: "N°5", name: "La Paradoja del 'Mantenido'", risk: "BAJO", stars: "⭐", genre: "Carisma Divino", page: "Pág. 1", desc: "No tiene trabajo, no tiene auto, no es guapo y no aporta nada. Su permanencia en el ecosistema depende 100% de que tiene un carisma de dios griego o sabe convencer a cualquiera.", action: "Cuidar la billetera frente a discursos extremadamente convincentes." },
+            "5": { id: "N°5", name: "La Paradoja del 'Mantenido'", risk: "BAJO", stars: "⭐", genre: "Carisma Divino", page: "Pág. 1", desc: "No tiene trabajo, no tiene auto, no es guapo y no aporta nada. Su permanencia en el ecosistema depende 100% de que tiene un carisma de dios griego o sabe convencer a cualquiera.", action: "Cuidar la billetera frente a discursos extremamente convincentes." },
             "6": { id: "N°6", name: "El 'Chico Lindo' de Perfil Bajo", risk: "BAJO", stars: "⭐⭐", genre: "Minimalismo Físico", page: "Pág. 1", desc: "Es guapísimo de cara, pero no tiene un gramo de masa muscular y pesa 50 kilos mojado. Ideal para fotos estéticas de Instagram, pero si hay que mover un mueble, se le desarma la espalda.", action: "Contratar fletes externos para mudanzas o trabajos pesados." },
             "7": { id: "N°7", name: "El Efecto 'Alucín' / Tuning Masculino", risk: "ALTO", stars: "⭐⭐⭐⭐", genre: "Riesgo Policial", page: "Pág. 2", desc: "Tiene camioneta gigante, cadenas de oro, ropa de marcas italianas con logos gigantes y música a todo volumen. Diagnóstico: Financiamiento de procedencia dudosa o deuda interna extrema. Alto riesgo de drama policial.", action: "Mantener una coartada lista y las cuentas de ahorro separadas." },
             "8": { id: "N°8", name: "El 'Crossfitter' Intensivo", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Obsesión Fitness", page: "Pág. 2", desc: "Tiene un físico espectacular, pero su personalidad fue absorbida por el deporte. El 100% de sus conversaciones giran en torno a sus tiempos, sus lesiones y por qué tú deberías dejar de comer pan.", action: "Aprender a ignorar los comentarios sobre carbohidratos mientras comes pizza." },
@@ -394,7 +450,7 @@
             "14": { id: "N°14", name: "El 'Gamer / Techie' Estratégico", risk: "BAJO", stars: "⭐⭐", genre: "Soporte Técnico", page: "Pág. 2", desc: "Cero interés por el gimnasio, viste con la misma playera de Star Wars hace 5 años, pero gana en dólares programando desde casa, te resuelve cualquier problema técnico y es sumamente leal. Un diamante en bruto.", action: "Valorar el flujo de ingresos en divisa extranjera y su soporte informático." },
             "15": { id: "N°15", name: "El 'Fresa' de Alto Mantenimiento", risk: "ALTO", stars: "⭐⭐⭐", genre: "Estándar Exigente", page: "Pág. 2", desc: "Es guapo y viste bien, pero sus estándares de vida exigen que tú también manejes un nivel socioeconómico alto. Si tu plan de fin de semana no incluye un festival de música costoso o la playa, se deprime.", action: "Mantener la agenda de eventos cotizados al día." },
             "16": { id: "N°16", name: "La Ley de la Altura Engañosa", risk: "BAJO", stars: "⭐", genre: "Atributo Único", page: "Pág. 3", desc: "Mide 1.90m y de espaldas parece un atleta de élite, pero cuando voltea, te das cuenta de que la altura era su único atributo disponible.", action: "Mantener los estándares de espaldas o buscar ángulos favorables." },
-            "17": { id: "N°17", name: "El 'Sugar' Promesa (Inversión a Largo Plazo)", risk: "BAJO", stars: "⭐⭐", genre: "Futuro Cotizable", page: "Pág. 3", desc: "Hoy es un estudiante universitario promedio que vive a base de fideos instantáneos, pero tiene una disciplina militar y estudia medicina o ingeniería aeroespacial. Hay que asegurar el terreno antes de que cotice en la bolsa.", action: "Financiar los fideos instantáneos actuales para asegurar las ganancias futuras." },
+            "17": { id: "N°17", name: "El 'Sugar' Promesa (Inversión a Largo Plazo)", risk: "BAJO", stars: "⭐⭐", genre: "Futuro Cotizable", page: "Pág. 3", desc: "Hoy es un estudiante universitario promedio que vive a base de fideos instantáneos, pero tiene una disciplina militar y estudia medicina o ingeniería aeroespacial. Hay que asegurar el terreno antes de que cotice en la bolsa.", action: "Financiar los fideos instantáneos actuales para asegurar las ganancias futures." },
             "18": { id: "N°18", name: "El Efecto 'Camaleón Urbano'", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Evolución de Etiqueta", page: "Pág. 3", desc: "Un miércoles en la tarde usando ropa deportiva parece que acaba de salir de prisión, pero ponle un traje sastre un sábado por la noche y mágicamente califica para la Regla N°4.", action: "Asegurar que guarde los trajes limpios en el clóset para emergencias estéticas." },
             "19": { id: "N°19", name: "El 'Eco-Friendly' Natural", risk: "MEDIO", stars: "⭐⭐", genre: "Campamento Libre", page: "Pág. 3", desc: "Cero vanidad, cuerpo atlético de hacer senderismo, cabello largo natural, pero vive acampando, no cree en el matrimonio institucionalizado y su desodorante es una piedra de alumbre. Dilema de estilo de vida.", action: "Regalarle barras de jabón artesanal de alta potencia aromática." },
             "20": { id: "N°20", name: "El Filtro Final (El 'S resuelve')", risk: "BAJO", stars: "💖", genre: "El Verdadero Jefe Final", page: "Pág. 3", desc: "No es modelo de revista, maneja un auto promedio y no es millonario; pero te da paz mental, te escucha cuando estás estresada, sabe cambiar una llanta, cocina delicioso y arregla cualquier desperfecto de la casa sin que se lo pidas dos veces. El verdadero Jefe Final. Casarse de inmediato.", action: "Adquirir argollas de matrimonio de forma inmediata. No dejar escapar." }
@@ -470,6 +526,16 @@
     }
 
     function selectOption(selectedText) {
+        // FILTRO POLÍTICO CRÍTICO: Activa animación y reproduce sonido de TikTok
+        if (selectedText === "Extrema Izquierda 🔺 (Peligro Nivel Cósmico)") {
+            const soundElement = document.getElementById('cosmic-error-sound');
+            if(soundElement) {
+                soundElement.play().catch(e => console.log("La reproducción requiere interacción del usuario:", e));
+            }
+            nextScreen('screen-cosmic-error');
+            return;
+        }
+
         const currentOptions = questions[userData.gender][currentStep].options;
         const idx = currentOptions.indexOf(selectedText);
         userData.answers.push(idx);
@@ -494,34 +560,25 @@
         const ans = userData.answers;
 
         if (userData.gender === "mujeres") {
-            if (ans[12] === 2 && ans[9] >= 2 && ans[8] === 0) finalRuleKey = "20"; 
-            else if (ans[12] === 1 || ans[7] === 1 || ans[8] === 2 || ans[9] === 0) finalRuleKey = "10"; 
-            else if (ans[13] === 1 || ans[7] === 2 || ans[10] === 0) finalRuleKey = "15"; 
-            else if (ans[11] === 2 || ans[6] === 2) finalRuleKey = "7"; 
-            else if (ans[3] === 2 && ans[2] === 0) finalRuleKey = "16"; 
-            else if (ans[6] === 0) finalRuleKey = "11"; 
-            else if (ans[4] === 3 || ans[10] === 4) finalRuleKey = "14"; 
-            else if (ans[6] === 3 && ans[2] >= 2) finalRuleKey = "12"; 
-            else if (ans[3] === 4 || ans[10] === 2) finalRuleKey = "19"; 
-            else if (ans[1] >= 2 && ans[0] <= 1) finalRuleKey = "1"; 
-            else if (ans[0] >= 2 && ans[1] <= 1) finalRuleKey = "2"; 
-            else if (ans[0] >= 2 && ans[1] >= 2 && ans[2] >= 2) finalRuleKey = "4"; 
-            else if (ans[0] >= 2 && ans[1] >= 2 && ans[2] === 0) finalRuleKey = "3"; 
-            else if (ans[0] <= 1 && ans[1] <= 1 && ans[2] >= 2) finalRuleKey = "6"; 
-            else if (ans[1] >= 2 && ans[12] === 0) finalRuleKey = "8"; 
+            if (ans[14] === 2) finalRuleKey = "20"; 
+            else if (ans[9] === 1 || ans[10] === 2) finalRuleKey = "10"; 
+            else if (ans[1] === 1 || ans[1] === 5) finalRuleKey = "4"; 
+            else if (ans[11] === 1 || ans[11] === 2) finalRuleKey = "15"; 
+            else if (ans[1] === 4 || ans[10] === 0) finalRuleKey = "8"; 
+            else if (ans[2] >= 2 && ans[3] <= 1) finalRuleKey = "1"; 
+            else if (ans[3] >= 2 && ans[2] <= 1) finalRuleKey = "2"; 
+            else if (ans[2] >= 2 && ans[3] >= 2 && ans[4] >= 2) finalRuleKey = "4"; 
+            else if (ans[2] >= 2 && ans[3] >= 2 && ans[4] === 0) finalRuleKey = "3"; 
+            else if (ans[2] <= 1 && ans[3] <= 1 && ans[4] >= 2) finalRuleKey = "6"; 
             else finalRuleKey = "5"; 
         } else {
-            if (ans[12] === 2 && ans[9] >= 2) finalRuleKey = "20"; 
-            else if (ans[7] === 1 || ans[8] === 2 || ans[9] === 0) finalRuleKey = "10"; 
-            else if (ans[6] === 2 || ans[1] === 2 || ans[7] === 2 || ans[10] === 3) finalRuleKey = "7"; 
-            else if (ans[13] === 1) finalRuleKey = "17"; 
-            else if (ans[4] === 3) finalRuleKey = "16"; 
-            else if (ans[6] === 3 && ans[2] === 2) finalRuleKey = "4"; 
-            else if (ans[1] === 1) finalRuleKey = "2"; 
-            else if (ans[0] === 2 && ans[3] === 0) finalRuleKey = "1"; 
-            else if (ans[2] === 2 && ans[11] === 0) finalRuleKey = "3"; 
-            else if (ans[0] === 0 && ans[1] === 0 && ans[11] === 1) finalRuleKey = "5"; 
-            else if (ans[2] === 2 && ans[0] === 0) finalRuleKey = "6"; 
+            if (ans[1] === 5) finalRuleKey = "20"; 
+            if (ans[1] === 0) finalRuleKey = "1"; 
+            else if (ans[9] === 1 || ans[10] === 2) finalRuleKey = "10"; 
+            else if (ans[8] === 2) finalRuleKey = "7"; 
+            else if (ans[4] === 2) finalRuleKey = "3"; 
+            else if (ans[1] === 3 && ans[4] === 2) finalRuleKey = "4"; 
+            else if (ans[1] === 4) finalRuleKey = "5"; 
             else finalRuleKey = "13"; 
         }
 
@@ -540,7 +597,8 @@
         document.getElementById('res-genre').textContent = result.genre || "Drama Central";
         document.getElementById('res-page').textContent = `${result.page} de 3`;
         
-        const panoramaElegido = questions[userData.gender][10].options[ans[10]];
+        const panoramaIdx = 12;
+        const panoramaElegido = questions[userData.gender][panoramaIdx].options[ans[panoramaIdx]] || "Planes urbanos estándar";
         document.getElementById('res-panorama').innerHTML = `<i class="fa-solid fa-heart"></i> <strong>Panorama de Convivencia Ideal:</strong> ${panoramaElegido}`;
 
         const randomMatch = Math.floor(Math.random() * (99 - 91 + 1)) + 91;
@@ -578,7 +636,6 @@
         }
     }
 
-    // MODIFICADO: RENDERIZA EXCLUSIVAMENTE EL NOMBRE DE LA LEY SIN DESCRIPCIÓN
     function openCatalog() {
         nextScreen('screen-catalog');
         switchCatalogTab('mujeres');
@@ -615,26 +672,27 @@
         }
     }
 
-    // Cuestionarios estructurados correlativos para los saltos condicionales
     const questions = {
         mujeres: [
+            { q: "¿Cuál es la afiliación o espectro político del perfil?", options: ["Extrema Izquierda 🔺 (Peligro Nivel Cósmico)", "Izquierda 🟥", "Centro 🟨", "Derecha 🟦", "Extrema Derecha 🦅"] },
+            { q: "¿Qué tipo de figura o silueta corporal presenta?", options: ["Triángulo 🔺", "Reloj de Arena ⌛", "Triángulo Invertido 🔻", "Diamante / Rombo ♦️", "Forma de Pera 🍐", "Silueta de Guitarra 🎸", "Rectangular 🟥"] },
             { q: "¿Cómo calificarías su estilo en el Atributo A (Busto)?", options: ["Sutil / Minimalista", "Moderado", "Destacado", "Imponente", "Estilo Alta Costura"] },
             { q: "¿Cómo calificarías su balance en el Atributo B (Glúteos)?", options: ["Sutil / Minimalista", "Moderado", "Destacado", "Imponente", "Estilo Fitness"] },
             { q: "¿Qué tal su armonía facial (Rostro)?", options: ["Estilo natural sencillo", "Simpática", "Muy bonita", "Facciones de impacto visual"] },
             { q: "¿Qué estructura o look lleva normalmente en el cabello?", options: ["Estilo alternativo / Ultra corto", "Corte Bob / Melena media elegante", "Cabellera larga, abundante y clásica", "Recogido casual la mayor parte del día", "Estilo bohemio / Trenzas artesanales"] },
-            { q: "¿Cuál es la propuesta de coloración capilar?", options: ["Tonalidad natural", "Reflejos claros / Platinado", "Pelirrojo / Cobrizo", "Tonos de fantasía", "Estilo Balayage"] },
+            { q: "Cuál es la propuesta de coloración capilar?", options: ["Tonalidad natural", "Reflejos claros / Platinado", "Pelirrojo / Cobrizo", "Tonos de fantasía", "Estilo Balayage"] },
             { q: "¿Cómo definirías el impacto de su mirada?", options: ["Tonalidades oscuras", "Ojos claros / Expresiva", "Facciones únicas", "Estilo intelectual", "Facciones orientales"] },
             { q: "¿Qué tipo de contenido comparte habitualmente en redes?", options: ["Fotos con edición / Filtros", "Imágenes espontáneas", "Contenido exclusivo / Privado", "Presencia mínima / Casi nula"] },
             { q: "Al momento de compartir eventos sociales o salidas:", options: ["Consumo moderado", "Mucha energía / Dinámica", "Preferencia por cartas VIP", "Preferencia por planes caseros"] },
             { q: "¿Cuáles son sus hábitos respecto al esparcimiento urbano?", options: ["Espacio libre de humo", "Uso social de vaporizadores", "Asistencia a ambientes festivos"] },
             { q: "¿Cuánto tiempo ha transcurrido desde su última relación?", options: ["Ruptura muy reciente", "Período intermedio", "Ciclo resuelto (Más de 6 meses)", "Sin historial previo"] },
-            { q: "¿Qué tipo de cita o panorama prefiere disfrutar?", options: ["Cena en restorán de tendencia", "Tarde de películas en casa", "Actividades al aire libre", "Asistencia a conciertos", "Planes geek / Videojuegos"] },
+            { q: "En el ámbito de citas, ¿qué panorama prefiere disfrutar?", options: ["Cena en restorán de tendencia", "Tarde de películas en casa", "Actividades al aire libre", "Asistencia a conciertos", "Planes geek / Videojuegos"] },
             { q: "¿Presenta intervenciones estéticas evidentes?", options: ["Líneas naturales", "Retoques sutiles", "Diseño corporal avanzado"] },
-            { q: "¿Cómo calificarías su nivel de organización y destreza diaria?", options: ["Estándar fluido", "Alta intensidad y temperamento", "Gran destreza, asertiva y paz mental"] },
-            { q: "¿Cuál es el nivel estimado de mantenimiento de sus pasatiempos?", options: ["Estilo de vida sencillo", "Preferencia por actividades de alta gama"] }
+            { q: "¿Cómo calificarías su nivel de organización y destreza diaria?", options: ["Estándar fluido", "Alta intensidad y temperamento", "Gran destreza, asertiva y paz mental"] }
         ],
         hombres: [
-            { q: "¿Cómo definirías su contextura física o porte?", options: ["Estilizado / Delgado", "Estructura intermedia y activa", "Acondicionamiento muscular diario"] },
+            { q: "¿Cuál es la afiliación o espectro político del perfil?", options: ["Extrema Izquierda 🔺 (Peligro Nivel Cósmico)", "Izquierda 🟥", "Centro 🟨", "Derecha 🟦", "Extrema Derecha 🦅"] },
+            { q: "¿Qué estructura o biotipo corporal presenta?", options: ["Musculoso arriba pero patas flacas 🍗", "Piernas musculosas pero flaco de arriba 🦵", "Flaco Total 🦴", "Flaco Marcado / Fibroso ⚡", "Gordito / Carita tierna 🐻", "Cuerpo de Dios Griego 🔱", "Culón de Impacto 🍑"] },
             { q: "¿Qué nivel de proyección de estatus social observa?", options: ["Estilo sencillo / Medios tradicionales", "Marcas visibles y accesorios", "Vehículos de alta gama / Lujos"] },
             { q: "¿Cómo describirías su armonía facial?", options: ["Facciones comunes con gran humor", "Facciones promedio armónicas", "Facciones destacadas / Modelo"] },
             { q: "Respecto a sus medidas generales de estatura:", options: ["Estatura promedio o compacta", "Estatura alta destacada (Sobre 1.85m)"] },
@@ -644,10 +702,9 @@
             { q: "Al momento de compartir eventos sociales:", options: ["Manejo ordenado de gastos", "Alta extroversión", "Busca destacar en zonas VIP", "Prefiere interiores / Tecnología"] },
             { q: "¿Cuáles son sus hábitos respecto al humo o esparcimiento?", options: ["Espacio libre de humo", "Uso social de vaporizadores", "Ambientes festivos alternativos"] },
             { q: "¿Cuánto tiempo ha transcurrido desde su última relación?", options: ["Ruptura muy reciente", "Período de transición", "Ciclo completamente resuelto", "Enfoque histórico en soltería"] },
-            { q: "¿Qué tipo de cita o panorama prefiere disfrutar?", options: ["Bares exclusivos / Gastronomía", "Maratón de series en casa", "Entrenamiento / Bicicleta", "Eventos musicales / Clubes", "Juego online / Ficción"] },
+            { q: "En el ámbito de citas, ¿qué panorama prefiere disfrutar?", options: ["Bares exclusivos / Gastronomía", "Maratón de series en casa", "Entrenamiento / Bicicleta", "Eventos musicales / Clubes", "Juego online / Ficción"] },
             { q: "¿Cuál es su nivel de elocuencia o facilidad de palabra?", options: ["Reservado / Introvertido amigable", "Gran fluidez verbal y conversador nato"] },
-            { q: "Comportamiento general y propuesta de convivencia:", options: ["Estilo de vida tradicional", "Tendencias exclusivas / Lenguaje de temporada", "Gran compañero de equipo y resolutivo"] },
-            { q: "¿Cómo calificarías la gestión de sus recursos?", options: ["Administración estándar", "Enfoque de cortesías premium planificadas"] }
+            { q: "Comportamiento general y propuesta de convivencia:", options: ["Estilo de vida tradicional", "Tendencias exclusivas / Lenguaje de temporada", "Gran compañero de equipo y resolutivo"] }
         ]
     };
 
