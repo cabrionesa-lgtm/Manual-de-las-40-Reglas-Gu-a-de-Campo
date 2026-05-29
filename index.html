@@ -13,6 +13,7 @@
             --netflix-card-bg: #181818;
             --netflix-light-gray: #e5e5e5;
             --cosmic-purple: #6a0dad;
+            --grial-gold: #ffd700;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
@@ -174,6 +175,7 @@
         .badge-medio { background-color: #e65100; }
         .badge-critico { background-color: #b71c1c; }
         .badge-chernobil { background-color: #000; border: 1px dashed #E50914; color: #E50914; animation: blink 0.8s infinite; box-shadow: 0 0 15px rgba(229,9,20,0.4); }
+        .badge-grial { background: linear-gradient(45deg, #bf953f, #fcf6ba, #b38728, #fbf5b7); color: #000; box-shadow: 0 0 15px rgba(255, 215, 0, 0.6); font-weight: 900; }
 
         @keyframes blink { 50% { opacity: 0.4; } }
 
@@ -233,7 +235,6 @@
         .catalog-list::-webkit-scrollbar { width: 6px; }
         .catalog-list::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
 
-        /* PANTALLA DE ERROR CÓSMICO */
         .cosmic-danger {
             background: radial-gradient(circle at center, #2a0033 0%, #000 80%) !important;
             border: 2px solid var(--cosmic-purple) !important;
@@ -247,7 +248,6 @@
             animation: pulseCosmic 0.6s infinite alternate;
         }
         
-        /* CARTEL ERROR CRÍTICO EXTENDED BLINK */
         .critical-banner {
             background: #b71c1c; 
             color: white; 
@@ -273,7 +273,7 @@
 </head>
 <body>
 
-<audio id="cosmic-error-sound" src="data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjYwLjEwMC4xMDDAAAAAAAAAAAAAAAB//4YgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAA6AAByAABzcHZ5enh7fH6AgYKDhIWGh4mKjI2OkpSWmZqcnqKkp6mrrK6wsbKztri6vL7Cw8bHycrNztLU1tnanJ6io6WlqKqqrK6vsbGysre3ubq7u7u8vb7Cw8XFh4mJiYqKi4uLi4yMjo6OjI6Ojo6OkJCQkJKSkZGSko6Ojo6Ojo6RkpKSkpKSkpKSkpGSkpKSlpaWlpaWlpaWl5mZmZmampqampqampqbm5ubm5ubm5ubm5ubnJ6enp6enp6enp6enp6eo6SkpKSkpKSkpKSkpKSkqaqrrK2tsbGxsrKytre5uru8vb6+vr6+vsbHycrMzdLS0tPT0tLS1tnanJ6enp6ioqKioqKioqOmpaWlpaWlpaWlpaWlpaWpqqqqqqqqqqqqqqqqqqqsrKysrKysrKysrKysrKysra2tra2tra2tra2tra2tsbGxsrKyurq6urq6urq6urq6vL6+vr6+vr6+vr6+vr6+vsbGxsbGxsfHycnJycnJycnJycXFxcXFxcXFxcXFxcXFxcnJycXFxsbGxsbGxsbGxsbGxsfJycnJycnJycnJycnJycnJysrKysrKysrKysrKysrKysrKysrKy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLzMzMzMzMzMzMzMzMzMzMzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3NzMzMzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N3d3d3d3d3d3f39/f39/f39/f39/f39//4YgAAf8AAAc0AABMADYAsAgAQ4IBAAAmBAH/7wIDVQEoAAgBGAX9//+P///gEAgEAwGAoP+AIBgMBgMD9bYp1/UAAAA6ZgSjLh8Zf5wH/8N0YI///N///839I////Nf///yYIAID/+GIAALPAAAMYgAAgAn8HAEfPZAAU6TUDxQxGAwIBAIBAMB/wBAwGAwGBgP9tDmv6v///gAHA7X///+b+sf///N///839Wv///JhAAB//4YgAAqMAAAMQgAAgAuUGgEXfRAAW6ZkDAwIBAMCAYFA/4AgYBgMBgYD/6v/q////gAHA6v///839WP///zf///m///8mGgAAH//4YgAAkMAAAMYgAAgAs2GgEXO9gAU7TYDAwIBgQCAYGA/4AgGBAIBgcD/q39W////gAHA6t////zf1Y///83///m///8mGgAAH//4YgAAlMAAAMYgAAgAtkGgEXfbAAU6TcDAgEAgIBAUGA/4AgYCAgEBQcD/Vv6t////gAHA1b///839Wf///N///+b///8mHAAAFAAP/4YgAAnMAAAMYgAAgAttHgEXfPAAU6TgDBAICAYEAgKD/gCBgGAwGBQf/Vv9W////gAcDq3///839W////zf///Nf///8mGgAAH//4YgAAnMAAAMYgAAgAt6HgEXO+AAU6TkDAwIBAQCAYEB/wBAMCAQEAgP/rf1Y///8AAcHVv///zf1Y///83///5v///8mHAAAH//4YgAAnMAAAMYgAAgAt+HgEXfcAAU6TsDBAICAgEBAUD/gCBAICAgECgf9W/q3///4ABwOrf///zf1b///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAuCHgEXfPAAU6TsDAwIBgQCAgID/gCBgMCAMCAf/Vv9X////AAGB1b///839W////zf///Nf///8mGAAAH//4YgAAnMAAAMYgAAgAuHHgEXfVAAU6TsDBAICAgEBAUD/gCBgICAQECgf9W/q3///4ABwNW////zf1Z///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAuNHgEXfPAAU6TkDAwICAgEBAMD/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAuRHgEXfPAAU6TkDAgEAgIBAQGB/wCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAuWHgEXfPAAU6TkDAwICAgEBAYH/gCBAICAgEBAf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAuaHgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAuengEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAuingEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAuyngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAu2ngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAu7ngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAu/ngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvCngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvGngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvKngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvPngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvSngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvWngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvangEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvengEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvingEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvmngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvqngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvungEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvyngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwCngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwGngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwKngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwOngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwSngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwWngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwangEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwengEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwizgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwmzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwqzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwuzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwvzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwwzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwxzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwyzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwzzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw0zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw1zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw2zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw3zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw4zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw5zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw6zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw7zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw8zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw9zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw+zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw/zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxAzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxBzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxCzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxDzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxEzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxFzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxGzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxHzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxIzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxJzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxKzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxLzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxMzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxNzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxOzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxPzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxQzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxRzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxSzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxTzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxUzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxVzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxWzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxXzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxYzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxZzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxazgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxYzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxczgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxdegEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxeegEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxfegEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxgegEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxiuAHffAAAU6TgAAAAA=" preload="auto" loop></audio>
+<audio id="cosmic-error-sound" src="data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjYwLjEwMC4xMDDAAAAAAAAAAAAAAAB//4YgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAA6AAByAABzcHZ5enh7fH6AgYKDhIWGh4mKjI2OkpSWmZqcnqKkp6mrrK6wsbKztri6vL7Cw8bHycrNztLU1tnanJ6io6WlqKqqrK6vsbGysre3ubq7u7u8vb7Cw8XFh4mJiYqKi4uLi4yMjo6OjI6Ojo6OkJCQkJKSkZGSko6Ojo6Ojo6RkpKSkpKSkpKSkpGSkpKSlpaWlpaWlpaWlpaWl5mZmZmampqampqampqbm5ubm5ubm5ubm5ubnJ6enp6enp6enp6enp6eo6SkpKSkpKSkpKSkpKSkqaqrrK2tsbGxsrKytre5uru8vb6+vr6+vsbHycrMzdLS0tPT0tLS1tnanJ6enp6ioqKioqKioqOmpaWlpaWlpaWlpaWlpaWpqqqqqqqqqqqqqqqqqqqsrKysrKysrKysrKysrKysra2tra2tra2tra2tra2tsbGxsrKyurq6urq6urq6urq6vL6+vr6+vr6+vr6+vr6+vsbGxsbGxsfHycnJycnJycnJycXFxcXFxcXFxcXFxcXFFxcnJycXFxsbGxsbGxsbGxsbGxsfJycnJycnJycnJycnJycnJysrKysrKysrKysrKysrKysrKysrKy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLzMzMzMzMzMzMzMzMzMzMzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3NzMzMzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N3d3d3d3d3d3f39/f39/f39/f39/f39//4YgAAf8AAAc0AABMADYAsAgAQ4IBAAAmBAH/7wIDVQEoAAgBGAX9//+P///gEAgEAwGAoP+AIBgMBgMD9bYp1/UAAAA6ZgSjLh8Zf5wH/8N0YI///N///839I////Nf///yYIAID/+GIAALPAAAMYgAAgAn8HAEfPZAAU6TUDxQxGAwIBAIBAMB/wBAwGAwGBgP9tDmv6v///gAHA7X///+b+sf///N///839Wv///JhAAB//4YgAAqMAAAMQgAAgAuUGgEXfRAAW6ZkDAwIBAMCAYFA/4AgYBgMBgYD/6v/q////gAHA6v///839WP///zf///m///8mGgAAH//4YgAAkMAAAMYgAAgAs2GgEXO9gAU7TYDAwIBgQCAYGA/4AgGBAIBgcD/q39W////gAHA1b///839Y///83///m///8mGgAAH//4YgAAlMAAAMYgAAgAtkGgEXfbAAU6TcDAgEAgIBAUGA/4AgYCAgEBQcD/Vv6t////gAHA1b///839Wf///N///+b///8mHAAAFAAP/4YgAAnMAAAMYgAAgAttHgEXfPAAU6TgDBAICAYEAgKD/gCBgGAwGBQf/Vv9W////gAcDq3///839W////zf///Nf///8mGgAAH//4YgAAnMAAAMYgAAgAt6HgEXO+AAU6TkDAwIBAQCAYEB/wBAMCAQEAgP/rf1Y///8AAcHVv///zf1Y///83///5v///8mHAAAH//4YgAAnMAAAMYgAAgAt+HgEXfcAAU6TsDBAICAgEBAUD/gCBAICAgECgf9W/q3///4ABwOrf///zf1b///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAuCHgEXfPAAU6TsDAwIBgQCAgID/gCBgMCAMCAf/Vv9X////AAGB1b///839W////zf///Nf///8mGAAAH//4YgAAnMAAAMYgAAgAuHHgEXfVAAU6TsDBAICAgEBAUD/gCBgICAQECgf9W/q3///4ABwNW////zf1Z///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAuNHgEXfPAAU6TkDAwICAgEBAMD/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAuRHgEXfPAAU6TkDAgEAgIBAQGB/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAuWHgEXfPAAU6TkDAwICAgEBAYH/gCBAICAgEBAf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAuaHgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAuengEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAuingEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAuyngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAu2ngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAu7ngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAu/ngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvCngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvGngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvKngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvPngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvSngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvWngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvangEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvengEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvingEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvmngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvqngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvungEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvyngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwCngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwGngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwKngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwOngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwSngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwWngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwangEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwengEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwizgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwmzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwqzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwuzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwvzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwwzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxxzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwyzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwzzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw0zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw1zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw2zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw3zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw4zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw5zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw6zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw7zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw8zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw9zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw+zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw/zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxAzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxBzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxCzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxDzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxEzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxFzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxGzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxHzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxIzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxJzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxKzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxLzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxMzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxNzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxOzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxPzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxQzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxRzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxSzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxTzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxUzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxVzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxWzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxXzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxYzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxZzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxazgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxYzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxczgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxdegEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxeegEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxfegEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxgegEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxiuAHffAAAU6TgAAAAA=" preload="auto" loop></audio>
 
 <div class="container">
     <div class="logo">MATRIXFLIX</div>
@@ -292,7 +292,7 @@
         </button>
 
         <button class="btn btn-secondary" onclick="playEffect('click'); openCatalog();">
-            <i class="fa-solid fa-layer-group"></i> Ver Catálogo Completo (40 Reglas)
+            <i class="fa-solid fa-layer-group"></i> Ver Catálogo Completo (42 Reglas)
         </button>
         
         <div class="achievements-box" id="box-recents" style="display:none;">
@@ -374,11 +374,11 @@
 
     <div id="screen-catalog" class="screen">
         <h1>Catálogo General de Perfiles</h1>
-        <p style="margin-bottom: 15px;">Índice oficial de las 40 reglas de comportamiento urbano de MatrixFlix.</p>
+        <p style="margin-bottom: 15px;">Índice oficial de las 42 reglas de comportamiento urbano de MatrixFlix.</p>
         
         <div class="catalog-tabs">
-            <button class="tab-btn active" id="tab-mujeres" onclick="switchCatalogTab('mujeres')">Femeninos (20)</button>
-            <button class="tab-btn" id="tab-hombres" onclick="switchCatalogTab('hombres')">Masculinos (20)</button>
+            <button class="tab-btn active" id="tab-mujeres" onclick="switchCatalogTab('mujeres')">Femeninos (21)</button>
+            <button class="tab-btn" id="tab-hombres" onclick="switchCatalogTab('hombres')">Masculinos (21)</button>
         </div>
 
         <div class="catalog-list" id="catalog-container"></div>
@@ -429,10 +429,11 @@
             "17": { id: "N°17", name: "La 'Milf' Promesa", risk: "BAJO", stars: "⭐⭐", genre: "Inversión Futura", page: "Pág. 3", desc: "Hoy está en su punto medio, pero analizas a la mamá y te das cuenta de que en 20 años va a ser una reina total. Una inversión a largo plazo.", action: "Asegurar el contrato de permanencia pensando en los dividendos a futuro." },
             "18": { id: "N°18", name: "La Combinación 'Camaleón'", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Mutación Estética", page: "Pág. 3", desc: "Un día la ves desarreglada y es la Regla N°5 (un desastre), pero se produce un sábado por la noche con maquillaje y vestido, y mágicamente roza la Regla N°4.", action: "Reservar los eventos importantes solo para los sábados de gala." },
             "19": { id: "N°19", name: "La 'Hippie' Natural", risk: "MEDIO", stars: "⭐⭐", genre: "Estlo Orgánico", page: "Pág. 3", desc: "Cero cirugías, buen cuerpo natural (Regla 1 o 2), bonita de cara, pero no se depila o no usa desodorante químico. Un dilema ideológico.", action: "Evaluar si tu tolerancia ideológica se adapta al ecosistema libre de químicos." },
-            "20": { id: "N°20", name: "El Filtro de la Madurez (La 'Ya qué más da')", risk: "BAJO", stars: "💖", genre: "Jefe Final", page: "Pág. 3", desc: "No cumple ninguna regla estética, pero cocina espectacular, te trata bien, te apoya en tus locuras y te da paz mental. El jefe final de la tabla.", action: "Firmar acuerdo definitivo de convivencia; la paz mental no se negocia." }
+            "20": { id: "N°20", name: "El Filtro de la Madurez (La 'Ya qué más da')", risk: "BAJO", stars: "💖", genre: "Jefe Final", page: "Pág. 3", desc: "No cumple ninguna regla estética, pero cocina espectacular, te trata bien, te apoya en tus locuras y te da paz mental. El jefe final de la tabla.", action: "Firmar acuerdo definitivo de convivencia; la paz mental no se negocia." },
+            "21": { id: "N°21", name: "El Santo Grial Femenino", risk: "SANTO GRIAL", stars: "👑👑👑👑👑", genre: "Milagro del Ecosistema", page: "Pág. 3", desc: "Tiene un cuerpazo espectacular con excelentes atributos (teta, culo, o ambos en sintonía perfecta), hermosa de cara... Y SU MENTALIDAD ES IMPECABLE. Cero conductas tóxicas, cero posesividad, cero dramas circulares. Es madura, segura de sí misma y te impulsa a crecer.", action: "Cuídala con tu vida, ve por el anillo de compromiso hoy mismo y borra tus redes sociales. Has ganado el juego." }
         },
         hombres: {
-            "1": { id: "N°1", name: "La Distribución Estándar A (El 'Gym-Bro')", risk: "BAJO", stars: "⭐", genre: "Compensación", page: "Pág. 1", desc: "Si tiene brazo gigante y abdomen marcado, no tiene estatura. Ley de la compensación física: todo el crecimiento se fue hacia los lados, no hacia arriba.", action: "Aceptar las limitaciones de altura a cambio de un guardaespaldas personal." },
+            "1": { id: "N°1", name: "La Distribución Estándar A (El 'Gym-Bro')", risk: "BAJO", stars: "⭐", genre: "Compensación", page: "Pág. 1", desc: "Si tiene brazo gigante and abdomen marcado, no tiene estatura. Ley de la compensación física: todo el crecimiento se fue hacia los lados, no hacia arriba.", action: "Aceptar las limitaciones de altura a cambio de un guardaespaldas personal." },
             "2": { id: "N°2", name: "La Distribución Estándar B (El Espejismo Financiero)", risk: "BAJO", stars: "⭐⭐", genre: "Estatus de Deuda", page: "Pág. 1", desc: "Si tiene un auto del año y viste ropa de marca, no tiene un peso en el banco. Todo el sueldo se va en pagar la cuota del auto y la tarjeta de crédito está al borde del embargo.", action: "Evitar pedirle préstamos y verificar quién paga las cuentas básicas." },
             "3": { id: "N°3", name: "El Impuesto de la Naturaleza", risk: "MEDIO", stars: "⭐⭐", genre: "Conversación Plana", page: "Pág. 1", desc: "Si es guapo de cara y tiene buen cuerpo, es un aburrido total o no tiene conversación. La vida no le exigió desarrollar carisma porque su físico hacía todo el trabajo.", action: "Llevar temas preparados a la cita o usarlo principalmente de adorno visual." },
             "4": { id: "N°4", name: "El Glitch de la Matrix Masculino", risk: "ALTO", stars: "⭐⭐⭐⭐", genre: "Peligro Narcisista", page: "Pág. 1", desc: "Si es alto (más de 1.85m), guapo, tiene dinero, es atento, caballeroso y soltero... una de dos: o es un personaje de ficción de Netflix, o es un psicópata narcisista con tres familias ocultas. Nivel de Riesgo: Chernóbil.", action: "Contratar un detective privado antes de presentar formalmente con la familia." },
@@ -451,7 +452,8 @@
             "17": { id: "N°17", name: "El 'Sugar' Promesa (Inversión a Largo Plazo)", risk: "BAJO", stars: "⭐⭐", genre: "Futuro Cotizable", page: "Pág. 3", desc: "Hoy es un estudiante universitario promedio que vive a base de fideos instantáneos, pero tiene una disciplina militar y estudia medicina o ingeniería aeroespacial. Hay que asegurar el terreno antes de que cotice en la bolsa.", action: "Financiar los fideos instantáneos actuales para asegurar las ganancias futures." },
             "18": { id: "N°18", name: "El Efecto 'Camaleón Urbano'", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Evolución de Etiqueta", page: "Pág. 3", desc: "Un miércoles en la tarde usando ropa deportiva parece que acaba de salir de prisión, pero ponle un traje sastre un sábado por la noche y mágicamente califica para la Regla N°4.", action: "Asegurar que guarde los trajes limpios en el clóset para emergencias estéticas." },
             "19": { id: "N°19", name: "El 'Eco-Friendly' Natural", risk: "MEDIO", stars: "⭐⭐", genre: "Campamento Libre", page: "Pág. 3", desc: "Cero vanidad, cuerpo atlético de hacer senderismo, cabello largo natural, pero vive acampando, no cree en el matrimonio institucionalizado y su desodorante es una piedra de alumbre. Dilema de estilo de vida.", action: "Regalarle barras de jabón artesanal de alta potencia aromática." },
-            "20": { id: "N°20", name: "El Filtro Final (El 'Si resuelve')", risk: "BAJO", stars: "💖", genre: "El Verdadero Jefe Final", page: "Pág. 3", desc: "No es modelo de revista, maneja un auto promedio y no es millonario; pero te da paz mental, te escucha cuando estás estresada, sabe cambiar una llanta, cocina delicioso y arregla cualquier desperfecto de la casa sin que se lo pidas dos veces. El verdadero Jefe Final. Casarse de inmediato.", action: "Adquirir argollas de matrimonio de forma inmediata. No dejar escapar." }
+            "20": { id: "N°20", name: "El Filtro Final (El 'Si resuelve')", risk: "BAJO", stars: "💖", genre: "El Verdadero Jefe Final", page: "Pág. 3", desc: "No es modelo de revista, maneja un auto promedio y no es millonario; pero te da paz mental, te escucha cuando estás estresada, sabe cambiar una llanta, cocina delicioso y arregla cualquier desperfecto de la casa sin que se lo pidas dos veces. El verdadero Jefe Final. Casarse de inmediato.", action: "Adquirir argollas de matrimonio de forma inmediata. No dejar escapar." },
+            "21": { id: "N°21", name: "El Santo Grial Masculino", risk: "SANTO GRIAL", stars: "👑👑👑👑👑", genre: "Milagro del Ecosistema", page: "Pág. 3", desc: "Tiene un físico de impacto (alto, marcado, excelentes atributos naturales) y una presencia magnética... Y SU MENTALIDAD ES SANA. No es tóxico, no es posesivo, confía plenamente en ti, te da paz mental, apoya tus proyectos y no tiene inseguridades absurdas de ego.", action: "Cuídalo con tu vida, no lo dejes ir por nada del mundo. Un perfil en peligro de extinción absoluta." }
         }
     };
 
@@ -507,6 +509,8 @@
 
     function setGender(genderSelected) {
         userData.gender = genderSelected;
+        currentStep = 0;
+        userData.answers = [];
         nextScreen('screen-quiz');
         showQuestion();
     }
@@ -532,7 +536,6 @@
     }
 
     function selectOption(selectedText) {
-        // DETECTOR DE ALERTA CÓSMICA
         if (selectedText === "Extrema Izquierda 🔺 (Peligro Nivel Cósmico)") {
             const soundElement = document.getElementById('cosmic-error-sound');
             if(soundElement) {
@@ -567,7 +570,12 @@
         const ans = userData.answers;
 
         if (userData.gender === "mujeres") {
-            if (ans[14] === 2) finalRuleKey = "20"; 
+            // CONDICIÓN UNICORNIO SANTO GRIAL (REGLA 21)
+            // Buena mentalidad (alta destreza/paz mental) + Atributos altos o imponentes (Busto/Glúteos)
+            if (ans[14] === 2 && (ans[2] >= 2 || ans[3] >= 2)) {
+                finalRuleKey = "21";
+            }
+            else if (ans[14] === 2) finalRuleKey = "20"; 
             else if (ans[9] === 1 || ans[10] === 2) finalRuleKey = "10"; 
             else if (ans[1] === 1 || ans[1] === 5) finalRuleKey = "4"; 
             else if (ans[11] === 1 || ans[11] === 2) finalRuleKey = "15"; 
@@ -579,8 +587,13 @@
             else if (ans[2] <= 1 && ans[3] <= 1 && ans[4] >= 2) finalRuleKey = "6"; 
             else finalRuleKey = "5"; 
         } else {
-            if (ans[1] === 5) finalRuleKey = "20"; 
-            if (ans[1] === 0) finalRuleKey = "1"; 
+            // CONDICIÓN UNICORNIO SANTO GRIAL MASCULINO (REGLA 21)
+            // Resolutivo/paz mental + Buen físico (Dios Griego o Marcado)
+            if (ans[13] === 2 && (ans[1] === 5 || ans[1] === 3)) {
+                finalRuleKey = "21";
+            }
+            else if (ans[13] === 2) finalRuleKey = "20"; 
+            else if (ans[1] === 0) finalRuleKey = "1"; 
             else if (ans[9] === 1 || ans[10] === 2) finalRuleKey = "10"; 
             else if (ans[8] === 2) finalRuleKey = "7"; 
             else if (ans[4] === 2) finalRuleKey = "3"; 
@@ -604,7 +617,7 @@
         document.getElementById('res-genre').textContent = result.genre || "Drama Central";
         document.getElementById('res-page').textContent = `${result.page} de 3`;
         
-        const panoramaIdx = 12;
+        const panoramaIdx = (userData.gender === 'mujeres') ? 12 : 11;
         const panoramaElegido = questions[userData.gender][panoramaIdx].options[ans[panoramaIdx]] || "Planes urbanos estándar";
         document.getElementById('res-panorama').innerHTML = `<i class="fa-solid fa-heart"></i> <strong>Panorama de Convivencia Ideal:</strong> ${panoramaElegido}`;
 
@@ -618,6 +631,7 @@
         if(result.risk === "MEDIO") { rBadge.textContent = "COMPLEJIDAD: MEDIA"; rBadge.classList.add('badge-medio'); }
         if(result.risk === "ALTO") { rBadge.textContent = "COMPLEJIDAD: ALTA"; rBadge.classList.add('badge-critico'); }
         if(result.risk === "EXTREMO") { rBadge.textContent = "COMPLEJIDAD: EXTREMA"; rBadge.classList.add('badge-chernobil'); }
+        if(result.risk === "SANTO GRIAL") { rBadge.textContent = "COMPLEJIDAD: NINGUNA (PERFECCIÓN)"; rBadge.classList.add('badge-grial'); }
         
         renderSuggestions(ruleKey);
         saveToRecents(userData.name, result.name);
@@ -663,6 +677,7 @@
             if (item.risk === 'MEDIO') { badgeClass = 'badge-medio'; labelRisk = 'MEDIA'; }
             if (item.risk === 'ALTO') { badgeClass = 'badge-critico'; labelRisk = 'ALTA'; }
             if (item.risk === 'EXTREMO') { badgeClass = 'badge-chernobil'; labelRisk = 'EXTREMA'; }
+            if (item.risk === 'SANTO GRIAL') { badgeClass = 'badge-grial'; labelRisk = 'GRIAL'; }
 
             const cardHtml = `
                 <div class="result-card" style="animation: none; margin-bottom: 5px;">
@@ -685,7 +700,7 @@
             { q: "¿Qué tipo de figura o silueta corporal presenta?", options: ["Triángulo 🔺", "Reloj de Arena ⌛", "Triángulo Invertido 🔻", "Diamante / Rombo ♦️", "Forma de Pera 🍐", "Silueta de Guitarra 🎸", "Rectangular 🟥"] },
             { q: "¿Cómo calificarías su estilo en el Atributo A (Busto)?", options: ["Sutil / Minimalista", "Moderado", "Destacado", "Imponente", "Estilo Alta Costura"] },
             { q: "¿Cómo calificarías su balance en el Atributo B (Glúteos)?", options: ["Sutil / Minimalista", "Moderado", "Destacado", "Imponente", "Estilo Fitness"] },
-            { q: "¿Qué tal su armonía facial (Rrostro)?", options: ["Estilo natural sencillo", "Simpática", "Muy bonita", "Facciones de impacto visual"] },
+            { q: "¿Qué tal su armonía facial (Rostro)?", options: ["Estilo natural sencillo", "Simpática", "Muy bonita", "Facciones de impacto visual"] },
             { q: "Estructura de look capilar habitual:", options: ["Estilo alternativo / Ultra corto", "Corte Bob / Melena media elegante", "Cabellera larga, abundante y clásica", "Recogido casual la mayor parte del día", "Estilo bohemio / Trenzas artesanales"] },
             { q: "Propuesta cromática o coloración capilar:", options: ["Tonalidad natural", "Reflejos claros / Platinado", "Pelirrojo / Cobrizo", "Tonos de fantasía", "Estilo Balayage"] },
             { q: "¿Cómo definirías el impacto de su mirada?", options: ["Tonalidades oscuras", "Ojos claros / Expresiva", "Facciones únicas", "Estilo intelectual", "Facciones orientales"] },
@@ -695,7 +710,7 @@
             { q: "¿Cuánto tiempo ha transcurrido desde su última relación?", options: ["Ruptura muy reciente", "Período intermedio", "Ciclo resuelto (Más de 6 meses)", "Sin historial previo"] },
             { q: "En el ámbito de citas, ¿qué panorama prefiere disfrutar?", options: ["Cena en restorán de tendencia", "Tarde de películas en casa", "Actividades al aire libre", "Asistencia a conciertos", "Planes geek / Videojuegos"] },
             { q: "¿Presenta intervenciones estéticas evidentes?", options: ["Líneas naturales", "Retoques sutiles", "Diseño corporal avanzado"] },
-            { q: "¿Cómo calificarías su nivel de organización y destreza diaria?", options: ["Estándar fluido", "Alta intensidad y temperamento", "Gran destreza, asertiva y paz mental"] }
+            { q: "¿Cómo calificarías su nivel de organización, celos y destreza diaria?", options: ["Estándar fluido", "Alta intensidad / Posesividad / Celos", "Excelente madurez, Cero Tóxica, Da paz mental total"] }
         ],
         hombres: [
             { q: "Cuál es el espectro o corriente ideológica del perfil objetivo?", options: ["Extrema Izquierda 🔺 (Peligro Nivel Cósmico)", "Izquierda 🟥", "Centro 🟨", "Derecha 🟦", "Extrema Derecha 🦅"] },
@@ -710,8 +725,8 @@
             { q: "Hábitos de consumo o esparcimiento:", options: ["Espacio libre de humo", "Uso social de vaporizadores", "Ambientes festivos alternativos"] },
             { q: "¿Cuánto tiempo ha transcurrido desde su última relación?", options: ["Ruptura muy reciente", "Período de transición", "Ciclo completamente resuelto", "Enfoque histórico en soltería"] },
             { q: "En el ámbito de citas, ¿qué panorama prefiere disfrutar?", options: ["Bares exclusivos / Gastronomía", "Maratón de series en casa", "Entrenamiento / Bicicleta", "Eventos musicales / Clubes", "Juego online / Ficción"] },
-            { q: "En el ámbito de citas, ¿qué panorama prefiere disfrutar?", options: ["Reservado / Introvertido amigable", "Gran fluidez verbal y conversador nato"] },
-            { q: "Comportamiento general y propuesta de convivencia:", options: ["Estilo de vida tradicional", "Tendencias exclusivas / Lenguaje de temporada", "Gran compañero de equipo y resolutivo"] }
+            { q: "En el ámbito de la conversación:", options: ["Reservado / Introvertido amigable", "Gran fluidez verbal y conversador nato"] },
+            { q: "Comportamiento general, nivel de celos y convivencia:", options: ["Estilo de vida tradicional", "Alta intensidad / Posesivo / Inseguro", "Gran compañero de equipo, Cero Tóxico y súper resolutivo"] }
         ]
     };
 
@@ -740,6 +755,9 @@
         } else if (riskLevel === "EXTREMO" && !unlockedBadges.includes("Sobreviviente")) {
             newBadge = { title: "Mediador Avanzado", desc: "Detectaste un perfil de Complejidad Extrema." };
             unlockedBadges.push("Sobreviviente");
+        } else if (riskLevel === "SANTO GRIAL" && !unlockedBadges.includes("BuscadorGrial")) {
+            newBadge = { title: "Elegido del Destino", desc: "¡Felicidades! Lograste escanear un Santo Grial (Regla N°21)." };
+            unlockedBadges.push("BuscadorGrial");
         }
 
         localStorage.setItem('matrix_badges', JSON.stringify(unlockedBadges));
@@ -765,7 +783,8 @@
         const allPossible = [
             { id: "Novato", title: "Iniciado en la Matrix", desc: "1er análisis completado" },
             { id: "Escaneador5", title: "Evaluador Urbano", desc: "5 análisis en terreno" },
-            { id: "Sobreviviente", title: "Mediador Avanzado", desc: "Encontró un perfil Complejo" }
+            { id: "Sobreviviente", title: "Mediador Avanzado", desc: "Encontró un perfil Complejo" },
+            { id: "BuscadorGrial", title: "Elegido del Destino", desc: "Encontró la mítica Regla N°21" }
         ];
 
         let html = `<p style='font-size:11px; margin-bottom:10px; color:#666;'>Evaluaciones listas: <strong>${totalScans}</strong></p>`;
