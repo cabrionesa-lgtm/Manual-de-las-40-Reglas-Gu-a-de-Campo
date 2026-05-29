@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MatrixFlix - Sistema de Diagnóstico de Campo</title>
+    <title>MatrixFlix - Sistema de Diagnóstico de Compatibilidad</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
@@ -151,6 +151,7 @@
             box-shadow: 0px 15px 35px rgba(0,0,0,0.8);
             border: 1px solid #2b2b2b;
             animation: cardPop 0.5s ease;
+            margin-bottom: 15px;
         }
         @keyframes cardPop { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
@@ -215,10 +216,24 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
+            margin-bottom: 10px;
         }
         .btn:hover { background-color: #b20710; transform: translateY(-1px); }
+        .btn-secondary {
+            background-color: #222;
+            border: 1px solid #444;
+        }
+        .btn-secondary:hover { background-color: #333; border-color: #666; }
         .clear-btn { font-size: 11px; color: #666; cursor: pointer; text-decoration: underline; background: none; border: none; }
         .clear-btn:hover { color: #999; }
+
+        /* NUEVOS ESTILOS PARA LA PANTALLA DE CATÁLOGO COMPLETO */
+        .catalog-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab-btn { flex: 1; padding: 12px; background: #1f1f1f; border: 1px solid #333; color: #888; border-radius: 6px; font-weight: bold; cursor: pointer; transition: all 0.2s; font-size: 13px; }
+        .tab-btn.active { background: var(--netflix-red); color: white; border-color: var(--netflix-red); }
+        .catalog-list { display: flex; flex-direction: column; gap: 20px; max-height: 60vh; overflow-y: auto; padding-right: 5px; text-align: left; }
+        .catalog-list::-webkit-scrollbar { width: 6px; }
+        .catalog-list::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
     </style>
 </head>
 <body>
@@ -227,26 +242,30 @@
     <div class="logo">MATRIXFLIX</div>
 
     <div id="screen-start" class="screen active">
-        <h1>Algoritmo de Diagnóstico de Campo</h1>
-        <p>Procesamiento avanzado multivariable de objetivos urbanos según el manual táctico confidencial.</p>
+        <h1>Filtro de Compatibilidad Urbana</h1>
+        <p>Análisis de afinidad, dinámicas sociales y pasatiempos grupales basado en perfiles de convivencia.</p>
         
         <div class="input-group">
-            <label>Nombre o Alias del Objetivo:</label>
-            <input type="text" id="target-name" placeholder="Ej: Sujeto Alpha / Candidata X">
+            <label>Nombre o Alias de la Persona:</label>
+            <input type="text" id="target-name" placeholder="Ej: Persona de Interés / Amigo X">
         </div>
         
         <button class="btn" onclick="playEffect('start'); nextScreen('screen-gender');">
-            <i class="fa-solid fa-bolt"></i> Iniciar Escaneo Táctico
+            <i class="fa-solid fa-bolt"></i> Iniciar Análisis de Afinidad
+        </button>
+
+        <button class="btn btn-secondary" onclick="playEffect('click'); openCatalog();">
+            <i class="fa-solid fa-layer-group"></i> Ver Catálogo Completo (40 Reglas)
         </button>
         
         <div class="achievements-box" id="box-recents" style="display:none;">
-            <div class="ach-title"><span><i class="fa-solid fa-clock-rotate-left"></i> Objetivos Recientes</span></div>
+            <div class="ach-title"><span><i class="fa-solid fa-clock-rotate-left"></i> Registros Recientes</span></div>
             <div id="recent-list"></div>
         </div>
         
         <div class="achievements-box">
             <div class="ach-title">
-                <span><i class="fa-solid fa-trophy"></i> Trofeos de Operador</span>
+                <span><i class="fa-solid fa-trophy"></i> Logros de Operador</span>
                 <button class="clear-btn" onclick="clearData()">Borrar Historial</button>
             </div>
             <div id="start-badges"></div>
@@ -255,7 +274,7 @@
 
     <div id="screen-gender" class="screen">
         <h1>Selecciona la Matriz Base</h1>
-        <p>¿A qué espectro biológico y de comportamiento corresponde el objetivo?</p>
+        <p>¿Hacia qué espectro de gustos u organización enfocas el perfil?</p>
         <div class="options-list">
             <div class="option-btn" onclick="playEffect('click'); setGender('mujeres')">ESPECTRO FEMENINO</div>
             <div class="option-btn" onclick="playEffect('click'); setGender('hombres')">ESPECTRO MASCULINO</div>
@@ -267,7 +286,7 @@
             <div class="progress-bar" id="quiz-progress"></div>
         </div>
         <h1 id="quiz-question">Pregunta</h1>
-        <p id="quiz-subtitle">Selecciona los parámetros observados en terreno.</p>
+        <p id="quiz-subtitle">Selecciona las alternativas observadas en el entorno.</p>
         <div id="quiz-options" class="options-list"></div>
     </div>
 
@@ -276,19 +295,19 @@
             <div class="scanner-line"></div>
             <i class="fa-solid fa-microchip scanner-icon"></i>
         </div>
-        <h1 id="loading-text">Decodificando parámetros físicos...</h1>
-        <p style="color:var(--netflix-red); font-size:11px; font-weight:bold; letter-spacing: 2px;">INYECTANDO CÓDIGO</p>
+        <h1 id="loading-text">Evaluando variables relacionales...</h1>
+        <p style="color:var(--netflix-red); font-size:11px; font-weight:bold; letter-spacing: 2px;">PROCESANDO DATOS</p>
     </div>
 
     <div id="screen-result" class="screen">
         <div class="result-card">
             <div class="result-header">
-                <div class="res-badge" id="res-risk">RIESGO</div>
-                <div class="res-id" id="res-id">REGLA</div>
-                <div class="res-name" id="res-name">Nombre de la Regla</div>
+                <div class="res-badge" id="res-risk">COMPLEJIDAD</div>
+                <div class="res-id" id="res-id">CATEGORÍA</div>
+                <div class="res-name" id="res-name">Nombre de la Categoría</div>
                 <div class="netflix-meta">
                     <span class="meta-match" id="res-match">98% Coincidencia</span>
-                    <span class="meta-genre" id="res-genre">CATEGORÍA</span>
+                    <span class="meta-genre" id="res-genre">GÉNERO</span>
                     <span class="meta-stars" id="res-stars">⭐⭐⭐⭐⭐</span>
                     <span class="meta-page" id="res-page">Pág. 1 de 3</span>
                 </div>
@@ -299,7 +318,7 @@
                 <div class="res-panorama" id="res-panorama">Panorama con Pareja...</div>
                 
                 <div class="netflix-row">
-                    <div class="row-title">Títulos Relacionados en Catálogo</div>
+                    <div class="row-title">Perfiles Similares en Catálogo</div>
                     <div class="row-cards" id="netflix-suggestions"></div>
                 </div>
             </div>
@@ -311,97 +330,108 @@
         </div>
 
         <br>
-        <button class="btn" onclick="shareWhatsApp()"><i class="fa-brands fa-whatsapp"></i> Compartir Diagnóstico</button>
+        <button class="btn" onclick="shareWhatsApp()"><i class="fa-brands fa-whatsapp"></i> Compartir Perfil de Afinidades</button>
         <br>
         <button class="btn" style="background: #222;" onclick="playEffect('click'); location.reload()">Nuevo Análisis</button>
+    </div>
+
+    <div id="screen-catalog" class="screen">
+        <h1>Catálogo General de Perfiles</h1>
+        <p>Explora la base de datos completa de las 40 dinámicas de comportamiento urbano.</p>
+        
+        <div class="catalog-tabs">
+            <button class="tab-btn active" id="tab-mujeres" onclick="switchCatalogTab('mujeres')">Femeninos (20)</button>
+            <button class="tab-btn" id="tab-hombres" onclick="switchCatalogTab('hombres')">Masculinos (20)</button>
+        </div>
+
+        <div class="catalog-list" id="catalog-container">
+            </div>
+
+        <br>
+        <button class="btn btn-secondary" onclick="playEffect('click'); nextScreen('screen-start');"><i class="fa-solid fa-arrow-left"></i> Volver al Menú</button>
     </div>
 </div>
 
 <script>
     const rulesDB = {
         mujeres: {
-            "1": { id: "N° 1", name: "Distribución Estándar A", risk: "BAJO", stars: "⭐", genre: "Clásico de la Naturaleza", page: "Pág. 1", desc: "Si tiene culo, no tiene teta. Ley de compensación y equilibrio clásico de la naturaleza.", action: "Estable. Zona segura." },
-            "2": { id: "N° 2", name: "Distribución Estándar B", risk: "BAJO", stars: "⭐", genre: "Lógica Inversa", page: "Pág. 1", desc: "Si tiene tetas, no tiene culo. Lógica inversa obligatoria del primer postulado.", action: "Clásico confiable." },
-            "3": { id: "N° 3", name: "Impuesto Ambiental", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Drama Estético", page: "Pág. 1", desc: "Si tiene teta y culo, es fea de cara. La física demuestra que el universo no otorga beneficios completos gratis.", action: "Evaluar de espaldas." },
-            "4": { id: "N° 4", name: "El Glitch de la Matrix", risk: "CRÍTICO", stars: "⭐⭐⭐⭐", genre: "Ciencia Ficción / Suspenso", page: "Pág. 1", desc: "Si tiene tetas, culo y es bonita de cara, una de dos variables es matemáticamente obligatoria: o es estúpida o era hombre antes.", action: "Investigar trasfondo tras las pistas visuales." },
-            "5": { id: "N° 5", name: "La Paradoja del Desierto", risk: "BAJO", stars: "⭐", genre: "Minimalismo Absoluto", page: "Pág. 1", desc: "Sin tetas, sin culo y fea de cara. Cero balance físico. Su valor depende al 100% de factores económicos externos o carisma legendario.", action: "Trato estrictamente de amigos." },
-            "6": { id: "N° 6", name: "El Unicornio de Perfil Bajo", risk: "BAJO", stars: "⭐⭐", genre: "Romance de Oficina", page: "Pág. 2", desc: "Sin tetas, sin culo, pero con un rostro bellísimo. Conocida como 'la bonita de oficina'. Engaña de lejos, pero carece de curvas en proximidad.", action: "Ideal para una relación tierna." },
-            "7": { id: "N° 7", name: "Efecto Tuning (Inversión)", risk: "CRÍTICO", stars: "⭐⭐⭐⭐", genre: "Acción Financiera", page: "Pág. 2", desc: "Tetas gigantes y culo prominente, pero con obvia manufactura plástica. Financiamiento externo comprobado (padres, ex, o patrocinadores).", action: "Peligro severo para tu billetera." },
-            "8": { id: "N° 8", name: "La Trampa del Gimnasio", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Deporte y Suspenso", page: "Pág. 2", desc: "Glúteos de infarto y piernas perfectas, pero espalda más desarrollada que la tuya. Capacidad de levantarte en peso muerto.", action: "No hacerla enojar bajo ningún concepto." },
-            "9": { id: "N° 9", name: "Luz de Cochera (Espejismo)", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Misterio Nocturno", page: "Pág. 2", desc: "Silueta confusa a 50 metros que aparenta un deportivo de lujo, pero al aproximarse se activa la Regla N°3 de manera retroactiva.", action: "Verificar iluminación antes de actuar." },
-            "10": { id: "N° 10", name: "Ley de la Tóxica Premium", risk: "CHERNÓBIL", stars: "⭐⭐⭐⭐⭐", genre: "Terror Psicológico", page: "Pág. 2", desc: "Rompe la Regla N°4: Tiene cuerpo, cara hermosa y además es sumamente inteligente. Implicación psicológica: Está completamente loca.", action: "Evacuación inmediata o asume las consecuencias." },
-            "11": { id: "N° 11", name: "La 'Cute' de Redes", risk: "BAJO", stars: "⭐⭐", genre: "Fantasía Digital", page: "Pág. 2", desc: "Cuerpo promedio, cara común, pero domina los filtros en plataformas simulando perfección absoluta. El choque de realidad física es duro.", action: "Exigir videollamada sin filtros." },
-            "12": { id: "N° 12", name: "La Bendecida Inalcanzable", risk: "BAJO", stars: "⭐⭐", genre: "Drama VIP", page: "Pág. 2", desc: "Posee absolutamente todo (cuerpo, cara, intelecto), pero su escasa huella digital o misterio social la hacen un objetivo indescifrable.", action: "Solo para apreciar de lejos. No insistir." },
-            "13": { id: "N° 13", name: "Paquete de Datos Ilimitado", risk: "BAJO", stars: "⭐", genre: "Comedia de Culto", page: "Pág. 2", desc: "No destaca en ningún eje anatómico, pero posee un carisma, labia y actitud tan potentes que anulan por completo cualquier carencia visual.", action: "Altamente adictiva. Proceder." },
-            "14": { id: "N° 14", name: "Efecto Gamer / Otaku", risk: "BAJO", stars: "⭐⭐", genre: "Cultura Geek", page: "Pág. 2", desc: "Físicamente en el estándar inferior, pero comparte aficiones de nicho, ve animé y domina los videojuegos. Suma +3 puntos automáticos en valoración.", action: "Valor estratégico muy alto. Asegurar." },
-            "15": { id: "N° 15", name: "Fresa de Alto Mantenimiento", risk: "CRÍTICO", stars: "⭐⭐⭐⭐", genre: "Terror Financiero", page: "Pág. 2", desc: "Puede alinearse con la Regla 1 o 2, pero su costo operativo mensual (viajes, cenas VIP) eleva drásticamente el costo por centímetro de atributo.", action: "Requiere solvencia o tarjeta corporativa." },
-            "16": { id: "N° 16", name: "La Ley del Pelo Largo", risk: "BAJO", stars: "⭐", genre: "Ilusión Óptica", page: "Pág. 3", desc: "Carece de rostro, busto y glúteos significativos, pero posee una cabellera espectacular. Genera enamoramiento cervical hasta que voltea.", action: "Caminar por delante de ella para evaluar." },
-            "17": { id: "N° 17", name: "La Milf Promesa", risk: "BAJO", stars: "⭐⭐", genre: "Inversión del Futuro", page: "Pág. 3", desc: "Actualmente en un rango estándar, pero el análisis genético de su madre demuestra que envejecerá como un vino de alta gama.", action: "Inversión inmobiliaria a largo plazo." },
-            "18": { id: "N° 18", name: "El Enigma Camaleón", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Efectos Especiales", page: "Pág. 3", desc: "Un martes por la tarde clasifica como Regla N°5 (desastre absoluto), pero un sábado producida con vestidos y maquillaje roza la Regla Nº4.", action: "Solo agendar citas nocturnas de fin de semana." },
-            "19": { id: "N° 19", name: "La Hippie Natural", risk: "MEDIO", stars: "⭐⭐", genre: "Aventura Ecológica", page: "Pág. 3", desc: "Cuerpo natural estético bajo Regla 1 o 2, rostro armónico, pero rechaza la depilación convencional y el uso de desodorantes industriales.", action: "Dilema ideológico y olfativo. A discreción." },
-            "20": { id: "N° 20", name: "Filtro Final (Paz Mental)", risk: "BAJO", stars: "💖", genre: "Obra Maestra Premiada", page: "Pág. 3", desc: "Ignora todas las reglas estéticas previas. Cocina de manera espectacular, te apoya en tus locuras, es leal y te quita el estrés diario.", action: "El verdadero Jefe Final. Casarse de inmediato." }
+            "1": { id: "Perfil A", name: "Distribución Estándar Confort", risk: "BAJO", stars: "⭐", genre: "Clásico de la Naturaleza", page: "Pág. 1", desc: "Silueta enfocada en simetría posterior con proporción estilizada en la parte superior. Equilibrio estético tradicional.", action: "Zona muy armoniosa y estable." },
+            "2": { id: "Perfil B", name: "Distribución Estándar Inversa", risk: "BAJO", stars: "⭐", genre: "Lógica Inversa", page: "Pág. 1", desc: "Estructura enfocada en volumen superior con líneas sutiles y deportivas abajo. Proporción clásica urbana.", action: "Un perfil confiable y bien balanceado." },
+            "3": { id: "Perfil C", name: "Estilo Alternativo / Minimalista", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Cultura de Nicho", page: "Pág. 1", desc: "Atributos físicos llamativos, pero rasgos faciales con una estética muy particular o de nicho que requiere afinidad artística.", action: "Conocer bien sus gustos antes de avanzar." },
+            "4": { id: "Perfil D", name: "El Efecto Estrella de Cine", risk: "ALTO", stars: "⭐⭐⭐⭐", genre: "Suspenso / Alta Gama", page: "Pág. 1", desc: "Presenta una simetría impecable en rostro, líneas deportivas en la silueta y carisma magnético. Suele llamar la atención en todo lugar público.", action: "Asegurar que compartan valores para evitar malos entendidos." },
+            "5": { id: "Perfil E", name: "Minimalismo Casual Absoluto", risk: "BAJO", stars: "⭐", genre: "Estilo Clásico Sencillo", page: "Pág. 1", desc: "Líneas físicas neutras, sin destacar en volumen ni maquillaje extravagante. Su fuerte está en la conversación o soporte personal.", action: "Ideal para lazos de amistad genuina o apoyo mutuo." },
+            "6": { id: "Perfil F", name: "Afinidad de Perfil Bajo", risk: "BAJO", stars: "⭐⭐", genre: "Romance de Oficina", page: "Pág. 2", desc: "Estilo casual, rostro muy tierno y amigable. Una presencia dulce que destaca más por la cercanía que por curvas pronunciadas.", action: "Excelente para entablar planes cotidianos de tranquilidad." },
+            "7": { id: "Perfil G", name: "Inversión Estética y Diseño", risk: "ALTO", stars: "⭐⭐⭐⭐", genre: "Estilo Vanguardista", page: "Pág. 2", desc: "Atributos de alta producción visual y retoques de diseño evidentes. Estilo urbano llamativo que requiere alta agenda de actividades.", action: "Monitorear si el ritmo de vida coincide con el tuyos." },
+            "8": { id: "Perfil H", name: "La Entrenadora de Elite", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Deporte y Disciplina", page: "Pág. 2", desc: "Estructura atlética imponente, entrenamiento constante y rendimiento deportivo superior a la media de la población urbana.", action: "Acompañar en hábitos de alimentación y madrugadas de gimnasio." },
+            "9": { id: "Perfil I", name: "Espejismo de Evento Nocturno", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Estética y Luces", page: "Pág. 2", desc: "Silueta que resalta de forma deslumbrante bajo condiciones de fiesta y vestuario especial, variando a un estilo mucho más relajado de día.", action: "Valorar el perfil en su faceta cotidiana." },
+            "10": { id: "Perfil J", name: "Intensidad Emocional Premium", risk: "EXTREMO", stars: "⭐⭐⭐⭐⭐", genre: "Drama de Alta Tensión", page: "Pág. 2", desc: "Posee todos los atributos ideales en carisma y estética, sumado a una personalidad de alta demanda afectiva, reactiva y protectora al extremo.", action: "Requiere alta madurez emocional y paciencia para la convivencia." },
+            "11": { id: "Perfil K", name: "Fantasía Digital / Fotogénica", risk: "BAJO", stars: "⭐⭐", genre: "Fantasía en Plataformas", page: "Pág. 2", desc: "Domina perfectamente los ángulos e iluminación digital. En vivo presenta una calidez y naturalidad distintas pero amigables.", action: "Priorizar siempre los encuentros cara a cara." },
+            "12": { id: "Perfil L", name: "Perfil de Reserva Social", risk: "BAJO", stars: "⭐⭐", genre: "Misterio / Privado", page: "Pág. 2", desc: "Estética sobresaliente combinada con una presencia nula o muy restringida en círculos masivos o plataformas de internet.", action: "Avanzar con respeto y valorando su privacidad." },
+            "13": { id: "Perfil M", name: "Líder de Carisma Colectivo", risk: "BAJO", stars: "⭐", genre: "Comedia de Éxito", page: "Pág. 2", desc: "Más allá de las proporciones físicas, su ingenio, sentido del humor y simpatía magnética conquistan a cualquier grupo social de inmediato.", action: "Asegurar tiempo de calidad, es una gran compañía." },
+            "14": { id: "Perfil N", name: "Cultura Geek / Compartida", risk: "BAJO", stars: "⭐⭐", genre: "Cultura Pop", page: "Pág. 2", desc: "Estilo casual cómodo. Comparte aficiones de videojuegos, maratones de animación japonesa o cultura pop, sumando puntos de afinidad.", action: "Perfecta para largas tardes de juego cooperativo." },
+            "15": { id: "Perfil O", name: "Estilo de Vida Exclusivo", risk: "ALTO", stars: "⭐⭐⭐⭐", genre: "Ritmo de Alta Gama", page: "Pág. 2", desc: "Perfil enfocado en visitas a locaciones de alto costo, viajes recurrentes y una agenda de esparcimiento que requiere alta inversión de tiempo.", action: "Planificar presupuestos conjuntos con anticipación." },
+            "16": { id: "Perfil P", name: "Efecto Silueta Estilizada", risk: "BAJO", stars: "⭐", genre: "Estilo Clásico", page: "Pág. 3", desc: "Presencia elegante basada en porte alto y un cabello largo que resalta en la multitud, definiendo un estilo muy distinguido.", action: "Disfrutar de paseos urbanos elegantes." },
+            "17": { id: "Perfil Q", name: "Proyección de Éxito Futuro", risk: "BAJO", stars: "⭐⭐", genre: "Inversión y Estabilidad", page: "Pág. 3", desc: "Perfil con gran proyección de sofisticación y estabilidad a largo plazo. Envejece con gran estilo siguiendo su línea familiar.", action: "Una excelente apuesta para planes de vida compartidos." },
+            "18": { id: "Perfil R", name: "El Enigma Camaleónico", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Transformación Estética", page: "Pág. 3", desc: "Alterna de forma impresionante entre un look deportivo sencillo de lunes a viernes y una presencia deslumbrante de gala el fin de semana.", action: "Disfrutar de ambas facetas con naturalidad." },
+            "19": { id: "Perfil S", name: "Estilo Orgánico / Natural", risk: "MEDIO", stars: "⭐⭐", genre: "Estilo Libre Ecológico", page: "Pág. 3", desc: "Alineada con la sustentabilidad. Prefiere la ausencia de maquillaje industrial, vestuario de fibras orgánicas y cuidado del medio ambiente.", action: "Afinidad en filosofías de vida natural." },
+            "20": { id: "Perfil T", name: "El Pilar de Paz Mental", risk: "BAJO", stars: "💖", genre: "Obra Maestra Premiada", page: "Pág. 3", desc: "Supera cualquier estándar superficial. Ofrece apoyo incondicional, excelente comunicación, lealtad y reduce el estrés del día a día.", action: "El perfil ideal para un proyecto de vida sólido." }
         },
         hombres: {
-            "1": { id: "N° 1", name: "El Gym-Bro de Bolsillo", risk: "BAJO", stars: "⭐", genre: "Comedia de Acción", page: "Pág. 1", desc: "Brazos gigantes, espalda de coloso, pero mide 1.60m. La genética se expandió horizontalmente.", action: "Mantener fuera del alcance de estanterías altas." },
-            "2": { id: "N° 2", name: "El Alumbrado Financiero", risk: "BAJO", stars: "⭐⭐", genre: "Ficción Económica", page: "Pág. 1", desc: "Auto de lujo financiado a 60 cuotas, zapatillas de marca con el logo gigante, pero saldo negativo en la Cuenta RUT.", action: "Monitorear flujos de caja y no prestarle dinero." },
-            "3": { id: "N° 3", name: "El Impuesto del Carito", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Cine Mudo / Drama", page: "Pág. 1", desc: "Excelente estructura facial y simetría física, pero su vocabulario no supera las tres palabras. Aburrimiento garantizado.", action: "Útil para fotografías, inviable para viajes largos." },
-            "4": { id: "N° 4", name: "El Minazo Misterioso", risk: "CRÍTICO", stars: "⭐⭐⭐⭐", genre: "Suspenso / Doble Identidad", page: "Pág. 1", desc: "Alto, finta de modelo, atento y soltero de forma sospechosa. No deja rastro alguno en sus redes sociales digitales.", action: "Exigir coordenadas satelitales en tiempo real." },
-            "5": { id: "N° 5", name: "El Mantenido Carismático", risk: "BAJO", stars: "⭐", genre: "Comedia Romántica", page: "Pág. 1", desc: "Sin empleo, sin vehículo, sin rutinas de ejercicio, pero posee una labia poética que hechiza a todo el perímetro urbano.", action: "Cortar subsidios de inmediato." },
-            "6": { id: "N° 6", name: "El Lindo de Cristal", risk: "BAJO", stars: "⭐⭐", genre: "Melodrama Juvenil", page: "Pág. 2", desc: "Estética impecable estilo K-Pop, fragilidad estructural extrema. Incapaz de cambiar un neumático o mover muebles.", action: "Manipular con extremo cuidado para evitar fracturas." },
-            "7": { id: "N° 7", name: "El Alucín de Zona Escolar", risk: "CRÍTICO", stars: "⭐⭐⭐⭐", genre: "Acción Extrema", page: "Pág. 2", desc: "Camioneta ruidosa, accesorios dorados y actitud extravagante. Sube material arriesgado a sus historias privadas.", action: "Mantener distancia prudente de la policía local." },
-            "8": { id: "N° 8", name: "El Monotemático del Crossfit", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Documental Deportivo", page: "Pág. 2", desc: "Físico óptimo, pero su espectro conversacional se reduce a gramos de proteína, creatina y récords personales al natural.", action: "Prepararse para una dieta estricta de pollo y arroz sin sal." },
-            "9": { id: "N° 9", name: "Espejismo de Barba Candado", risk: "MEDIO", stars: "⭐⭐", genre: "Efectos Especiales", page: "Pág. 2", desc: "La barba le otorga un aire rústico y varonil. El día que se afeita se descubre una ausencia total de mentón.", action: "Solicitar archivos fotográficos del año anterior." },
-            "10": { id: "N° 10", name: "El Tiburón de la Micro", risk: "CHERNÓBIL", stars: "⭐⭐⭐⭐⭐", genre: "Terror Financiero", page: "Pág. 2", desc: "Traje formal desgastado, discursos sobre activos digitales y libertad financiera, pero solicita dinero prestado para el transporte público.", action: "Evacuar antes de ser reclutado en un esquema piramidal." },
-            "11": { id: "N° 11", name: "El Streamer Subterráneo", risk: "BAJO", stars: "⭐", genre: "Cyberpunk de Clóset", page: "Pág. 2", desc: "Evita la luz solar directa, alimentación basada en energéticas y su única red social activa es un servidor de Discord.", action: "Proveer bloqueador solar factor 50 de manera urgente." },
-            "12": { id: "N° 12", name: "El Inalcanzable de Elite", risk: "BAJO", stars: "⭐⭐", genre: "Drama de Alta Sociedad", page: "Pág. 2", desc: "Solvencia histórica familiar, propiedades vacacionales, pero su algoritmo social es sumamente privado y cerrado.", action: "No desperdiciar recursos tácticos." },
-            "13": { id: "N° 13", name: "El Feo con Tumbao", risk: "BAJO", stars: "⭐", genre: "Musical / Comedia", page: "Pág. 2", desc: "Nulo atractivo en ejes convencionales, pero domina las artes culinarias, el baile y el humor de alta gama.", action: "Activo de alto valor. Asegurar." },
-            "14": { id: "N° 14", name: "El Coleccionista de Animé", risk: "BAJO", stars: "⭐⭐", genre: "Anime / Animación", page: "Pág. 2", desc: "Indumentaria gigante de Akatsuki, presupuesto destinado a figuras coleccionables. Nula tasa de infidelidad detectada.", action: "Garantía de fidelidad absoluta." },
-            "15": { id: "N° 15", name: "El Zorrón de Temporada", risk: "CRÍTICO", stars: "⭐⭐⭐⭐", genre: "Reality Show", page: "Pág. 2", desc: "Léxico basado en muletillas de balnearios exclusivos, adicto a las motos acuáticas y propenso a liquidar presupuestos en una noche.", action: "Monitorear límites de tarjetas de crédito." },
-            "16": { id: "N° 16", name: "La Trampa del Jockey Urbano", risk: "BAJO", stars: "⭐", genre: "Misterio / Caída Libre", page: "Pág. 3", desc: "Perspectiva posterior impecable con gorra urbana. Al retirarla se evidencia un avance avanzado del mapa de calvicie.", action: "Evaluar el perímetro frontal en condiciones de luz diurna." },
-            "17": { id: "N° 17", name: "El Sugar en Práctica", risk: "BAJO", stars: "⭐⭐", genre: "Finanzas / Drama", page: "Pág. 3", desc: "Ofrece financiar cenas exclusivas, pero audita detalladamente la boleta y procesa el pago a múltiples cuotas sin interés.", action: "Inversión con retorno lento pero seguro." },
-            "18": { id: "N° 18", name: "El Executive Camaleónico", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Ficción Corporativa", page: "Pág. 3", desc: "Aspecto corporativo premium de lunes a viernes. Los domingos en el mercado local con sandalias es completamente irreconocible.", action: "Restringir interacciones a horarios de oficina." },
-            "19": { id: "N° 19", name: "El Trovador Habitacional", risk: "MEDIO", stars: "⭐⭐", genre: "Aventura / Documental", page: "Pág. 3", desc: "Atractivo silvestre, ejecución musical destacada, pero carece de domicilio fijo y habita en estructuras temporales.", action: "Dilema de estabilidad residencial." },
-            "20": { id: "N° 20", name: "El Partner Definitivo", risk: "BAJO", stars: "💖", genre: "Obra Maestra Romántica", page: "Pág. 3", desc: "Soporte absoluto en crisis, destreza en el ensamblaje de mobiliario, habilidades culinarias y proveedor de estabilidad psicológica.", action: "El verdadero Jefe Final. Casarse inmediatamente." }
+            "1": { id: "Perfil A", name: "Deportista Compacto", risk: "BAJO", stars: "⭐", genre: "Comedia de Acción", page: "Pág. 1", desc: "Desarrollo muscular sobresaliente en tren superior, pero con una estatura promedio o compacta.", action: "Dinámico y activo para actividades físicas." },
+            "2": { id: "Perfil B", name: "Proyección Financiera Alumbrada", risk: "BAJO", stars: "⭐⭐", genre: "Estilo de Vida Urbano", page: "Pág. 1", desc: "Enfocado en marcas visibles, vehículos llamativos a cuotas y asistencia a eventos sociales para proyectar estatus elevado.", action: "Mantener los límites financieros bien claros." },
+            "3": { id: "Perfil C", name: "Simetría Silenciosa", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Cine Mudo / Enigma", page: "Pág. 1", desc: "Excelente apariencia física y facciones, pero de conversación reservada, minimalista o sumamente breve.", action: "Ideal para fotografías; requiere incentivar el diálogo." },
+            "4": { id: "Perfil D", name: "El Perfil Reservado Elegante", risk: "ALTO", stars: "⭐⭐⭐⭐", genre: "Misterio / Doble Identidad", page: "Pág. 1", desc: "Estatura alta, porte de pasarela, modales cuidados y nula información pública disponible sobre sus actividades.", action: "Establecer lazos de confianza paso a paso." },
+            "5": { id: "Perfil E", name: "Carisma Bohemio Relajado", risk: "BAJO", stars: "⭐", genre: "Comedia Romántica", page: "Pág. 1", desc: "Sin rutinas estrictas de oficina ni horarios fijos, pero con una labia y dotes artísticos que encantan en reuniones.", action: "Fomentar el equilibrio y la organización compartida." },
+            "6": { id: "Perfil F", name: "Estética Juvenil Delicada", risk: "BAJO", stars: "⭐⭐", genre: "Melodrama Juvenil", page: "Pág. 2", desc: "Look impecable de tendencia actual (estilo K-Pop), enfocado al cuidado personal pero con hábitos físicos hogareños.", action: "Ideal para actividades tranquilas en interiores." },
+            "7": { id: "Perfil G", name: "Aventurero Urbano Extravagante", risk: "ALTO", stars: "⭐⭐⭐⭐", genre: "Acción Extrema", page: "Pág. 2", desc: "Vehículos modificados, accesorios llamativos y gusto por actividades de alta velocidad o adrenalina pública.", action: "Mantener medidas de seguridad en trayectos grupales." },
+            "8": { id: "Perfil H", name: "Entusiasta del Alto Rendimiento", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Documental Deportivo", page: "Pág. 2", desc: "Físico atlético óptimo. Su agenda gira en torno a tiempos de entrenamiento, suplementación y récords físicos.", action: "Adecuarse a un estilo de vida saludable y estructurado." },
+            "9": { id: "Perfil I", name: "Diseño de Estilo Rústico (Barba)", risk: "MEDIO", stars: "⭐⭐", genre: "Diseño de Imagen", page: "Pág. 2", desc: "La estética de su rostro cambia notablemente según el cuidado o presencia de su barba, jugando con las sombras faciales.", action: "Valorar sus diferentes facetas de presentación." },
+            "10": { id: "Perfil J", name: "Emprendedor de Alta Ficción", risk: "EXTREMO", stars: "⭐⭐⭐⭐⭐", genre: "Drama Corporativo", page: "Pág. 2", desc: "Discursos constantes sobre inversiones intangibles, activos digitales y libertad total, requiriendo en ocasiones apoyo cotidiano.", action: "Verificar la viabilidad de los proyectos antes de asociarse." },
+            "11": { id: "Perfil K", name: "Operador Digital Digital-Only", risk: "BAJO", stars: "⭐", genre: "Cultura Digital", page: "Pág. 2", desc: "Poco afecto a las salidas diurnas, alta interacción a través de Discord y afición por la tecnología avanzada.", action: "Incentivar paseos al aire libre durante los fines de semana." },
+            "12": { id: "Perfil L", name: "Perfil Corporativo Corporativo Premium", risk: "BAJO", stars: "⭐⭐", genre: "Alta Sociedad", page: "Pág. 2", desc: "Círculo social muy cerrado, excelente estatus laboral e historial familiar estable, manteniendo bajo perfil en redes.", action: "Respetar los tiempos de su agenda profesional." },
+            "13": { id: "Perfil M", name: "Personalidad de Ritmo y Humor", risk: "BAJO", stars: "⭐", genre: "Musical / Comedia", page: "Pág. 2", desc: "Rasgos físicos comunes, pero destaca ampliamente en la cocina, el baile y el humor refinado.", action: "Diversión asegurada; un excelente compañero social." },
+            "14": { id: "Perfil N", name: "Coleccionista de Cultura Pop", risk: "BAJO", stars: "⭐⭐", genre: "Anime / Colección", page: "Pág. 2", desc: "Enfocado en indumentaria de sagas, pasatiempos de colección e historias de ficción. Altísima lealtad relacional.", action: "Excelente para ambientes familiares y planes en casa." },
+            "15": { id: "Perfil O", name: "Perfil Viajero Frecuente", risk: "ALTO", stars: "⭐⭐⭐⭐", genre: "Aventura y Viajes", page: "Pág. 2", desc: "Gusto por balnearios costeros, deportes náuticos y un ritmo de gastos intensivo en eventos de temporada.", action: "Coordinar presupuestos comunes para el esparcimiento." },
+            "16": { id: "Perfil P", name: "Efecto Accesorios Urbanos", risk: "BAJO", stars: "⭐", genre: "Diseño Urbano", page: "Pág. 3", desc: "Look urbano marcado por el uso constante de gorras u accesorios. Al variar su vestuario muestra facetas muy distintas.", action: "Conocer sus gustos en vestuario casual." },
+            "17": { id: "Perfil Q", name: "Inversor en Cenas y Cortesías", risk: "BAJO", stars: "⭐⭐", genre: "Finanzas Tradicionales", page: "Pág. 3", desc: "Organiza planes en lugares interesantes cuidando los detalles administrativos del presupuesto de forma muy ordenada.", action: "Planificación mutua y ordenada de actividades." },
+            "18": { id: "Perfil R", name: "Perfil Ejecutivo Camaleón", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Estilo Corporativo", page: "Pág. 3", desc: "Presencia muy formal de lunes a viernes en ámbitos de oficina y look totalmente relajado e informal los fines de semana.", action: "Disfrutar de su adaptabilidad a los entornos." },
+            "19": { id: "Perfil S", name: "Músico de Estilo Libre", risk: "MEDIO", stars: "⭐⭐", genre: "Aventura Artística", page: "Pág. 3", desc: "Atracción por el arte, dominio de instrumentos musicales y un estilo de vida flexible con poca atadura a rutinas fijas.", action: "Ideal para compartir un ambiente bohemio y creativo." },
+            "20": { id: "Perfil T", name: "El Compañero de Equipo Ideal", risk: "BAJO", stars: "💖", genre: "Obra Maestra Romántica", page: "Pág. 3", desc: "Gran soporte en momentos complejos, proactivo en tareas del hogar, excelentes dotes culinarias y proveedor de balance emocional.", action: "Un perfil excepcional para construir planes mutuos a largo plazo." }
         }
     };
 
-    // BANCO DE PREGUNTAS ACTUALIZADO (REMOCIÓN DE Nº EN REDES Y ADICIÓN DE APARTADO CITAS)
     const questions = {
         mujeres: [
-            { q: "¿Cómo calificarías el nivel de su escote (delantera)?", options: ["Nada", "Algo", "Bueno", "Caray", "Divina"] },
-            { q: "¿Cómo calificarías el nivel de su retaguardia (glúteos)?", options: ["Nada", "Algo", "Bueno", "Caray", "Divina"] },
-            { q: "¿Qué tal anda de carita (lindura de rostro)?", options: ["Pasa piola / No salva", "Simpática", "Bonita", "Terrible de hermosa"] },
-            { q: "¿Qué estructura, largo o peinado lleva en el cabello?", options: ["Pelo ultra corto / Rapado lateral", "Corte Bob / Melena media estándar", "Cabellera gigante, larga y espectacular", "Tomado con pinza desordenada todo el día", "Rastas / Trenzas artesanales"] },
-            { q: "¿Cuál es el color o diseño de tinte del espécimen?", options: ["Color natural clásico (Castaño / Negro)", "Rubio ceniza / Platinado tuning", "Pelirrojo / Cobrizo fuego", "Colores de animé / Fantasía (Azul, Rosado)", "Mechas californianas / Balayage"] },
-            { q: "¿Cómo clasificarías sus ojos y su mirada?", options: ["Café oscuro / Pardo estándar", "Verdes / Azules / Claros magnéticos", "Heterocromía pura", "Mirada cansada / Ojeras de mapache", "Ojos achinados expresivos"] },
-            // APARTADO REDES REFORMULADO SIN "Nº"
-            { q: "¿Qué tipo de contenido suele subir a sus redes sociales?", options: ["Con filtro para mejorar belleza", "Sin filtro, al natural", "Normalmente a sus mejores amigos sube fotos en ropa interior", "Casi no sube fotos de sí misma"] },
-            { q: "Al momento de salir a beber alcohol juntas/os:", options: ["Bebe moderado y conversa tranquilo", "Se transforma por completo / Show garantizado", "Gasta una fortuna pidiendo la carta VIP", "Prefiere quedarse en casa (No bebe / Aburrida)"] },
-            { q: "¿Tiene hábitos de fumar o consume estupefacientes?", options: ["100% libre de humo y sustancias", "Fuma tabaco/vapea de forma social", "Consume estupefacientes recreativos recurrentes"] },
-            { q: "¿Hace cuánt tempo terminó con su último Ex?", options: ["Menos de una semana / Sigue llorando", "Entre 1 y 3 meses (Terreno inestable)", "Más de 6 meses / Ciclo cerrado", "Nunca ha tenido una relación seria"] },
-            // NUEVO APARTADO: CITAS Y ENTRENIMIENTO DE PAREJA
-            { q: "¿Qué tipo de cita prefiere o le encanta hacer con su pareja?", options: ["Restaurante VIP lujoso, bar estético e historias para redes", "Quedarse en cama viendo Netflix, series y pidiendo delivery", "Naturaleza, trekking, acampar o un parque al aire libre", "Ir a un concierto masivo, festival de música o techno-rave", "Cita geek: jugar videojuegos juntos, ir a comer ramen o arcade"] },
-            { q: "¿Tiene algún retoque o tuneo físico evidente?", options: ["100% Natural, orgánica", "Su arreglín piola", "Tuneada completa de fábrica"] },
-            { q: "¿Qué tal anda en el amoblaje de cabeza y cocina?", options: ["Normal", "Loca de remate", "Cocina espectacular, te da paz y te apaña"] },
-            { q: "¿Qué tanto gasta en salidas, cenas o estilo de vida?", options: ["Humilde / Alaraquea poco", "Alto mantenimiento / Gasto operativo nivel VIP"] }
+            { q: "¿Cómo calificarías su estilo en el Atributo A (Líneas superiores / Busto)?", options: ["Sutil / Minimalista", "Moderado", "Destacado", "Imponente", "Estilo Alta Costura"] },
+            { q: "¿Cómo calificarías su balance en el Atributo B (Líneas de silueta / Glúteos)?", options: ["Sutil / Minimalista", "Moderado", "Destacado", "Imponente", "Estilo Fitness"] },
+            { q: "¿Qué tal su armonía facial (Rostro y expresiones)?", options: ["Estilo natural sencillo", "Simpática", "Muy bonita", "Facciones de impacto visual"] },
+            { q: "¿Qué estructura o look lleva normalmente en el cabello?", options: ["Estilo alternativo / Ultra corto", "Corte Bob / Melena media elegante", "Cabellera larga, abundante y clásica", "Recogido casual la mayor parte del día", "Estilo bohemio / Trenzas artesanales"] },
+            { q: "¿Cuál es la propuesta de coloración capilar?", options: ["Tonalidad natural (Castaño / Negro / Rubio natural)", "Reflejos claros / Platinado vanguardista", "Pelirrojo / Cobrizo intenso", "Tonos de fantasía (Pasteles, Azul, Rosado)", "Estilo Balayage / Degradado suave"] },
+            { q: "¿Cómo definirías el impacto de su mirada?", options: ["Tonalidades oscuras tradicionales", "Ojos claros / Mirada muy expresiva", "Facciones únicas o heterocromía", "Expresión cansada / Estilo intelectual", "Facciones orientales o muy definidas"] },
+            { q: "¿Qué tipo de contenido comparte habitualmente en sus redes sociales?", options: ["Fotografías con edición o filtros estéticos", "Imágenes espontáneas al natural", "Contenido exclusivo o historias en círculos cerrados", "Presencia mínima / Casi no comparte fotografías personales"] },
+            { q: "Al momento de compartir eventos sociales o salidas nocturnas:", options: ["Consumo moderado, priorizando la conversación", "Mucha energía / Dinamizadora del evento", "Preferencia por cartas de alta gama y locaciones VIP", "Preferencia por planes caseros y ambientes tranquilos"] },
+            { q: "¿Cuáles son sus hábitos respecto al humo o esparcimiento?", options: ["Espacio 100% libre de humo y sustancias", "Uso social de vaporizadores o tabaco", "Asistencia recurrentes a ambientes festivos alternativos"] },
+            { q: "¿Cuánto tiempo ha transcurrido desde el cierre de su última relación?", options: ["Ruptura muy reciente (Proceso de adaptación)", "Período intermedio (1 a 3 meses / Transición)", "Ciclo completamente cerrado (Más de 6 meses)", "Sin historial de relaciones formales previas"] },
+            { q: "¿Qué tipo de cita o panorama prefiere disfrutar en pareja?", options: ["Cena en restorán de tendencia, coctelería y registro fotográfico", "Tarde de películas en casa, comodidad y comida a domicilio", "Actividades al aire libre, senderismo o paseos por parques", "Asistencia a conciertos, festivales de música o eventos masivos", "Planes geek: juegos de mesa, videojuegos o ferias temáticas"] },
+            { q: "¿Presenta intervenciones estéticas o de diseño corporal?", options: ["Líneas 100% naturales u orgánicas", "Detalles o retoques sutiles", "Diseño corporal avanzado de alta producción"] },
+            { q: "¿Cómo calificarías su nivel de organización y destreza diaria?", options: ["Estándar fluido", "Personalidad de alta intensidad y temperamento fuerte", "Gran destreza culinaria, asertividad y creadora de paz mental"] },
+            { q: "¿Cuál es el nivel estimado de mantenimiento de sus pasatiempos?", options: ["Estilo de vida sencillo y adaptable", "Preferencia por actividades de alta gama y presupuestos VIP"] }
         ],
         hombres: [
-            { q: "¿Cómo calificarías su musculatura o porte físico?", options: ["Nada / Flaquito / Guatita parrillera", "Algo armado", "Bueno / Pasa metido en el gimnasio"] },
-            { q: "¿Cómo anda de estatus o alumbrado de lujos?", options: ["Humilde / Anda a pata", "Alumbra marcas y auto del año que debe", "Alucín completo / Camioneta gigante"] },
-            { q: "¿Qué tal el rostro del espécimen?", options: ["Feo pero simpático", "Promedio", "Carita de modelo / Minazo"] },
-            { q: "Medidas del espécimen urbano:", options: ["Estándar/bajo de estatura", "Sí, es alto (más de 1.80m)"] },
-            { q: "Diseño capilar u ocultamiento urbano:", options: ["Pelo corto normal / Degradado clásico", "Corte urbano con diseños", "Cabello largo estilo vikingo / Man-bun", "Jockey / Gorra puesta las 24 horas del día"] },
-            { q: "Tonalidad e impacto visual de sus ojos:", options: ["Oscuros comunes", "Claros / Verdes / Azules impactantes", "Mirada de sueño / Cansancio profundo"] },
-            // APARTADO REDES REFORMULADO SIN "Nº"
-            { q: "¿Qué tipo de contenido suele subir a sus redes sociales?", options: ["Con filtro para mejorar belleza", "Sin filtro, al natural", "Normalmente a sus mejores amigos sube fotos en ropa interior", "Casi no sube fotos de sí mismo"] },
-            { q: "Al momento de salir a beber alcohol juntos/as:", options: ["Paga su parte y controla el ambiente", "Se le apaga la tele / Se pone violento o denso", "Alardea invitando rondas que no puede pagar", "No sale a beber / Prefiere quedarse jugando en PC"] },
-            { q: "¿Tiene hábitos de fumar o consume estupefacientes?", options: ["100% libre de humo y sustancias", "Fuma tabaco/vapea de forma social", "Consume estupefacientes recreativos recurrentes"] },
-            { q: "¿Hace cuánto tiempo terminó con su última Ex?", options: ["Menos de una semana / Sigue acosando", "Entre 1 y 3 meses (Despecho activo)", "Más de 6 meses / Superado", "Soltero histórico de campo"] },
-            // NUEVO APARTADO: CITAS Y ENTRENIMIENTO DE PAREJA
-            { q: "¿Qué tipo de cita prefiere o le encanta hacer con su pareja?", options: ["Ir a un bar clandestino caro, comer sushi e impresionar", "Hacer maratón de películas en casa, regalonear o cocinar juntos", "Salir a correr, ir al cerro, andar en bicicleta o entrenar juntos", "Ir a una tocata de rock, festival de música electrónica o disco", "Quedarse en Discord jugando cooperativos o viendo anime entero"] },
-            { q: "¿Cómo es su labia o capacidad de engrupimiento?", options: ["Tímido / Habla poco", "Labia nivel Dios / Te vende un hielo"] },
-            { q: "Estilo y comportamiento de Campo:", options: ["Normal", "Zorrón de Pucón insoportable", "Partner definitivo / Te cocina y te da paz"] },
-            { q: "¿Qué tal su billetera reales?", options: ["Normal", "Es un Sugar en práctica (paga a 6 cuotas)"] }
+            { q: "¿Cómo definirías su contextura física o porte?", options: ["Estilizado / Delgado / Contextura común", "Estructura intermedia y activa", "Enfocado al entrenamiento y acondicionamiento muscular diario"] },
+            { q: "¿Qué nivel de proyección de estatus social observa en su día a día?", options: ["Estilo sencillo / Medios tradicionales", "Enfoque en marcas visibles y accesorios llamativos", "Gusto por vehículos de alta gama y proyección de lujos"] },
+            { q: "¿Cómo describirías su armonía facial?", options: ["Facciones comunes con gran sentido del humor", "Facciones promedio armónicas", "Facciones destacadas / Estilo modelo"] },
+            { q: "Respecto a sus medidas generales de estatura:", options: ["Estatura promedio o compacta", "Estatura alta destacada (sobre la media habitual)"] },
+            { q: "Diseño, estilo o accesorios en su presentación capilar:", options: ["Corte tradicional / Degradado prolijo", "Estilo urbano con detalles geométricos", "Cabello largo / Estilo alternativo / Recogido superior", "Uso constante de gorras, sombreros o accesorios urbanos"] },
+            { q: "Impacto visual y tonalidad de su mirada:", options: ["Tonos oscuros convencionales", "Tonos claros o mirada muy magnética", "Facciones intelectuales / Expresión de concentración"] },
+            { q: "¿Qué tipo de contenido comparte habitualmente en sus redes sociales?", options: ["Fotografías con edición o filtros estéticos", "Imágenes espontáneas al natural", "Contenido exclusivo o historias en círculos cerrados", "Presencia mínima / Casi no comparte fotografías personales"] },
+            { q: "Al momento de compartir eventos sociales o salidas nocturnas:", options: ["Manejo ordenado de gastos y ambiente controlado", "Alta extroversión / Tiende a extender la celebración", "Busca destacar invitando o seleccionando zonas VIP", "Prefiere quedarse en interiores enfocado en tecnología o juegos"] },
+            { q: "¿Cuáles son sus hábitos respecto al humo o esparcimiento?", options: ["Espacio 100% libre de humo y sustancias", "Uso social de vaporizadores o tabaco", "Asistencia recurrente a ambientes festivos alternativos"] },
+            { q: "¿Cuánto tiempo ha transcurrido desde el cierre de su última relación?", options: ["Ruptura muy reciente (En proceso de superación)", "Período de transición (1 a 3 meses en adaptación)", "Ciclo completamente resuelto (Más de 6 meses)", "Enfoque histórico en soltería e independencia"] },
+            { q: "¿Qué tipo de cita o panorama prefiere disfrutar en pareja?", options: ["Visitar bares exclusivos, gastronomía fusión y conversación", "Maratón de series en casa, cocina conjunta y relajo total", "Entrenamiento en pareja, rutas en bicicleta o cerro", "Asistencia a eventos musicales, recitales o clubes de baile", "Conectarse a plataformas de juego online o ver series de ficción"] },
+            { q: "¿Cuál es su nivel de elocuencia o facilidad de palabra?", options: ["Reservado / Introvertido amigable", "Gran fluidez verbal, persuasivo y conversador nato"] },
+            { q: "Comportamiento general y propuesta de convivencia:", options: ["Estilo de vida tradicional", "Gusto por tendencias exclusivas y lenguaje de temporada", "Gran compañero de equipo, resolutivo en el hogar y brinda paz"] },
+            { q: "¿Cómo calificarías la gestión de sus recursos cotidianos?", options: ["Administración estándar e independiente", "Enfoque de cortesías premium planificadas a plazos"] }
         ]
     };
 
@@ -441,7 +471,7 @@
 
     function nextScreen(id) {
         if(id === 'screen-gender') {
-            userData.name = document.getElementById('target-name').value.trim() || "Sujeto de Campo";
+            userData.name = document.getElementById('target-name').value.trim() || "Persona Analizada";
         }
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         document.getElementById(id).classList.add('active');
@@ -546,30 +576,27 @@
         const result = rulesDB[userData.gender][ruleKey];
         const ans = userData.answers;
         
-        document.getElementById('res-id').textContent = `REGLA ${userData.gender === 'mujeres' ? 'FEMENINA' : 'MASCULINA'} ${result.id}`;
+        document.getElementById('res-id').textContent = `${userData.gender === 'mujeres' ? 'MATRIZ FEMENINA' : 'MATRIZ MASCULINA'} - ${result.id}`;
         document.getElementById('res-name').textContent = result.name;
         document.getElementById('res-desc').textContent = result.desc;
-        document.getElementById('res-action').textContent = `Recomendación: ${result.action}`;
+        document.getElementById('res-action').textContent = `Sugerencia de Manejo: ${result.action}`;
         document.getElementById('res-stars').textContent = result.stars || "⭐";
         document.getElementById('res-genre').textContent = result.genre || "Drama Central";
         document.getElementById('res-page').textContent = `${result.page} de 3`;
         
-        // Extraer texto de la cita seleccionada para mostrar en el veredicto final
-        const citaIdx = userData.gender === 'mujeres' ? ans[10] : ans[10];
-        const panoramaElegido = questions[userData.gender][10].options[citaIdx];
-        document.getElementById('res-panorama').innerHTML = `<i class="fa-solid fa-heart-crack"></i> <strong>Panorama Ideal con Pareja:</strong> ${panoramaElegido}`;
+        const panoramaElegido = questions[userData.gender][10].options[ans[10]];
+        document.getElementById('res-panorama').innerHTML = `<i class="fa-solid fa-heart"></i> <strong>Panorama de Convivencia Ideal:</strong> ${panoramaElegido}`;
 
         const randomMatch = Math.floor(Math.random() * (99 - 91 + 1)) + 91;
-        document.getElementById('res-match').textContent = `${randomMatch}% Coincidencia`;
+        document.getElementById('res-match').textContent = `${randomMatch}% Compatibilidad`;
 
         const rBadge = document.getElementById('res-risk');
         rBadge.className = "res-badge"; 
-        rBadge.textContent = `RIESGO: ${result.risk}`;
         
-        if(result.risk === "BAJO") rBadge.classList.add('badge-bajo');
-        if(result.risk === "MEDIO") rBadge.classList.add('badge-medio');
-        if(result.risk === "CRÍTICO") rBadge.classList.add('badge-critico');
-        if(result.risk === "CHERNÓBIL") rBadge.classList.add('badge-chernobil');
+        if(result.risk === "BAJO") { rBadge.textContent = "COMPLEJIDAD: BAJA"; rBadge.classList.add('badge-bajo'); }
+        if(result.risk === "MEDIO") { rBadge.textContent = "COMPLEJIDAD: MEDIA"; rBadge.classList.add('badge-medio'); }
+        if(result.risk === "ALTO") { rBadge.textContent = "COMPLEJIDAD: ALTA"; rBadge.classList.add('badge-critico'); }
+        if(result.risk === "EXTREMO") { rBadge.textContent = "COMPLEJIDAD: EXTREMA"; rBadge.classList.add('badge-chernobil'); }
         
         renderSuggestions(ruleKey);
         saveToRecents(userData.name, result.name);
@@ -595,6 +622,49 @@
         }
     }
 
+    /* NUEVAS FUNCIONES DE LA LOGICA DEL CATALOGO COMPLETO */
+    function openCatalog() {
+        nextScreen('screen-catalog');
+        switchCatalogTab('mujeres'); // Abre por defecto la pestaña femenina
+    }
+
+    function switchCatalogTab(gender) {
+        document.getElementById('tab-mujeres').classList.toggle('active', gender === 'mujeres');
+        document.getElementById('tab-hombres').classList.toggle('active', gender === 'hombres');
+        
+        const container = document.getElementById('catalog-container');
+        container.innerHTML = "";
+        
+        const db = rulesDB[gender];
+        for (let key in db) {
+            const item = db[key];
+            let badgeClass = 'badge-bajo';
+            let labelRisk = 'COMPLEJIDAD: BAJA';
+            if (item.risk === 'MEDIO') { badgeClass = 'badge-medio'; labelRisk = 'COMPLEJIDAD: MEDIA'; }
+            if (item.risk === 'ALTO') { badgeClass = 'badge-critico'; labelRisk = 'COMPLEJIDAD: ALTA'; }
+            if (item.risk === 'EXTREMO') { badgeClass = 'badge-chernobil'; labelRisk = 'COMPLEJIDAD: EXTREMA'; }
+
+            const cardHtml = `
+                <div class="result-card" style="animation: none; margin-bottom: 5px;">
+                    <div class="result-header" style="padding: 16px 14px;">
+                        <div class="res-badge ${badgeClass}" style="font-size: 9px; padding: 3px 8px; margin-bottom: 6px;">${labelRisk}</div>
+                        <div class="res-id" style="font-size: 10px;">${gender === 'mujeres' ? 'MATRIZ FEMENINA' : 'MATRIZ MASCULINA'} - ${item.id}</div>
+                        <div class="res-name" style="font-size: 18px; margin-bottom: 4px;">${item.name}</div>
+                        <div class="netflix-meta" style="font-size: 11px;">
+                            <span class="meta-genre">${item.genre}</span>
+                            <span class="meta-stars">${item.stars}</span>
+                        </div>
+                    </div>
+                    <div class="result-body" style="padding: 14px;">
+                        <p class="res-desc" style="font-size: 12px; margin-bottom: 10px; line-height: 1.4;">${item.desc}</p>
+                        <div class="res-action" style="font-size: 12px; padding: 8px; margin-bottom: 0;"><strong>Sugerencia:</strong> ${item.action}</div>
+                    </div>
+                </div>
+            `;
+            container.innerHTML += cardHtml;
+        }
+    }
+
     function saveToRecents(name, ruleName) {
         let recents = JSON.parse(localStorage.getItem('matrix_recents') || "[]");
         recents = recents.filter(r => r.name !== name);
@@ -612,13 +682,13 @@
         let newBadge = null;
 
         if (scans === 1 && !unlockedBadges.includes("Novato")) {
-            newBadge = { title: "Iniciado en la Matrix", desc: "Hiciste tu primer escáner con éxito." };
+            newBadge = { title: "Iniciado en la Matrix", desc: "Completaste tu primera evaluación de afinidad." };
             unlockedBadges.push("Novato");
         } else if (scans === 5 && !unlockedBadges.includes("Escaneador5")) {
-            newBadge = { title: "Cazador Urbano", desc: "Completaste 5 análisis tácticos en terreno." };
+            newBadge = { title: "Evaluador Urbano", desc: "Completaste 5 análisis en el mapa urbano." };
             unlockedBadges.push("Escaneador5");
-        } else if (riskLevel === "CHERNÓBIL" && !unlockedBadges.includes("Sobreviviente")) {
-            newBadge = { title: "Sobreviviente Nuclear", desc: "Detectaste un objetivo Chernobyl." };
+        } else if (riskLevel === "EXTREMO" && !unlockedBadges.includes("Sobreviviente")) {
+            newBadge = { title: "Mediador Avanzado", desc: "Detectaste un perfil de Complejidad Extrema." };
             unlockedBadges.push("Sobreviviente");
         }
 
@@ -643,12 +713,12 @@
         const totalScans = localStorage.getItem('matrix_scans_count') || "0";
         
         const allPossible = [
-            { id: "Novato", title: "Iniciado en la Matrix", desc: "1er escáner listo" },
-            { id: "Escaneador5", title: "Cazador Urbano", desc: "5 escaneos en terreno" },
-            { id: "Sobreviviente", title: "Sobreviviente Nuclear", desc: "Encontró un Chernobyl" }
+            { id: "Novato", title: "Iniciado en la Matrix", desc: "1er análisis completado" },
+            { id: "Escaneador5", title: "Evaluador Urbano", desc: "5 análisis en terreno" },
+            { id: "Sobreviviente", title: "Mediador Avanzado", desc: "Encontró un perfil Complejo" }
         ];
 
-        let html = `<p style='font-size:11px; margin-bottom:10px; color:#666;'>Escaneos completados: <strong>${totalScans}</strong></p>`;
+        let html = `<p style='font-size:11px; margin-bottom:10px; color:#666;'>Evaluaciones listas: <strong>${totalScans}</strong></p>`;
         allPossible.forEach(b => {
             const isLocked = !unlocked.includes(b.id);
             html += `
@@ -681,7 +751,7 @@
     }
 
     function shareWhatsApp() {
-        const text = `*MatrixFlix - Diagnóstico de Campo* 🎬\n\n*Objetivo:* ${userData.name}\n*Resultado:* ${document.getElementById('res-name').textContent}\n*Diagnóstico:* ${document.getElementById('res-desc').textContent}`;
+        const text = `*MatrixFlix - Perfil de Compatibilidad* 🎬\n\n*Nombre:* ${userData.name}\n*Resultado:* ${document.getElementById('res-name').textContent}\n*Detalle:* ${document.getElementById('res-desc').textContent}`;
         window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
     }
 
