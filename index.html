@@ -235,7 +235,6 @@
         .catalog-list::-webkit-scrollbar { width: 6px; }
         .catalog-list::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
 
-        /* LISTA LIMPIA DE SOLO NOMBRES */
         .name-only-item {
             background: #141414;
             padding: 12px 15px;
@@ -289,8 +288,6 @@
 </head>
 <body>
 
-<audio id="cosmic-error-sound" src="data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjYwLjEwMC4xMDDAAAAAAAAAAAAAAAB//4YgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAA6AAByAABzcHZ5enh7fH6AgYKDhIWGh4mKjI2OkpSWmZqcnqKkp6mrrK6wsbKztri6vL7Cw8bHycrNztLU1tnanJ6io6WlqKqqrK6vsbGysre3ubq7u7u8vb7Cw8XFh4mJiYqKi4uLi4yMjo6OjI6Ojo6OkJCQkJKSkZGSko6Ojo6Ojo6RkpKSkpKSkpKSkpGSkpKSlpaWlpaWlpaWlpaWlpaWl5mZmZmampqampqampqbm5ubm5ubm5ubm5ubnJ6enp6enp6enp6enp6eo6SkpKSkpKSkpKSkpKSkqaqrrK2tsbGxsrKytre5uru8vb6+vr6+vsbHycrMzdLS0tPT0tLS1tnanJ6enp6ioqKioqKioqOmpaWlpaWlpaWlpaWlpaWpqqqqqqqqqqqqqqqqqqqsrKysrKysrKysrKysrKysra2tra2tra2tra2tra2tsbGxsrKyurq6urq6urq6urq6vL6+vr6+vr6+vr6+vr6+vsbGxsbGxsfHycnJycnJycnJycnJycXFxcXFxcXFxcXFxcXFFxcnJycXFxsbGxsbGxsbGxsbGxsfJycnJycnJycnJycnJycnJysrKysrKysrKysrKysrKysrKysrKy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLzMzMzMzMzMzMzMzMzMzMzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3NzMzMzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N3d3d3d3d3d3f39/f39/f39/f39/f39//4YgAAf8AAAc0AABMADYAsAgAQ4IBAAAmBAH/7wIDVQEoAAgBGAX9//+P///gEAgEAwGAoP+AIBgMBgMD9bYp1/UAAAA6ZgSjLh8Zf5wH/8N0YI///N///839I////Nf///yYIAID/+GIAALPAAAMYgAAgAn8HAEfPZAAU6TUDxQxGAwIBAIBAMB/wBAwGAwGBgP9tDmv6v///gAHA7X///+b+sf///N///839Wv///JhAAB//4YgAAqMAAAMQgAAgAuUGgEXfRAAW6ZkDAwIBAMCAYFA/4AgYBgMBgYD/6v/q////gAHA6v///839WP///zf///m///8mGgAAH//4YgAAkMAAAMYgAAgAs2GgEXO9gAU7TYDAwIBgQCAYGA/4AgGBAIBgcD/q39W////gAHA1b///839Y///83///m///8mGgAAH//4YgAAlMAAAMYgAAgAtkGgEXfbAAU6TcDAgEAgIBAUGA/4AgYCAgEBQcD/Vv6t////gAHA1b///839Wf///N///+b///8mHAAAFAAP/4YgAAnMAAAMYgAAgAttHgEXfPAAU6TgDBAICAYEAgKD/gCBgGAwGBQf/Vv9W////gAcDq3///839W////zf///Nf///8mGgAAH//4YgAAnMAAAMYgAAgAt6HgEXO+AAU6TkDAwIBAQCAYEB/wBAMCAQEAgP/rf1Y///8AAcHVv///zf1Y///83///5v///8mHAAAH//4YgAAnMAAAMYgAAgAt+HgEXfcAAU6TsDBAICAgEBAUD/gCBAICAgECgf9W/q3///4ABwOrf///zf1b///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAuCHgEXfPAAU6TsDAwIBgQCAgID/gCBgMCAMCAf/Vv9X////AAGB1b///839W////zf///Nf///8mGAAAH//4YgAAnMAAAMYgAAgAuHHgEXfVAAU6TsDBAICAgEBAUD/gCBgICAQECgf9W/q3///4ABwNW////zf1Z///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAuNHgEXfPAAU6TkDAwICAgEBAMD/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAuRHgEXfPAAU6TkDAgEAgIBAQGB/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAuWHgEXfPAAU6TkDAwICAgEBAYH/gCBAICAgEBAf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAuaHgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAuengEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAuingEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAuyngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAu2ngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAu7ngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAu/ngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvCngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvGngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvKngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvPngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvSngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvWngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvangEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvengEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvingEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvmngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvqngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvungEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAvyngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwCngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwGngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwKngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwOngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwSngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwWngEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwangEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwengEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwizgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwmzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwqzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwuzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwvzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwwzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxxzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwyzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAwzzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw0zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw1zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw2zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw3zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw4zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw5zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw6zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw7zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw8zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw9zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw+zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAw/zgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxAzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxBzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxCzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxDzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxEzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxFzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxGzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxHzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxIzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxJzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxKzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxLzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxMzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxNzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxOzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxPzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxQzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxRzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxSzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxTzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxUzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxVzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxWzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxXzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxYzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxZzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxazgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxYzgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxczgEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxdegEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxeegEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxfegEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxgegEXfbAAU6TkDAwICAgEBAYH/gCBgICAQEBgf9W/q3///4ABwNW////zf1Y///83///zf///8mGAAAH//4YgAAnMAAAMYgAAgAxiuAHffAAAU6TgAAAAA=" preload="auto" loop></audio>
-
 <div class="container">
     <div class="logo">MATRIXFLIX</div>
 
@@ -303,16 +300,12 @@
             <input type="text" id="target-name" placeholder="Ej: Persona de Interés / Amigo X">
         </div>
         
-        <button class="btn" onclick="playEffect('start'); nextScreen('screen-gender');">
+        <button class="btn" onclick="nextScreen('screen-gender');">
             <i class="fa-solid fa-bolt"></i> Iniciar Análisis de Afinidad
         </button>
 
-        <button class="btn btn-secondary" onclick="playEffect('click'); openNamesOnlyCatalog();" style="border-color: var(--netflix-red); background: rgba(229,9,20,0.05);">
+        <button class="btn btn-secondary" onclick="openNamesOnlyCatalog();" style="border-color: var(--netflix-red); background: rgba(229,9,20,0.05);">
             <i class="fa-solid fa-list-ol"></i> Ver Nombres del Catálogo (21 y 21)
-        </button>
-
-        <button class="btn btn-secondary" onclick="playEffect('click'); openCatalog();">
-            <i class="fa-solid fa-layer-group"></i> Ver Catálogo de Diagnósticos
         </button>
         
         <div class="achievements-box" id="box-recents" style="display:none;">
@@ -333,8 +326,8 @@
         <h1>Selecciona la Matriz Base</h1>
         <p>¿Hacia qué espectro de gustos u organización enfocas el perfil?</p>
         <div class="options-list">
-            <div class="option-btn" onclick="playEffect('click'); setGender('mujeres')">ESPECTRO FEMENINO</div>
-            <div class="option-btn" onclick="playEffect('click'); setGender('hombres')">ESPECTRO MASCULINO</div>
+            <div class="option-btn" onclick="setGender('mujeres')">ESPECTRO FEMENINO</div>
+            <div class="option-btn" onclick="setGender('hombres')">ESPECTRO MASCULINO</div>
         </div>
     </div>
 
@@ -389,22 +382,7 @@
         <br>
         <button class="btn" onclick="shareWhatsApp()"><i class="fa-brands fa-whatsapp"></i> Compartir Perfil de Afinidades</button>
         <br>
-        <button class="btn" style="background: #222;" onclick="playEffect('click'); stopCosmicAlert(); location.reload()">Nuevo Análisis</button>
-    </div>
-
-    <div id="screen-catalog" class="screen">
-        <h1>Catálogo General de Diagnósticos</h1>
-        <p style="margin-bottom: 15px;">Índice detallado de comportamiento urbano de MatrixFlix.</p>
-        
-        <div class="catalog-tabs">
-            <button class="tab-btn active" id="tab-mujeres" onclick="switchCatalogTab('mujeres')">Femeninos (21)</button>
-            <button class="tab-btn" id="tab-hombres" onclick="switchCatalogTab('hombres')">Masculinos (21)</button>
-        </div>
-
-        <div class="catalog-list" id="catalog-container"></div>
-
-        <br>
-        <button class="btn btn-secondary" onclick="playEffect('click'); nextScreen('screen-start');"><i class="fa-solid fa-arrow-left"></i> Volver al Menú</button>
+        <button class="btn" style="background: #222;" onclick="location.reload()">Nuevo Análisis</button>
     </div>
 
     <div id="screen-names-only" class="screen">
@@ -419,7 +397,7 @@
         <div class="catalog-list" id="names-only-container" style="gap: 8px;"></div>
 
         <br>
-        <button class="btn btn-secondary" onclick="playEffect('click'); nextScreen('screen-start');"><i class="fa-solid fa-arrow-left"></i> Volver al Menú</button>
+        <button class="btn btn-secondary" onclick="nextScreen('screen-start');"><i class="fa-solid fa-arrow-left"></i> Volver al Menú</button>
     </div>
 
     <div id="screen-cosmic-error" class="screen">
@@ -436,7 +414,7 @@
                 <div style="background: rgba(0,0,0,0.6); padding: 15px; border-radius: 6px; font-size: 13px; border-left: 3px solid #ff00ff; text-align: left; line-height: 1.6; color: #fff; margin-bottom: 20px;">
                     <strong>Diagnóstico del Sistema:</strong> El espécimen analizado ha sido clasificado bajo la vertiente ideológica de <strong>Extrema Izquierda</strong>. La distorsión espacio-temporal y los niveles de debate circular rompen las ecuaciones base de MatrixFlix. El juego se ha congelado para proteger tu integridad financiera y mental.
                 </div>
-                <button class="btn" style="background: #6a0dad; border: 1px solid #ff00ff;" onclick="stopCosmicAlert(); location.reload()">Reiniciar Sistema (Evacuar)</button>
+                <button class="btn" style="background: #6a0dad; border: 1px solid #ff00ff;" onclick="location.reload()">Reiniciar Sistema (Evacuar)</button>
             </div>
         </div>
     </div>
@@ -446,7 +424,7 @@
     const rulesDB = {
         mujeres: {
             "1": { id: "N°1", name: "La Distribución Estándar A", risk: "BAJO", stars: "⭐", genre: "Equilibrio Clásico", page: "Pág. 1", desc: "Si tiene culo, no tiene teta. (Equilibrio clásico).", action: "Disfrutar de la simetría natural y clásica de este ecosistema." },
-            "2": { id: "N°2", name: "La Distribución Estándar B", risk: "BAJO", stars: "⭐", genre: "Lógica Inversa", page: "Pág. 1", desc: "Si tiene tetas, no tiene culo. (Lógica inversa de la regla 1).", action: "Apreciar la distribution inversa clásica sin exigir de más." },
+            "2": { id: "N°2", name: "La Distribución Estándar B", risk: "BAJO", stars: "⭐", genre: "Lógica Inversa", page: "Pág. 1", desc: "Si tiene tetas, no tiene culo. (Lógica inversa de la regla 1).", action: "Apreciar la distribución inversa clásica sin exigir de más." },
             "3": { id: "N°3", name: "El Impuesto de la Naturaleza", risk: "MEDIO", stars: "⭐⭐", genre: "Compensación", page: "Pág. 1", desc: "Si tiene teta y culo, es fea de cara. (La vida no te da todo gratis).", action: "Valorar los atributos físicos recordando las leyes de compensación." },
             "4": { id: "N°4", name: "El Glitch de la Matrix", risk: "ALTO", stars: "⭐⭐⭐⭐", genre: "Ficción Absoluta", page: "Pág. 1", desc: "Si tiene tetas, culo y es bonita de cara, una de dos: o es estúpida o era hombre antes. (Demasiado perfecto para ser real).", action: "Mantener los ojos abiertos ante posibles fallas lógicas del sistema." },
             "5": { id: "N°5", name: "La Paradoja del Desierto", risk: "BAJO", stars: "⭐", genre: "Personalidad", page: "Pág. 1", desc: "Si no tiene tetas, no tiene culo y es fea de cara. No hay atributos físicos que evaluar. Su valor en la tabla depende 100% de que sea millonaria, tenga carro del año o una personalidad legendaria.", action: "Enfocarse plenamente en el capital financiero o el carisma legendario." },
@@ -456,19 +434,19 @@
             "9": { id: "N°9", name: "La Luz de Cochera (El Espejismo)", risk: "MEDIO", stars: "⭐⭐", genre: "Efecto Óptico", page: "Pág. 2", desc: "De lejos parece un Ferrari, de cerca es un auto viejo. La silueta a 50 metros te confunde, pero de frente se activa la Regla N°3 de manera retroactiva.", action: "Verificar la cercanía física real antes de tomar decisiones de diseño." },
             "10": { id: "N°10", name: "La Ley de la 'Tóxica Premium'", risk: "EXTREMO", stars: "⭐⭐⭐⭐⭐", genre: "Peligro Inminente", page: "Pág. 2", desc: "Rompe la Regla N°4 porque tiene teta, culo, es hermosa de cara y además es inteligentísima. Diagnóstico: Está completamente loca o es psicópata. Nivel de peligro: Chernóbil.", action: "Evacuar el área perimetral de inmediato o usar traje de contención radiactiva." },
             "11": { id: "N°11", name: "La 'Cute' (Tierna pero Falsa)", risk: "BAJO", stars: "⭐", genre: "Fantasía Digital", page: "Pág. 2", desc: "No tiene cuerpo, cara promedio, pero usa filtros de Instagram o TikTok que la hacen ver como modelo de anime. En persona el bajón emocional es duro.", action: "Desactivar las notificaciones de redes y exigir encuentros en el mundo real." },
-            "12": { id: "N°12", name: "La Bendecida por la Genética (La inalcanzable)", risk: "ALTO", stars: "⭐⭐⭐⭐", genre: "Alta Gama", page: "Pág. 2", desc: "Tiene todo (cuerpo y cara), es buena persona, inteligente... pero tiene novio desde hace 6 años, mide 1.80m o juega en otra liga económica. Existe, pero solo para mirar.", action: "Apreciar el panorama visual sin intentar adquisiciones fuera de presupuesto." },
+            "12": { id: "N°12", name: "La Bendecida por la Genética (La inalcanzable)", risk: "ALTO", stars: "⭐⭐⭐⭐", genre: "Alta Gama", page: "Pág. 2", desc: "Tiene todo (cuerpo y cara), es buena persona, inteligente... pero tiene novio desde hace 6 años, mide 1.80m o juega en otra liga económica. Existe, pero solo para mirar.", action: "Apreciar the panorama visual sin intentar adquisiciones fuera de presupuesto." },
             "13": { id: "N°13", name: "El 'Paquete de Datos Ilimitado' (Labia Pura)", risk: "BAJO", stars: "⭐", genre: "Carisma Puro", page: "Pág. 3", desc: "No destaca en cara, ni en tetas, ni en culo, pero tiene una labia, un carisma y una actitud que te hace olvidar el resto. Atractivo invisible pero efectivo.", action: "Dejarse llevar por la conversación y disfrutar de su actitud magnética." },
-            "14": { id: "N°14", name: "El Efecto 'Otaku / Gamer'", risk: "BAJO", stars: "⭐⭐", genre: "Cultura Pop", page: "Pág. 3", desc: "Físicamente promedio o baja, pero comparte todos tus gustos culposos, ve anime y juega al mismo nivel que tú. Automáticamente sube 3 puntos en la escala global.", action: "Armar inmediatamente el set cooperativo para jugar en pareja." },
-            "15": { id: "La 'Fresa' de Alto Mantenimiento", name: "La 'Fresa' de Alto Mantenimiento", risk: "ALTO", stars: "⭐⭐⭐", genre: "Inversión Premium", page: "Pág. 3", desc: "Puede cumplir la Regla 1 o 2, pero su estilo de vida exige restaurantes caros y viajes. El costo por centímetro de atributo es demasiado elevado.", action: "Calcular el costo/beneficio de la salida antes de comprometer la tarjeta." },
+            "14": { id: "N°14", name: "El Fuegos de Artificio 'Otaku / Gamer'", risk: "BAJO", stars: "⭐⭐", genre: "Cultura Pop", page: "Pág. 3", desc: "Físicamente promedio o baja, pero comparte todos tus gustos culposos, ve anime y juega al mismo nivel que tú. Automáticamente sube 3 puntos en la escala global.", action: "Armar inmediatamente el set cooperativo para jugar en pareja." },
+            "15": { id: "N°15", name: "La 'Fresa' de Alto Mantenimiento", risk: "ALTO", stars: "⭐⭐⭐", genre: "Inversión Premium", page: "Pág. 3", desc: "Puede cumplir la Regla 1 o 2, pero su estilo de vida exige restaurantes caros y viajes. El costo por centímetro de atributo es demasiado elevado.", action: "Calcular el costo/beneficio de la salida antes de comprometer la tarjeta." },
             "16": { id: "N°16", name: "La Ley del Pelo Largo", risk: "BAJO", stars: "⭐", genre: "Ilusión Posterior", page: "Pág. 3", desc: "No tiene cara, ni tetas, ni culo, pero tiene un cabello espectacular que se mueve en cámara lenta. Te enamoras de su nuca, hasta que voltea.", action: "Mantener el enfoque desde atrás o sugerir el uso constante de coletas." },
             "17": { id: "N°17", name: "La 'Milf' Promesa (Inversión a Largo Plazo)", risk: "BAJO", stars: "⭐⭐", genre: "Inversión Futura", page: "Pág. 3", desc: "Hoy está en su punto medio, pero analizas a la mamá y te das cuenta de que en 20 años va a ser una reina total. Una inversión a largo plazo.", action: "Asegurar el contrato de permanencia pensando en los dividendos a futuro." },
             "18": { id: "N°18", name: "La Combinación 'Camaleón'", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Mutación Estética", page: "Pág. 3", desc: "Un día la ves desarreglada y es la Regla N°5 (un desastre), pero se produce un sábado por la noche con maquillaje y vestido, y mágicamente roza la Regla N°4.", action: "Reservar los eventos importantes solo para los sábados de gala." },
-            "19": { id: "N°19", name: "La 'Hippie' Natural", risk: "MEDIO", stars: "⭐⭐", genre: "Estlo Orgánico", page: "Pág. 3", desc: "Cero cirugías, buen cuerpo natural (Regla 1 o 2), bonita de cara, pero no se depila o no usa desodorante químico. Un dilema ideológico.", action: "Evaluar si tu tolerancia ideológica se adapta al ecosistema libre de químicos." },
+            "19": { id: "N°19", name: "La 'Hippie' Natural", risk: "MEDIO", stars: "⭐⭐", genre: "Estilo Orgánico", page: "Pág. 3", desc: "Cero cirugías, buen cuerpo natural (Regla 1 o 2), bonita de cara, pero no se depila o no usa desodorante químico. Un dilema ideológico.", action: "Evaluar si tu tolerancia ideológica se adapta al ecosistema libre de químicos." },
             "20": { id: "N°20", name: "El Filtro de la Madurez (La 'Ya qué más da')", risk: "BAJO", stars: "💖", genre: "Jefe Final", page: "Pág. 3", desc: "No cumple ninguna regla estética, pero cocina espectacular, te trata bien, te apoya en tus locuras y te da paz mental. El jefe final de la tabla.", action: "Firmar acuerdo definitivo de convivencia; la paz mental no se negocia." },
             "21": { id: "N°21", name: "El Santo Grial Femenino", risk: "SANTO GRIAL", stars: "👑👑👑👑👑", genre: "Milagro del Ecosistema", page: "Pág. 3", desc: "Tiene un cuerpazo espectacular con excelentes atributos (teta, culo, o ambos en sintonía perfecta), hermosa de cara... Y SU MENTALIDAD ES IMPECABLE. Cero conductas tóxicas, cero posesividad, cero dramas circulares. Es madura, segura de sí misma y te impulsa a crecer.", action: "Cuídala con tu vida, ve por el anillo de compromiso hoy mismo y borra tus redes sociales. Has ganado el juego." }
         },
         hombres: {
-            "1": { id: "N°1", name: "La Distribución Estándar A (El 'Gym-Bro')", risk: "BAJO", stars: "⭐", genre: "Compensación", page: "Pág. 1", desc: "Si tiene brazo gigante and abdomen marcado, no tiene estatura. Ley de la compensación física: todo el crecimiento se fue hacia los lados, no hacia arriba.", action: "Aceptar las limitaciones de altura a cambio de un guardaespaldas personal." },
+            "1": { id: "N°1", name: "La Distribución Estándar A (El 'Gym-Bro')", risk: "BAJO", stars: "⭐", genre: "Compensación", page: "Pág. 1", desc: "Si tiene brazo gigante y abdomen marcado, no tiene estatura. Ley de la compensación física: todo el crecimiento se fue hacia los lados, no hacia arriba.", action: "Aceptar las limitaciones de altura a cambio de un guardaespaldas personal." },
             "2": { id: "N°2", name: "La Distribución Estándar B (El Espejismo Financiero)", risk: "BAJO", stars: "⭐⭐", genre: "Estatus de Deuda", page: "Pág. 1", desc: "Si tiene un auto del año y viste ropa de marca, no tiene un peso en el banco. Todo el sueldo se va en pagar la cuota del auto y la tarjeta de crédito está al borde del embargo.", action: "Evitar pedirle préstamos y verificar quién paga las cuentas básicas." },
             "3": { id: "N°3", name: "El Impuesto de la Naturaleza", risk: "MEDIO", stars: "⭐⭐", genre: "Conversación Plana", page: "Pág. 1", desc: "Si es guapo de cara y tiene buen cuerpo, es un aburrido total o no tiene conversación. La vida no le exigió desarrollar carisma porque su físico hacía todo el trabajo.", action: "Llevar temas preparados a la cita o usarlo principalmente de adorno visual." },
             "4": { id: "N°4", name: "El Glitch de la Matrix Masculino", risk: "ALTO", stars: "⭐⭐⭐⭐", genre: "Peligro Narcisista", page: "Pág. 1", desc: "Si es alto (más de 1.85m), guapo, tiene dinero, es atento, caballeroso y soltero... una de dos: o es un personaje de ficción de Netflix, o es un psicópata narcisista con tres familias ocultas. Nivel de Riesgo: Chernóbil.", action: "Contratar un detective privado antes de presentar formalmente con la familia." },
@@ -480,9 +458,9 @@
             "10": { id: "N°10", name: "La Ley del 'Mago de las Finanzas' (Cryptobro)", risk: "EXTREMO", stars: "⭐⭐⭐⭐⭐", genre: "Ilusión Bursátil", page: "Pág. 2", desc: "Viste traje formal los domingos, habla de inversiones, mentalidad de tiburón y libertad financiera... pero te pide dinero prestado para pagar la cuenta del café porque 'tiene sus activos congelados en la bolsa'.", action: "Pagar tu propio café y bloquear cualquier propuesta de inversión digital." },
             "11": { id: "N°11", name: "El 'Indie / Músico' Incomprendido", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Drama Melódico", page: "Pág. 2", desc: "Tiene un estilo espectacular, toca la guitarra, es profundo y escribe poesía. Diagnóstico emocional: Te va a romper el corazón y luego va a componer una canción sobre cómo tú arruinaste su vida.", action: "Disfrutar del concierto pero evitar convertirte en el próximo sencillo musical." },
             "12": { id: "N°12", name: "El 'Adulto Independiente' Falso", risk: "BAJO", stars: "⭐⭐", genre: "Mamitis Compleja", page: "Pág. 2", desc: "Tiene 32 años, puesto de gerente, viste impecable... pero la mamá le sigue comprando la ropa interior, le hace la comida y le maneja la agenda emocional. Si te casas con él, te casas con su madre.", action: "Establecer límites geográficos estrictos con la suegra." },
-            "13": { id: "N°13", name: "El Paquete de Datos Ilimitado (El 'Feo con Labia')", risk: "BAJO", stars: "⭐", genre: "Estrategia Humataria", page: "Pág. 2", desc: "Físicamente parece salido de un meme, pero tiene una seguridad, un sentido del humor y una labia tan descomunales que termina saliendo con las mujeres más cotizadas de la ciudad.", action: "No subestimar el poder de un buen chiste en la primera cita." },
-            "14": { id: "N°14", name: "El 'Gamer / Techie' Estratégico", risk: "BAJO", stars: "⭐⭐", genre: "Soporte Técnico", page: "Pág. 2", desc: "Cero interés por el gimnasio, viste con la misma playera de Star Wars hace 5 años, pero gana en dólares programando desde casa, te resuelve cualquier problem técnico y es sumamente leal. Un diamante en bruto.", action: "Valorar el flujo de ingresos en divisa extranjera y su soporte informático." },
-            "15": { id: "N°15", name: "El 'Fresa' de Alto Mantenimiento", risk: "ALTO", stars: "⭐⭐⭐", genre: "Estánar Exigente", page: "Pág. 2", desc: "Es guapo y viste bien, pero sus estándares de vida exigen que tú también manejes un nivel socioeconómico alto. Si tu plan de fin de semana no incluye un festival de música costoso o la playa, se deprime.", action: "Mantener la agenda de eventos cotizados al día." },
+            "13": { id: "N°13", name: "El Paquete de Datos Ilimitado (El 'Feo con Labia')", risk: "BAJO", stars: "⭐", genre: "Estrategia Humanitaria", page: "Pág. 2", desc: "Físicamente parece salido de un meme, pero tiene una seguridad, un sentido del humor y una labia tan descomunales que termina saliendo con las mujeres más cotizadas de la ciudad.", action: "No subestimar el poder de un buen chiste en la primera cita." },
+            "14": { id: "N°14", name: "El 'Gamer / Techie' Estratégico", risk: "BAJO", stars: "⭐⭐", genre: "Soporte Técnico", page: "Pág. 2", desc: "Cero interés por el gimnasio, viste con la misma playera de Star Wars hace 5 años, pero gana en dólares programando desde casa, te resuelve cualquier problema técnico y es sumamente leal. Un diamante en bruto.", action: "Valorar el flujo de ingresos en divisa extranjera y su soporte informático." },
+            "15": { id: "N°15", name: "El 'Fresa' de Alto Mantenimiento", risk: "ALTO", stars: "⭐⭐⭐", genre: "Estandár Exigente", page: "Pág. 2", desc: "Es guapo y viste bien, pero sus estándares de vida exigen que tú también manejes un nivel socioeconómico alto. Si tu plan de fin de semana no incluye un festival de música costoso o la playa, se deprime.", action: "Mantener la agenda de eventos cotizados al día." },
             "16": { id: "N°16", name: "La Ley de la Altura Engañosa", risk: "BAJO", stars: "⭐", genre: "Atributo Único", page: "Pág. 3", desc: "Mide 1.90m y de espaldas parece un atleta de élite, pero cuando voltea, te das cuenta de que la altura era su único atributo disponible.", action: "Mantener los estándares de espaldas o buscar ángulos favorables." },
             "17": { id: "N°17", name: "El 'Sugar' Promesa (Inversión a Largo Plazo)", risk: "BAJO", stars: "⭐⭐", genre: "Futuro Cotizable", page: "Pág. 3", desc: "Hoy es un estudiante universitario promedio que vive a base de fideos instantáneos, pero tiene una disciplina militar y estudia medicina o ingeniería aeroespacial. Hay que asegurar el terreno antes de que cotice en la bolsa.", action: "Financiar los fideos instantáneos actuales para asegurar las ganancias futures." },
             "18": { id: "N°18", name: "El Efecto 'Camaleón Urbano'", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Evolución de Etiqueta", page: "Pág. 3", desc: "Un miércoles en la tarde usando ropa deportiva parece que acaba de salir de prisión, pero ponle un traje sastre un sábado por la noche y mágicamente califica para la Regla N°4.", action: "Asegurar que guarde los trajes limpios en el clóset para emergencias estéticas." },
@@ -494,45 +472,6 @@
 
     let userData = { name: "", gender: "", answers: [] };
     let currentStep = 0;
-    let scanAudioInterval = null;
-
-    function playEffect(type) {
-        try {
-            const AudioContext = window.AudioContext || window.webkitAudioContext;
-            if (!AudioContext) return;
-            const ctx = new AudioContext();
-            if (type === 'click') {
-                let osc = ctx.createOscillator(); let gain = ctx.createGain();
-                osc.type = 'sine'; osc.frequency.setValueAtTime(450, ctx.currentTime);
-                gain.gain.setValueAtTime(0.08, ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.04);
-                osc.connect(gain); gain.connect(ctx.destination);
-                osc.start(); osc.stop(ctx.currentTime + 0.04);
-            } 
-            else if (type === 'start') {
-                let now = ctx.currentTime; let osc = ctx.createOscillator(); let gain = ctx.createGain();
-                osc.type = 'sawtooth'; osc.frequency.setValueAtTime(100, now);
-                osc.frequency.exponentialRampToValueAtTime(700, now + 0.4);
-                gain.gain.setValueAtTime(0.08, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
-                osc.connect(gain); gain.connect(ctx.destination);
-                osc.start(); osc.stop(now + 0.4);
-            }
-            else if (type === 'scanning_beep') {
-                let osc = ctx.createOscillator(); let gain = ctx.createGain();
-                osc.type = 'sine'; osc.frequency.setValueAtTime(880, ctx.currentTime);
-                gain.gain.setValueAtTime(0.03, ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
-                osc.connect(gain); gain.connect(ctx.destination);
-                osc.start(); osc.stop(ctx.currentTime + 0.1);
-            }
-        } catch(e) { console.log(e); }
-    }
-
-    function stopCosmicAlert() {
-        const soundElement = document.getElementById('cosmic-error-sound');
-        if(soundElement) {
-            soundElement.pause();
-            soundElement.currentTime = 0; 
-        }
-    }
 
     function nextScreen(id) {
         if(id === 'screen-gender') {
@@ -572,15 +511,10 @@
 
     function selectOption(selectedText) {
         if (selectedText === "Extrema Izquierda 🔺 (Peligro Nivel Cósmico)") {
-            const soundElement = document.getElementById('cosmic-error-sound');
-            if(soundElement) {
-                soundElement.play().catch(e => console.log("La reproducción falló:", e));
-            }
             nextScreen('screen-cosmic-error');
             return;
         }
 
-        playEffect('click');
         const currentOptions = questions[userData.gender][currentStep].options;
         const idx = currentOptions.indexOf(selectedText);
         userData.answers.push(idx);
@@ -596,8 +530,7 @@
 
     function processQuiz() {
         nextScreen('screen-loading');
-        scanAudioInterval = setInterval(() => { playEffect('scanning_beep'); }, 350);
-        setTimeout(() => { clearInterval(scanAudioInterval); calculateRule(); }, 2500);
+        setTimeout(() => { calculateRule(); }, 2500);
     }
 
     function calculateRule() {
@@ -644,9 +577,10 @@
         document.getElementById('res-genre').textContent = result.genre || "Drama Central";
         document.getElementById('res-page').textContent = `${result.page} de 3`;
         
+        // Ubicación de la pregunta del panorama semanal según el espectro
         const panoramaIdx = (userData.gender === 'mujeres') ? 12 : 11;
-        const panoramaElegido = questions[userData.gender][panoramaIdx].options[ans[panoramaIdx]] || "Planes urbanos estándar";
-        document.getElementById('res-panorama').innerHTML = `<i class="fa-solid fa-heart"></i> <strong>Panorama de Convivencia Ideal:</strong> ${panoramaElegido}`;
+        const panoramaElegido = questions[userData.gender][panoramaIdx].options[ans[panoramaIdx]] || "Día de descanso";
+        document.getElementById('res-panorama').innerHTML = `<i class="fa-solid fa-calendar-days"></i> <strong>Rutina Semanal Predilecta:</strong> ${panoramaElegido}`;
 
         const randomMatch = Math.floor(Math.random() * (99 - 91 + 1)) + 91;
         document.getElementById('res-match').textContent = `${randomMatch}% Compatibilidad`;
@@ -684,44 +618,6 @@
         }
     }
 
-    /* SISTEMA DE VISTA COMPLETA (DIAGNÓSTICOS) */
-    function openCatalog() {
-        nextScreen('screen-catalog');
-        switchCatalogTab('mujeres');
-    }
-
-    function switchCatalogTab(gender) {
-        document.getElementById('tab-mujeres').classList.toggle('active', gender === 'mujeres');
-        document.getElementById('tab-hombres').classList.toggle('active', gender === 'hombres');
-        
-        const container = document.getElementById('catalog-container');
-        container.innerHTML = "";
-        
-        const db = rulesDB[gender];
-        for (let key in db) {
-            const item = db[key];
-            let badgeClass = 'badge-bajo'; let labelRisk = 'BAJA';
-            if (item.risk === 'MEDIO') { badgeClass = 'badge-medio'; labelRisk = 'MEDIA'; }
-            if (item.risk === 'ALTO') { badgeClass = 'badge-critico'; labelRisk = 'ALTA'; }
-            if (item.risk === 'EXTREMO') { badgeClass = 'badge-chernobil'; labelRisk = 'EXTREMA'; }
-            if (item.risk === 'SANTO GRIAL') { badgeClass = 'badge-grial'; labelRisk = 'GRIAL'; }
-
-            const cardHtml = `
-                <div class="result-card" style="animation: none; margin-bottom: 5px;">
-                    <div class="result-header" style="padding: 14px 15px; background: #141414;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                            <div class="res-id" style="font-size: 10px; margin:0;">${item.id}</div>
-                            <div class="res-badge ${badgeClass}" style="font-size: 9px; padding: 2px 6px; margin: 0; font-weight:bold;">${labelRisk}</div>
-                        </div>
-                        <div class="res-name" style="font-size: 15px; margin: 0; font-weight: 800; color:#fff;">${item.name}</div>
-                    </div>
-                </div>
-            `;
-            container.innerHTML += cardHtml;
-        }
-    }
-
-    /* NUEVO SISTEMA SÓLO NOMBRES (REGLA SOLICITADA) */
     function openNamesOnlyCatalog() {
         nextScreen('screen-names-only');
         switchNamesTab('mujeres');
@@ -758,8 +654,8 @@
             { q: "Al momento de compartir eventos sociales o salidas:", options: ["Consumo moderado", "Mucha energía / Dinámica", "Preferencia por cartas VIP", "Preferencia por planes caseros"] },
             { q: "Hábitos de consumo o esparcimiento:", options: ["Espacio libre de humo", "Uso social de vaporizadores", "Asistencia a ambientes festivos"] },
             { q: "¿Cuánto tiempo ha transcurrido desde su última relación?", options: ["Ruptura muy reciente", "Período intermedio", "Ciclo resuelto (Más de 6 meses)", "Sin historial previo"] },
-            { q: "En el ámbito de citas, ¿qué panorama prefiere disfrutar?", options: ["Cena en restorán de tendencia", "Tarde de películas en casa", "Actividades al aire libre", "Asistencia a conciertos", "Planes geek / Videojuegos"] },
-            { q: "¿Presenta intervenciones estéticas evidentes?", options: ["Líneas naturales", "Retoques sutiles", "Diseño corporal avanzado"] },
+            { q: "¿Qué día de la rutina semanal de convivencia describe mejor su dinámica ideal?", options: ["Lunes de mimos 🤗", "Martes de pololeo 💕", "Miércoles de misterio 🕵️‍♀️", "Jueves de culeo 🔥", "Viernes de carrete 🥳", "Sábado de relajo ☕", "Domingo de aseo 🧹"] },
+            { q: "¿Presenta intervenciones estéticas evidente?", options: ["Líneas naturales", "Retoques sutiles", "Diseño corporal avanzado"] },
             { q: "¿Cómo calificarías su nivel de organización, celos y destreza diaria?", options: ["Estándar fluido", "Alta intensidad / Posesividad / Celos", "Excelente madurez, Cero Tóxica, Da paz mental total"] }
         ],
         hombres: [
@@ -774,9 +670,9 @@
             { q: "Al momento de compartir eventos sociales:", options: ["Manejo ordenado de gastos", "Alta extroversión", "Busca destacar en zonas VIP", "Prefiere interiores / Tecnología"] },
             { q: "Hábitos de consumo o esparcimiento:", options: ["Espacio libre de humo", "Uso social de vaporizadores", "Ambientes festivos alternativos"] },
             { q: "¿Cuánto tiempo ha transcurrido desde su última relación?", options: ["Ruptura muy reciente", "Período de transición", "Ciclo completamente resuelto", "Enfoque histórico en soltería"] },
-            { q: "En el ámbito de citas, ¿qué panorama prefiere disfrutar?", options: ["Bares exclusivos / Gastronomía", "Maratón de series en casa", "Entrenamiento / Bicicleta", "Eventos musicales / Clubes", "Juego online / Ficción"] },
+            { q: "¿Qué día de la rutina semanal de convivencia describe mejor su dinámica ideal?", options: ["Lunes de mimos 🤗", "Martes de pololeo 💕", "Miércoles de misterio 🕵️‍♂️", "Jueves de culeo 🔥", "Viernes de carrete 🥳", "Sábado de relajo ☕", "Domingo de aseo 🧹"] },
             { q: "En el ámbito de la conversación:", options: ["Reservado / Introvertido amigable", "Gran fluidez verbal y conversador nato"] },
-            { q: "Comportamiento general, nivel de celos y convivencia:", options: ["Estilo de vida tradicional", "Alta intensidad / Posesivo / Inseguro", "Gran compañero de equipo, Cero Tóxico y súper resolutivo"] }
+            { q: "Comportamiento general, nivel de celos y convivencia:", options: ["Estilo de vida tradicional", "Alta intensidad / Posesivo / Inseguro", "Gran compañero de equipo, Cero Técnico y súper resolutivo"] }
         ]
     };
 
