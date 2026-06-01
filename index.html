@@ -198,8 +198,18 @@
         .row-cards { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; }
         .row-cards::-webkit-scrollbar { height: 4px; }
         .row-cards::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
-        .mini-card { flex: 0 0 130px; background: #222; padding: 10px; border-radius: 4px; font-size: 11px; border: 1px solid #333; }
+        
+        .mini-card { 
+            flex: 0 0 140px; 
+            background: #1f1f1f; 
+            padding: 12px; 
+            border-radius: 6px; 
+            font-size: 11px; 
+            border: 1px solid #2d2d2d;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
         .mini-card strong { color: var(--netflix-red); display: block; margin-bottom: 2px; }
+        .mini-match { color: #46d369; font-weight: bold; display: block; margin-top: 4px; font-size: 10px; }
 
         .btn {
             background-color: var(--netflix-red);
@@ -358,7 +368,7 @@
                 <div class="netflix-meta">
                     <span class="meta-match" id="res-match">98% Coincidencia</span>
                     <span class="meta-genre" id="res-genre">GÉNERO</span>
-                    <span class="meta-stars" id="res-stars">⭐⭐⭐⭐⭐</span>
+                    <span class="meta-stars" id="res-stars">⭐⭐⭐⭐•</span>
                     <span class="meta-page" id="res-page">Pág. 1 de 3</span>
                 </div>
             </div>
@@ -434,7 +444,7 @@
             "9": { id: "N°9", name: "La Luz de Cochera (El Espejismo)", risk: "MEDIO", stars: "⭐⭐", genre: "Efecto Óptico", page: "Pág. 2", desc: "De lejos parece un Ferrari, de cerca es un auto viejo. La silueta a 50 metros te confunde, pero de frente se activa la Regla N°3 de manera retroactiva.", action: "Verificar la cercanía física real antes de tomar decisiones de diseño." },
             "10": { id: "N°10", name: "La Ley de la 'Tóxica Premium'", risk: "EXTREMO", stars: "⭐⭐⭐⭐⭐", genre: "Peligro Inminente", page: "Pág. 2", desc: "Rompe la Regla N°4 porque tiene teta, culo, es hermosa de cara y además es inteligentísima. Diagnóstico: Está completamente loca o es psicópata. Nivel de peligro: Chernóbil.", action: "Evacuar el área perimetral de inmediato o usar traje de contención radiactiva." },
             "11": { id: "N°11", name: "La 'Cute' (Tierna pero Falsa)", risk: "BAJO", stars: "⭐", genre: "Fantasía Digital", page: "Pág. 2", desc: "No tiene cuerpo, cara promedio, pero usa filtros de Instagram o TikTok que la hacen ver como modelo de anime. En persona el bajón emocional es duro.", action: "Desactivar las notificaciones de redes y exigir encuentros en el mundo real." },
-            "12": { id: "N°12", name: "La Bendecida por la Genética (La inalcanzable)", risk: "ALTO", stars: "⭐⭐⭐⭐", genre: "Alta Gama", page: "Pág. 2", desc: "Tiene todo (cuerpo y cara), es buena persona, inteligente... pero tiene novio desde hace 6 años, mide 1.80m o juega en otra liga económica. Existe, pero solo para mirar.", action: "Apreciar the panorama visual sin intentar adquisiciones fuera de presupuesto." },
+            "12": { id: "N°12", name: "La Bendecida por la Genética (La inalcanzable)", risk: "ALTO", stars: "⭐⭐⭐⭐", genre: "Alta Gama", page: "Pág. 2", desc: "Tiene todo (cuerpo y cara), es buena persona, inteligente... pero tiene novio desde hace 6 años, mide 1.80m o juega en otra liga económica. Existe, pero solo para mirar.", action: "Apreciar el panorama visual sin intentar adquisiciones fuera de presupuesto." },
             "13": { id: "N°13", name: "El 'Paquete de Datos Ilimitado' (Labia Pura)", risk: "BAJO", stars: "⭐", genre: "Carisma Puro", page: "Pág. 3", desc: "No destaca en cara, ni en tetas, ni en culo, pero tiene una labia, un carisma y una actitud que te hace olvidar el resto. Atractivo invisible pero efectivo.", action: "Dejarse llevar por la conversación y disfrutar de su actitud magnética." },
             "14": { id: "N°14", name: "El Fuegos de Artificio 'Otaku / Gamer'", risk: "BAJO", stars: "⭐⭐", genre: "Cultura Pop", page: "Pág. 3", desc: "Físicamente promedio o baja, pero comparte todos tus gustos culposos, ve anime y juega al mismo nivel que tú. Automáticamente sube 3 puntos en la escala global.", action: "Armar inmediatamente el set cooperativo para jugar en pareja." },
             "15": { id: "N°15", name: "La 'Fresa' de Alto Mantenimiento", risk: "ALTO", stars: "⭐⭐⭐", genre: "Inversión Premium", page: "Pág. 3", desc: "Puede cumplir la Regla 1 o 2, pero su estilo de vida exige restaurantes caros y viajes. El costo por centímetro de atributo es demasiado elevado.", action: "Calcular el costo/beneficio de la salida antes de comprometer la tarjeta." },
@@ -446,7 +456,7 @@
             "21": { id: "N°21", name: "El Santo Grial Femenino", risk: "SANTO GRIAL", stars: "👑👑👑👑👑", genre: "Milagro del Ecosistema", page: "Pág. 3", desc: "Tiene un cuerpazo espectacular con excelentes atributos (teta, culo, o ambos en sintonía perfecta), hermosa de cara... Y SU MENTALIDAD ES IMPECABLE. Cero conductas tóxicas, cero posesividad, cero dramas circulares. Es madura, segura de sí misma y te impulsa a crecer.", action: "Cuídala con tu vida, ve por el anillo de compromiso hoy mismo y borra tus redes sociales. Has ganado el juego." }
         },
         hombres: {
-            "1": { id: "N°1", name: "La Distribución Estándar A (El 'Gym-Bro')", risk: "BAJO", stars: "⭐", genre: "Compensación", page: "Pág. 1", desc: "Si tiene brazo gigante y abdomen marcado, no tiene estatura. Ley de la compensación física: todo el crecimiento se fue hacia los lados, no hacia arriba.", action: "Aceptar las limitaciones de altura a cambio de un guardaespaldas personal." },
+            "1": { id: "N°1", name: "La Distribución Estándar A (El 'Gym-Bro')", risk: "BAJO", stars: "⭐", genre: "Compensación", page: "Pág. 1", desc: "Si tiene brazo gigante y abdomen marcado, no tiene estatura. Ley de la compensación física: todo el crecimiento se fue hacia los lados, no hacia arriba.", action: "Aceptar las limitations de altura a cambio de un guardaespaldas personal." },
             "2": { id: "N°2", name: "La Distribución Estándar B (El Espejismo Financiero)", risk: "BAJO", stars: "⭐⭐", genre: "Estatus de Deuda", page: "Pág. 1", desc: "Si tiene un auto del año y viste ropa de marca, no tiene un peso en el banco. Todo el sueldo se va en pagar la cuota del auto y la tarjeta de crédito está al borde del embargo.", action: "Evitar pedirle préstamos y verificar quién paga las cuentas básicas." },
             "3": { id: "N°3", name: "El Impuesto de la Naturaleza", risk: "MEDIO", stars: "⭐⭐", genre: "Conversación Plana", page: "Pág. 1", desc: "Si es guapo de cara y tiene buen cuerpo, es un aburrido total o no tiene conversación. La vida no le exigió desarrollar carisma porque su físico hacía todo el trabajo.", action: "Llevar temas preparados a la cita o usarlo principalmente de adorno visual." },
             "4": { id: "N°4", name: "El Glitch de la Matrix Masculino", risk: "ALTO", stars: "⭐⭐⭐⭐", genre: "Peligro Narcisista", page: "Pág. 1", desc: "Si es alto (más de 1.85m), guapo, tiene dinero, es atento, caballeroso y soltero... una de dos: o es un personaje de ficción de Netflix, o es un psicópata narcisista con tres familias ocultas. Nivel de Riesgo: Chernóbil.", action: "Contratar un detective privado antes de presentar formalmente con la familia." },
@@ -462,7 +472,7 @@
             "14": { id: "N°14", name: "El 'Gamer / Techie' Estratégico", risk: "BAJO", stars: "⭐⭐", genre: "Soporte Técnico", page: "Pág. 2", desc: "Cero interés por el gimnasio, viste con la misma playera de Star Wars hace 5 años, pero gana en dólares programando desde casa, te resuelve cualquier problema técnico y es sumamente leal. Un diamante en bruto.", action: "Valorar el flujo de ingresos en divisa extranjera y su soporte informático." },
             "15": { id: "N°15", name: "El 'Fresa' de Alto Mantenimiento", risk: "ALTO", stars: "⭐⭐⭐", genre: "Estandár Exigente", page: "Pág. 2", desc: "Es guapo y viste bien, pero sus estándares de vida exigen que tú también manejes un nivel socioeconómico alto. Si tu plan de fin de semana no incluye un festival de música costoso o la playa, se deprime.", action: "Mantener la agenda de eventos cotizados al día." },
             "16": { id: "N°16", name: "La Ley de la Altura Engañosa", risk: "BAJO", stars: "⭐", genre: "Atributo Único", page: "Pág. 3", desc: "Mide 1.90m y de espaldas parece un atleta de élite, pero cuando voltea, te das cuenta de que la altura era su único atributo disponible.", action: "Mantener los estándares de espaldas o buscar ángulos favorables." },
-            "17": { id: "N°17", name: "El 'Sugar' Promesa (Inversión a Largo Plazo)", risk: "BAJO", stars: "⭐⭐", genre: "Futuro Cotizable", page: "Pág. 3", desc: "Hoy es un estudiante universitario promedio que vive a base de fideos instantáneos, pero tiene una disciplina militar y estudia medicina o ingeniería aeroespacial. Hay que asegurar el terreno antes de que cotice en la bolsa.", action: "Financiar los fideos instantáneos actuales para asegurar las ganancias futures." },
+            "17": { id: "N°17", name: "El 'Sugar' Promesa (Inversión a Largo Plazo)", risk: "BAJO", stars: "⭐⭐", genre: "Futuro Cotizable", page: "Pág. 3", desc: "Hoy es un estudiante universitario promedio que vive a base de fideos instantáneos, pero tiene una disciplina militar y estudia medicina o ingeniería aeroespacial. Hay que asegurar el terreno antes de que cotice en la bolsa.", action: "Financiar los fideos instantáneos actuales para asegurar las ganancias futuras." },
             "18": { id: "N°18", name: "El Efecto 'Camaleón Urbano'", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Evolución de Etiqueta", page: "Pág. 3", desc: "Un miércoles en la tarde usando ropa deportiva parece que acaba de salir de prisión, pero ponle un traje sastre un sábado por la noche y mágicamente califica para la Regla N°4.", action: "Asegurar que guarde los trajes limpios en el clóset para emergencias estéticas." },
             "19": { id: "N°19", name: "El 'Eco-Friendly' Natural", risk: "MEDIO", stars: "⭐⭐", genre: "Campamento Libre", page: "Pág. 3", desc: "Cero vanidad, cuerpo atlético de hacer senderismo, cabello largo natural, pero vive acampando, no cree en el matrimonio institucionalizado y su desodorante es una piedra de alumbre. Dilema de estilo de vida.", action: "Regalarle barras de jabón artesanal de alta potencia aromática." },
             "20": { id: "N°20", name: "El Filtro Final (El 'Si resuelve')", risk: "BAJO", stars: "💖", genre: "El Verdadero Jefe Final", page: "Pág. 3", desc: "No es modelo de revista, maneja un auto promedio y no es millonario; pero te da paz mental, te escucha cuando estás estresada, sabe cambiar una llanta, cocina delicioso y arregla cualquier desperfecto de la casa sin que se lo pidas dos veces. El verdadero Jefe Final. Casarse de inmediato.", action: "Adquirir argollas de matrimonio de forma inmediata. No dejar escapar." },
@@ -538,7 +548,7 @@
         const ans = userData.answers;
 
         if (userData.gender === "mujeres") {
-            if (ans[14] === 2 && (ans[2] >= 2 || ans[3] >= 2)) { finalRuleKey = "21"; }
+            if (ans[12] === 0 && ans[14] === 2) { finalRuleKey = "21"; }
             else if (ans[14] === 2) finalRuleKey = "20"; 
             else if (ans[9] === 1 || ans[10] === 2) finalRuleKey = "10"; 
             else if (ans[1] === 1 || ans[1] === 5) finalRuleKey = "4"; 
@@ -555,10 +565,10 @@
             else if (ans[13] === 2) finalRuleKey = "20"; 
             else if (ans[1] === 0) finalRuleKey = "1"; 
             else if (ans[9] === 1 || ans[10] === 2) finalRuleKey = "10"; 
-            else if (ans[8] === 2) finalRuleKey = "7"; 
-            else if (ans[4] === 2) finalRuleKey = "3"; 
-            else if (ans[1] === 3 && ans[4] === 2) finalRuleKey = "4"; 
-            else if (ans[1] === 4) finalRuleKey = "5"; 
+            else if (ans[2] === 2) finalRuleKey = "7"; 
+            else if (ans[3] === 2) finalRuleKey = "3"; 
+            else if (ans[1] === 5 && ans[4] === 1) finalRuleKey = "4"; 
+            else if (ans[1] === 2) finalRuleKey = "5"; 
             else finalRuleKey = "13"; 
         }
 
@@ -577,13 +587,12 @@
         document.getElementById('res-genre').textContent = result.genre || "Drama Central";
         document.getElementById('res-page').textContent = `${result.page} de 3`;
         
-        // Ubicación de la pregunta del panorama semanal según el espectro
         const panoramaIdx = (userData.gender === 'mujeres') ? 12 : 11;
         const panoramaElegido = questions[userData.gender][panoramaIdx].options[ans[panoramaIdx]] || "Día de descanso";
         document.getElementById('res-panorama').innerHTML = `<i class="fa-solid fa-calendar-days"></i> <strong>Rutina Semanal Predilecta:</strong> ${panoramaElegido}`;
 
-        const randomMatch = Math.floor(Math.random() * (99 - 91 + 1)) + 91;
-        document.getElementById('res-match').textContent = `${randomMatch}% Compatibilidad`;
+        const randomMatch = Math.floor(Math.random() * (99 - 92 + 1)) + 92;
+        document.getElementById('res-match').textContent = `${randomMatch}% Coincidencia`;
 
         const rBadge = document.getElementById('res-risk');
         rBadge.className = "res-badge"; 
@@ -600,22 +609,47 @@
         nextScreen('screen-result');
     }
 
+    // NUEVO SISTEMA DE RECOMENDACIÓN DINÁMICA CON PORCENTAJES DE AFINIDAD REALES
     function renderSuggestions(currentKey) {
         const db = rulesDB[userData.gender];
         const suggestionsDiv = document.getElementById('netflix-suggestions');
         suggestionsDiv.innerHTML = "";
         
-        let count = 0;
+        let pool = [];
+        
+        // Buscamos leyes del catálogo que compartan el mismo nivel de complejidad (Risk)
+        const currentRisk = db[currentKey].risk;
         for (let key in db) {
-            if (key !== currentKey && count < 3) {
-                const item = db[key];
-                const card = document.createElement('div');
-                card.className = "mini-card";
-                card.innerHTML = `<strong>${item.id}</strong>${item.name}<br><span style="color:#666; font-size:9px;">${item.risk}</span>`;
-                suggestionsDiv.appendChild(card);
-                count++;
+            if (key !== currentKey) {
+                let score = 50; // Base de afinidad
+                
+                if (db[key].risk === currentRisk) {
+                    score += 25; // Si comparten el nivel de riesgo, sube la afinidad
+                }
+                
+                // Pequeño factor aleatorio controlado para que las sugerencias varíen de manera realista
+                score += Math.floor(Math.random() * 14);
+                
+                pool.push({ key: key, item: db[key], score: score });
             }
         }
+        
+        // Ordenamos de mayor a menor afinidad
+        pool.sort((a, b) => b.score - a.score);
+        
+        // Tomamos las top 3 leyes con menor porcentaje que el resultado principal
+        const top3 = pool.slice(0, 3);
+        
+        top3.forEach(sug => {
+            const card = document.createElement('div');
+            card.className = "mini-card";
+            card.innerHTML = `
+                <strong>${sug.item.id}</strong>
+                ${sug.item.name}
+                <span class="mini-match">${sug.score}% Coincidencia</span>
+            `;
+            suggestionsDiv.appendChild(card);
+        });
     }
 
     function openNamesOnlyCatalog() {
@@ -642,7 +676,7 @@
 
     const questions = {
         mujeres: [
-            { q: "Cuál es el espectro o corriente ideológica del perfil objetivo?", options: ["Extrema Izquierda 🔺 (Peligro Nivel Cósmico)", "Izquierda 🟥", "Centro 🟨", "Derecha 🟦", "Extrema Derecha 🦅"] },
+            { q: "¿Cuál es el espectro o corriente ideológica del perfil objetivo?", options: ["Extrema Izquierda 🔺 (Peligro Nivel Cósmico)", "Izquierda 🟥", "Centro 🟨", "Derecha 🟦", "Extrema Derecha 🦅"] },
             { q: "¿Qué tipo de figura o silueta corporal presenta?", options: ["Triángulo 🔺", "Reloj de Arena ⌛", "Triángulo Invertido 🔻", "Diamante / Rombo ♦️", "Forma de Pera 🍐", "Silueta de Guitarra 🎸", "Rectangular 🟥"] },
             { q: "¿Cómo calificarías su estilo en el Atributo A (Busto)?", options: ["Sutil / Minimalista", "Moderado", "Destacado", "Imponente", "Estilo Alta Costura"] },
             { q: "¿Cómo calificarías su balance en el Atributo B (Glúteos)?", options: ["Sutil / Minimalista", "Moderado", "Destacado", "Imponente", "Estilo Fitness"] },
@@ -655,11 +689,11 @@
             { q: "Hábitos de consumo o esparcimiento:", options: ["Espacio libre de humo", "Uso social de vaporizadores", "Asistencia a ambientes festivos"] },
             { q: "¿Cuánto tiempo ha transcurrido desde su última relación?", options: ["Ruptura muy reciente", "Período intermedio", "Ciclo resuelto (Más de 6 meses)", "Sin historial previo"] },
             { q: "¿Qué día de la rutina semanal de convivencia describe mejor su dinámica ideal?", options: ["Lunes de mimos 🤗", "Martes de pololeo 💕", "Miércoles de misterio 🕵️‍♀️", "Jueves de culeo 🔥", "Viernes de carrete 🥳", "Sábado de relajo ☕", "Domingo de aseo 🧹"] },
-            { q: "¿Presenta intervenciones estéticas evidente?", options: ["Líneas naturales", "Retoques sutiles", "Diseño corporal avanzado"] },
-            { q: "¿Cómo calificarías su nivel de organización, celos y destreza diaria?", options: ["Estándar fluido", "Alta intensidad / Posesividad / Celos", "Excelente madurez, Cero Tóxica, Da paz mental total"] }
+            { q: "¿Presenta intervenciones estéticas evidentes?", options: ["Líneas naturales", "Retoques sutiles", "Diseño corporal avanzado"] },
+            { q: "Cómo calificarías su nivel de organización, celos y destreza diaria?", options: ["Estándar fluido", "Alta intensidad / Posesividad / Celos", "Excelente madurez, Cero Tóxica, Da paz mental total"] }
         ],
         hombres: [
-            { q: "Cuál es el espectro o corriente ideológica del perfil objetivo?", options: ["Extrema Izquierda 🔺 (Peligro Nivel Cósmico)", "Izquierda 🟥", "Centro 🟨", "Derecha 🟦", "Extrema Derecha 🦅"] },
+            { q: "¿Cuál es el espectro o corriente ideológica del perfil objetivo?", options: ["Extrema Izquierda 🔺 (Peligro Nivel Cósmico)", "Izquierda 🟥", "Centro 🟨", "Derecha 🟦", "Extrema Derecha 🦅"] },
             { q: "¿Qué estructura o biotipo corporal presenta?", options: ["Musculoso arriba pero patas flacas 🍗", "Piernas musculosas pero flaco de arriba 🦵", "Flaco Total 🦴", "Flaco Marcado / Fibroso ⚡", "Gordito / Carita tierna 🐻", "Cuerpo de Dios Griego 🔱", "Culón de Impacto 🍑"] },
             { q: "¿Qué nivel de proyección de estatus social observa?", options: ["Estilo sencillo / Medios tradicionales", "Marcas visibles y accesorios", "Vehículos de alta gama / Lujos"] },
             { q: "¿Cómo describirías su armonía facial?", options: ["Facciones comunes con gran humor", "Facciones promedio armónicas", "Facciones destacadas / Modelo"] },
@@ -672,7 +706,7 @@
             { q: "¿Cuánto tiempo ha transcurrido desde su última relación?", options: ["Ruptura muy reciente", "Período de transición", "Ciclo completamente resuelto", "Enfoque histórico en soltería"] },
             { q: "¿Qué día de la rutina semanal de convivencia describe mejor su dinámica ideal?", options: ["Lunes de mimos 🤗", "Martes de pololeo 💕", "Miércoles de misterio 🕵️‍♂️", "Jueves de culeo 🔥", "Viernes de carrete 🥳", "Sábado de relajo ☕", "Domingo de aseo 🧹"] },
             { q: "En el ámbito de la conversación:", options: ["Reservado / Introvertido amigable", "Gran fluidez verbal y conversador nato"] },
-            { q: "Comportamiento general, nivel de celos y convivencia:", options: ["Estilo de vida tradicional", "Alta intensidad / Posesivo / Inseguro", "Gran compañero de equipo, Cero Técnico y súper resolutivo"] }
+            { q: "Comportamiento general, nivel de celos y convivencia:", options: ["Estilo de vida tradicional", "Alta intensidad / Posesivo / Inseguro", "Gran compañero de equipo, Cero Tóxico y súper resolutivo"] }
         ]
     };
 
