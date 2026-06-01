@@ -463,7 +463,7 @@
             "5": { id: "N°5", name: "La Paradoja del 'Mantenido'", risk: "BAJO", stars: "⭐", genre: "Carisma Divino", page: "Pág. 1", desc: "No tiene trabajo, no tiene auto, no es guapo y no aporta nada. Su permanencia en el ecosistema depende 100% de que tiene un carisma de dios griego o sabe convencer a cualquiera.", action: "Cuidar la billetera frente a discursos extremamente convincentes." },
             "6": { id: "N°6", name: "El 'Chico Lindo' de Perfil Bajo", risk: "BAJO", stars: "⭐⭐", genre: "Minimalismo Físico", page: "Pág. 1", desc: "Es guapísimo de cara, pero no tiene un gramo de masa muscular y pesa 50 kilos mojado. Ideal para fotos estéticas de Instagram, pero si hay que mover un mueble, se le desarma la espalda.", action: "Contratar fletes externos para mudanzas o trabajos pesados." },
             "7": { id: "N°7", name: "El Efecto 'Alucín' / Tuning Masculino", risk: "ALTO", stars: "⭐⭐⭐⭐", genre: "Riesgo Policial", page: "Pág. 2", desc: "Tiene camioneta gigante, cadenas de oro, ropa de marcas italianas con logos gigantes y música a todo volumen. Diagnóstico: Financiamiento de procedencia dudosa o deuda interna extrema. Alto riesgo de drama policial.", action: "Mantener una coartada lista y las cuentas de ahorro separadas." },
-            "8": { id: "N°8", name: "El 'Crossfitter' Intensivo", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Obsesión Fitness", page: "Pág. 2", desc: "Tiene un físico espectacular, pero su personalidad fue absorbida por el deporte. El 100% de sus conversaciones giran en torno a sus tiempos, sus lesiones y por qué tú deberías dejar de comer pan.", action: "Aprender a ignorar los comentarios sobre carbohidratos mientras comes pizza." },
+            "8": { id: "N°8", name: "El 'Crossfitter' Intensivo", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Obsesión Fitness", page: "Pág. 2", desc: "Tiene un físico espectacular, pero su personalidad fue absorbida por el deporte. El 100% de sus conversaciones giran en torno a sus tiempos, sus lesiones y por qué tú deberías dejar de comer pan.", action: "Ander a ignorar los comentarios sobre carbohidratos mientras comes pizza." },
             "9": { id: "N°9", name: "El Espejismo del 'Barba de Candado'", risk: "MEDIO", stars: "⭐⭐", genre: "Diseño Facial", page: "Pág. 2", desc: "Con barba parece un actor de Hollywood de rudeza rústica; pero el día que se afeita por exigencia laboral, descubres que no tiene mandíbula y se activa la Regla N°3 de forma retroactiva.", action: "Esconder las navajas de afeitar de la casa permanentemente." },
             "10": { id: "N°10", name: "La Ley del 'Mago de las Finanzas' (Cryptobro)", risk: "EXTREMO", stars: "⭐⭐⭐⭐⭐", genre: "Ilusión Bursátil", page: "Pág. 2", desc: "Viste traje formal los domingos, habla de inversiones, mentalidad de tiburón y libertad financiera... pero te pide dinero prestado para pagar la cuenta del café porque 'tiene sus activos congelados en la bolsa'.", action: "Pagar tu propio café y bloquear cualquier propuesta de inversión digital." },
             "11": { id: "N°11", name: "El 'Indie / Músico' Incomprendido", risk: "MEDIO", stars: "⭐⭐⭐", genre: "Drama Melódico", page: "Pág. 2", desc: "Tiene un estilo espectacular, toca la guitarra, es profundo y escribe poesía. Diagnóstico emocional: Te va a romper el corazón y luego va a componer una canción sobre cómo tú arruinaste su vida.", action: "Disfrutar del concierto pero evitar convertirte en el próximo sencillo musical." },
@@ -548,12 +548,24 @@
         const ans = userData.answers;
 
         if (userData.gender === "mujeres") {
-            if (ans[12] === 0 && ans[14] === 2) { finalRuleKey = "21"; }
-            else if (ans[14] === 2) finalRuleKey = "20"; 
-            else if (ans[9] === 1 || ans[10] === 2) finalRuleKey = "10"; 
+            // Evaluamos la nueva pregunta de Estado Sentimental (Índice 11)
+            // ans[11] -> 0: Soltera Reciente, 1: Soltera Intermedia, 2: Soltera +6 meses, 3: Relación Estable, 4: Relación Tóxica
+            
+            if (ans[11] === 4 || ans[9] === 1 || ans[14] === 1) { 
+                // Si está en una Relación Tóxica o tiene conductas posesivas, directo a Tóxica Premium
+                finalRuleKey = "10"; 
+            }
+            else if (ans[11] === 3 && ans[14] === 2) { 
+                // Relación estable + mente impecable = Santo Grial
+                finalRuleKey = "21"; 
+            }
+            else if (ans[11] === 3) {
+                // Relación estable general tiende al Filtro de Madurez
+                finalRuleKey = "20";
+            }
             else if (ans[1] === 1 || ans[1] === 5) finalRuleKey = "4"; 
-            else if (ans[11] === 1 || ans[11] === 2) finalRuleKey = "15"; 
-            else if (ans[1] === 4 || ans[10] === 0) finalRuleKey = "8"; 
+            else if (ans[13] === 1 || ans[13] === 2) finalRuleKey = "15"; 
+            else if (ans[1] === 4 || ans[9] === 0) finalRuleKey = "8"; 
             else if (ans[2] >= 2 && ans[3] <= 1) finalRuleKey = "1"; 
             else if (ans[3] >= 2 && ans[2] <= 1) finalRuleKey = "2"; 
             else if (ans[2] >= 2 && ans[3] >= 2 && ans[4] >= 2) finalRuleKey = "4"; 
@@ -561,10 +573,22 @@
             else if (ans[2] <= 1 && ans[3] <= 1 && ans[4] >= 2) finalRuleKey = "6"; 
             else finalRuleKey = "5"; 
         } else {
-            if (ans[13] === 2 && (ans[1] === 5 || ans[1] === 3)) { finalRuleKey = "21"; }
-            else if (ans[13] === 2) finalRuleKey = "20"; 
+            // Ecosistema Hombres
+            // ans[10] -> 0: Soltero Reciente, 1: Soltero Transición, 2: Soltero Resuelto, 3: Relación Estable, 4: Relación Tóxica
+            
+            if (ans[10] === 4 || ans[13] === 1) {
+                // Relación Tóxica o Inseguro = El Mago de las Finanzas / Cryptobro o Alucín
+                finalRuleKey = "10";
+            }
+            else if (ans[10] === 3 && ans[13] === 2) {
+                // Relación Estable + súper resolutivo = Santo Grial
+                finalRuleKey = "21";
+            }
+            else if (ans[10] === 3) {
+                // Relación Estable general = El que resuelve
+                finalRuleKey = "20";
+            }
             else if (ans[1] === 0) finalRuleKey = "1"; 
-            else if (ans[9] === 1 || ans[10] === 2) finalRuleKey = "10"; 
             else if (ans[2] === 2) finalRuleKey = "7"; 
             else if (ans[3] === 2) finalRuleKey = "3"; 
             else if (ans[1] === 5 && ans[4] === 1) finalRuleKey = "4"; 
@@ -609,35 +633,26 @@
         nextScreen('screen-result');
     }
 
-    // NUEVO SISTEMA DE RECOMENDACIÓN DINÁMICA CON PORCENTAJES DE AFINIDAD REALES
     function renderSuggestions(currentKey) {
         const db = rulesDB[userData.gender];
         const suggestionsDiv = document.getElementById('netflix-suggestions');
         suggestionsDiv.innerHTML = "";
         
         let pool = [];
-        
-        // Buscamos leyes del catálogo que compartan el mismo nivel de complejidad (Risk)
         const currentRisk = db[currentKey].risk;
+        
         for (let key in db) {
             if (key !== currentKey) {
-                let score = 50; // Base de afinidad
-                
+                let score = 50; 
                 if (db[key].risk === currentRisk) {
-                    score += 25; // Si comparten el nivel de riesgo, sube la afinidad
+                    score += 25; 
                 }
-                
-                // Pequeño factor aleatorio controlado para que las sugerencias varíen de manera realista
                 score += Math.floor(Math.random() * 14);
-                
                 pool.push({ key: key, item: db[key], score: score });
             }
         }
         
-        // Ordenamos de mayor a menor afinidad
         pool.sort((a, b) => b.score - a.score);
-        
-        // Tomamos las top 3 leyes con menor porcentaje que el resultado principal
         const top3 = pool.slice(0, 3);
         
         top3.forEach(sug => {
@@ -687,7 +702,7 @@
             { q: "¿Qué tipo de contenido comparte habitualmente en redes?", options: ["Fotos con edición / Filtros", "Imágenes espontáneas", "Contenido exclusivo / Privado", "Presencia mínima / Casi nula"] },
             { q: "Al momento de compartir eventos sociales o salidas:", options: ["Consumo moderado", "Mucha energía / Dinámica", "Preferencia por cartas VIP", "Preferencia por planes caseros"] },
             { q: "Hábitos de consumo o esparcimiento:", options: ["Espacio libre de humo", "Uso social de vaporizadores", "Asistencia a ambientes festivos"] },
-            { q: "¿Cuánto tiempo ha transcurrido desde su última relación?", options: ["Ruptura muy reciente", "Período intermedio", "Ciclo resuelto (Más de 6 meses)", "Sin historial previo"] },
+            { q: "¿Cuál es su situación sentimental y relacional actual?", options: ["Soltera (Ruptura muy reciente)", "Soltera (Período de transición)", "Soltera Estable (Más de 6 meses sola)", "En una Relación Estable y Sana 💚", "En una Relación Completamente Tóxica ⚠️"] },
             { q: "¿Qué día de la rutina semanal de convivencia describe mejor su dinámica ideal?", options: ["Lunes de mimos 🤗", "Martes de pololeo 💕", "Miércoles de misterio 🕵️‍♀️", "Jueves de culeo 🔥", "Viernes de carrete 🥳", "Sábado de relajo ☕", "Domingo de aseo 🧹"] },
             { q: "¿Presenta intervenciones estéticas evidentes?", options: ["Líneas naturales", "Retoques sutiles", "Diseño corporal avanzado"] },
             { q: "Cómo calificarías su nivel de organización, celos y destreza diaria?", options: ["Estándar fluido", "Alta intensidad / Posesividad / Celos", "Excelente madurez, Cero Tóxica, Da paz mental total"] }
@@ -703,7 +718,7 @@
             { q: "¿Qué tipo de contenido comparte habitualmente en redes?", options: ["Fotografías con edición", "Imágenes espontáneas", "Historias en círculos cerrados", "Presencia mínima / Sin fotos"] },
             { q: "Al momento de compartir eventos sociales:", options: ["Manejo ordenado de gastos", "Alta extroversión", "Busca destacar en zonas VIP", "Prefiere interiores / Tecnología"] },
             { q: "Hábitos de consumo o esparcimiento:", options: ["Espacio libre de humo", "Uso social de vaporizadores", "Ambientes festivos alternativos"] },
-            { q: "¿Cuánto tiempo ha transcurrido desde su última relación?", options: ["Ruptura muy reciente", "Período de transición", "Ciclo completamente resuelto", "Enfoque histórico en soltería"] },
+            { q: "¿Cuál es su situación sentimental y relacional actual?", options: ["Soltero (Ruptura muy reciente)", "Soltero (Período de transición)", "Soltero Estable (Ciclo resuelto)", "En una Relación Estable y Sana 💚", "En una Relación Completamente Tóxica ⚠️"] },
             { q: "¿Qué día de la rutina semanal de convivencia describe mejor su dinámica ideal?", options: ["Lunes de mimos 🤗", "Martes de pololeo 💕", "Miércoles de misterio 🕵️‍♂️", "Jueves de culeo 🔥", "Viernes de carrete 🥳", "Sábado de relajo ☕", "Domingo de aseo 🧹"] },
             { q: "En el ámbito de la conversación:", options: ["Reservado / Introvertido amigable", "Gran fluidez verbal y conversador nato"] },
             { q: "Comportamiento general, nivel de celos y convivencia:", options: ["Estilo de vida tradicional", "Alta intensidad / Posesivo / Inseguro", "Gran compañero de equipo, Cero Tóxico y súper resolutivo"] }
